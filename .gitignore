@@ -1,0 +1,38 @@
+# maven ignore
+target/
+*.jar
+!.mvn/wrapper/*
+*.war
+*.zip
+*.tar
+*.tar.gz
+
+# eclipse ignore
+.settings/
+.project
+.classpath
+
+# idea ignore
+.idea/
+*.ipr
+*.iml
+*.iws
+
+# temp ignore
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+
+# system ignore
+.DS_Store
+Thumbs.db
+/target
+src/main/java/com/wjl/config/
+src/main/java/com/wjl/controller/
+src/main/java/com/wjl/dao/
+src/main/java/com/wjl/filter/
+src/main/java/com/wjl/interceptor/
+src/main/java/com/wjl/listerner/
+src/main/java/com/wjl/service/
