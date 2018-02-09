@@ -25,4 +25,8 @@ public class UserController {
     public Object insert(@PathVariable String userName, @PathVariable String userPass,@PathVariable Integer flag){
         return userService.insert(userName,userPass,flag);
     }
+    @RequestMapping(value = "index")
+    public String insert(){
+        return "login";
+    }
 }

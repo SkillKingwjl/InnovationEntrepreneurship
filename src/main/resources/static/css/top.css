@@ -1,0 +1,15 @@
+.top{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    position: relative;
+    z-index: 10000;
+    background: #fff;
+    height: 56px;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(39,54,78,.1);
+    font-size: 12px;
+    font-family: -apple-system, "SF UI Text", "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Zen Hei", sans-serif;
+    font-weight: normal;
+    line-height: 18px;
+}
