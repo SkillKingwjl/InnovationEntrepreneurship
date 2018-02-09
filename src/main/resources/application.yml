@@ -9,7 +9,7 @@ logging:
       wjl: trace
     org:
       springframework:
-          web: DEBUG
+          web: INFO
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource

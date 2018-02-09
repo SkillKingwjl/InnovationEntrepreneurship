@@ -2,14 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>登录</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" th:href="@{/css/login.css}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <script th:href="@{/js/jquery-3.3.1.min.js}"></script>
+    <script th:href="@{/js/bootstrap.js}" ></script>
+    <script th:href="@{/js/login.js}"></script>
 </head>
-<body>
-    <div class="bodycss">
-        <div class="name">姓名:</div>
-        <div class="nameinput"><input class="input" placeholder="用户名" id="name"></div>
-    </div>
+<body class="text-center">
+    <form class="form-signin">
+        <input type="text" id="userName" class="form-control" placeholder="用户名" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+        <label>用户类型</label>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle"
+                    data-toggle="dropdown">
+                默认 <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#">功能</a></li>
+                <li><a href="#">另一个功能</a></li>
+                <li><a href="#">其他</a></li>
+                <li class="divider"></li>
+                <li><a href="#">分离的链接</a></li>
+            </ul>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+    </form>
 </body>
 </html>
