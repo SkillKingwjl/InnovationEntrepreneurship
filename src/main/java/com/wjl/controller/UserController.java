@@ -15,14 +15,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "findUser/{userName}/{userPass}",method = RequestMethod.POST)
+    @RequestMapping(value = "login",method = RequestMethod.POST)
     @ResponseBody
-    public Object findUser(@PathVariable String userName, @PathVariable String userPass){
+    public Object findUser(String userName,String userPass){
         return userService.findUser(userName,userPass);
     }
 
-    @RequestMapping(value = "insert/userName/{userName}/userPass/{userPass}/flag/{flag}",method = RequestMethod.PUT)
-    public Object insert(@PathVariable String userName, @PathVariable String userPass,@PathVariable Integer flag){
+    @RequestMapping(value = "register",method = RequestMethod.PUT)
+    @ResponseBody
+    public Object insert(String userName,  String userPass, Integer flag){
         return userService.insert(userName,userPass,flag);
     }
     @RequestMapping(value = "index")

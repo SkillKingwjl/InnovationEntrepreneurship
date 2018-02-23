@@ -32,8 +32,7 @@ CREATE TABLE `enterprisedetil` (
   `phoneNum` int(11) NOT NULL,
   `isShowPhoneNum` tinyint(1) NOT NULL,
   `photo` varchar(255) NOT NULL,
-  `
-personalProfile` text,
+  `personalProfile` text,
   `workExperience` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -47,8 +46,7 @@ CREATE TABLE `studentdetil` (
   `userID` int(11) NOT NULL,
   `sex` tinyint(1) NOT NULL,
   `studentID` varchar(255) NOT NULL,
-  `
-department` varchar(255) NOT NULL,
+  `department` varchar(255) NOT NULL,
   `major` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `weichart` varchar(255) NOT NULL,

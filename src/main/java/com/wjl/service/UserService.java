@@ -20,6 +20,7 @@ public class UserService {
     }
 
     public int insert(String userName, String userPass, Integer flag) {
+        userPass = MD5Util.getMD5(userPass);
         return userMapper.insert(userName, userPass, flag);
     }
 }
