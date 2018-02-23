@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>信息展示</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+</head>
+<body style="background-color: #f7f7f7">
+<div style="width: 1500px;min-height: 960px;margin: auto">
+    <div class="col-lg-2" style="margin: 90px auto;background-color: #fff">
+        <ul class="nav nav-pills nav-stacked">
+            <li class="active" style="margin-top: 10px"><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+        </ul>
+    </div>
+    <div class="col-lg-10">
+        <div style="margin: 90px auto;background-color:#ffffff;padding-bottom: 90px;border-radius: 5px">
+            <div class="col-lg-4" style="padding-top: 20px">
+                <form class="form-horizontal form-style" >
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">姓名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="name" placeholder="姓名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sex" class="col-sm-2 control-label">性别</label>
+                        <div class="col-sm-10">
+                            <select  class="form-control" id="sex">
+                                <option value="0">男</option>
+                                <option value="1">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="role" class="col-sm-2 control-label">角色</label>
+                        <div class="col-sm-10">
+                            <select  class="form-control" id="role">
+                                <option value="0">企业人员</option>
+                                <option value="1">教师</option>
+                                <option value="1">学生</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentNum" class="col-sm-2 control-label" id="studentNum1">学号</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="studentNum" placeholder="学号">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-sm-2 control-label">密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="password" placeholder="密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password1" class="col-sm-2 control-label">确认密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="password1" placeholder="确认密码">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="college" class="col-sm-2 control-label" id="college1">院系</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="college" placeholder="院系">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="profession" class="col-sm-2 control-label" id="profession1">专业</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="profession" placeholder="专业">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-4" style="padding-top: 20px">
+                <form class="form-horizontal form-style" >
+                    <div class="form-group">
+                        <label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="inputEmail" placeholder="邮箱">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="wechat" class="col-sm-2 control-label" >微信</label>
+                        <div class="col-sm-7">
+                            <input type="password" class="form-control" id="wechat" placeholder="微信">
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-control" id="wechatP">
+                                <option value="0" selected>公开</option>
+                                <option value="1">不公开</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="col-sm-2 control-label">电话</label>
+                        <div class="col-sm-7">
+                            <input type="password" class="form-control" id="phone" placeholder="电话">
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-control" id="phoneP">
+                                <option value="0" selected>公开</option>
+                                <option value="1" >不公开</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pic" class="col-sm-2 control-label">照片</label>
+                        <div class="col-sm-7" id="pic" style="height:300px;border-radius: 3px;background-color: silver">
+                            <img src="">
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-default">上传</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-4" style="padding-top: 20px">
+                <form class="form-horizontal form-style" >
+
+
+                    <div class="form-group">
+                        <label for="feature" class="col-sm-2 control-label" id="">特长</label>
+                        <div class="col-sm-10" >
+                        <textarea class="form-control" id="feature" placeholder="" style="height:230px">
+                        </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exprience" class="col-sm-2 control-label" id="exprience1">经历</label>
+                        <div class="col-sm-10">
+                        <textarea class="form-control" id="exprience" placeholder="" style="height:230px">
+                        </textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <form class="form-horizontal form-style" >
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default " >修改</button>
+                            <button type="submit" class="btn btn-default " style="margin-left: 300px">确认修改</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<script th:href="@{/js/jquery-3.3.1.min.js}"></script>
+<script th:href="@{/js/bootstrap.js}" ></script>
+<script th:href="@{/js/login.js}"></script>
+</html>

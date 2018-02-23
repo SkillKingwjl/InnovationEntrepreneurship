@@ -27,7 +27,11 @@ public class UserController {
         return userService.insert(userName,userPass,flag);
     }
     @RequestMapping(value = "index")
-    public String insert(){
+    public String skinToLogin(){
         return "login";
+    }
+    @RequestMapping(value = "register")
+    public String skinToRegister(){
+        return "register";
     }
 }

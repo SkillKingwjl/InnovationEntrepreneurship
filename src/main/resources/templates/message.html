@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>发布项目</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+</head>
+<body style="background-color: #f7f7f7">
+<div style="width: 1500px;min-height: 960px;margin: auto">
+    <div class="col-lg-2" style="margin: 90px auto;background-color: #fff">
+        <ul class="nav nav-pills nav-stacked">
+            <li class="active" style="margin-top: 10px"><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+            <li ><a href="#">个人信息</a></li>
+        </ul>
+    </div>
+    <div class="col-lg-10">
+        <div style="margin: 90px auto;background-color:#ffffff;padding-bottom: 90px;border-radius: 5px">
+            <div class="col-lg-6" style="padding-top: 20px">
+                <form class="form-horizontal form-style" >
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">发布人</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="name" placeholder="发布人">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="type" class="col-sm-2 control-label">性别</label>
+                        <div class="col-sm-4">
+                            <select  class="form-control" id="type">
+                                <option value="0">挑战杯</option>
+                                <option value="0">挑战杯</option>
+                                <option value="0">挑战杯</option>
+                                <option value="0">挑战杯</option>
+                            </select>
+                        </div>
+                        <label for="process" class="col-sm-2 control-label">进度</label>
+                        <div class="col-sm-4">
+                            <select  class="form-control" id="process">
+                                <option value="0">校赛</option>
+                                <option value="1">省赛</option>
+                                <option value="2">国赛</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="projectname" class="col-sm-2 control-label">项目名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="projectname" placeholder="项目名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="feature" class="col-sm-2 control-label">创意简介</label>
+                        <div class="col-sm-10" >
+                        <textarea class="form-control" id="feature" placeholder="" style="height:230px">
+                        </textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6" style="padding-top: 20px">
+                <form class="form-horizontal form-style" >
+                    <div class="form-group">
+                        <label for="for_person" class="col-sm-2 control-label">负责人</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="for_person" placeholder="负责人">
+                        </div>
+                        <label for="teacher" class="col-sm-2 control-label">导师</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="teacher" placeholder="导师">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="search" class="col-sm-2 control-label">寻找</label>
+                        <div class="col-sm-4">
+                            <select  class="form-control" id="search">
+                                <option value="0">队员</option>
+                                <option value="0">项目负责人</option>
+                                <option value="0">创新创业导师</option>
+                            </select>
+                        </div>
+                        <label for="search_num" class="col-sm-2 control-label">人数</label>
+                        <div class="col-sm-4">
+                            <select  class="form-control" id="search_num">
+                                <option value="1">1人</option>
+                                <option value="2">2人</option>
+                                <option value="3">3人</option>
+                                <option value="4">4人</option>
+                                <option value="5">5人</option>
+                                <option value="6">6人</option>
+                                <option value="7">7人</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="search_know" class="col-sm-2 control-label">寻找说明</label>
+                        <div class="col-sm-10" >
+                        <textarea class="form-control" id="search_know" placeholder="" style="height:230px">
+                        </textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div>
+                <form class="form-horizontal form-style" >
+                    <div class="form-group">
+                        <div class="col-sm-offset-5 col-sm-6">
+                            <button type="submit" class="btn btn-default " >发布</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<script th:href="@{/js/jquery-3.3.1.min.js}"></script>
+<script th:href="@{/js/bootstrap.js}" ></script>
+<script th:href="@{/js/login.js}"></script>
+</html>
