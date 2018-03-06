@@ -30,6 +30,10 @@ spring:
   mvc:
     favicon:
       enabled: false
+  http:
+    multipart:
+      maxFileSize: -1
+      maxRequestSize: -1
 mybatis:
   type-aliases-package: com.wjl.model
   mapper-locations: classpath:maper/*.xml
@@ -41,5 +45,6 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: count\=countSql
+
 
 

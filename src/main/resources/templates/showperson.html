@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>显示人员信息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+</head>
+<body style="background-color: #f7f7f7">
+<div style="width: 1500px;min-height: 960px;margin: auto">
+    <div class="col-lg-2" style="margin: 90px auto;background-color: #fff">
+        <ul class="nav nav-pills nav-stacked">
+            <li style="margin-top: 10px"><a href="showinfo.html">个人信息</a></li>
+            <li ><a href="pubproject.html">发布项目</a></li>
+            <li ><a href="searchproject.html">寻找项目</a></li>
+            <li  class="active"><a href="searchperson.html">寻找合伙人</a></li>
+            <li ><a href="meproject.html">已创建项目</a></li>
+            <li ><a href="signupproject.html">已报名项目</a></li>
+            <li ><a href="message.html">通知</a></li>
+        </ul>
+    </div>
+    <div class="col-lg-10">
+        <div style="margin: 90px auto;background-color:#ffffff;padding-bottom: 90px;border-radius: 5px">
+            <div class="col-lg-6" style="padding-top: 20px">
+                <form class="form-horizontal form-style" >
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">姓名</label>
+                        <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="name">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-4 control-label">照片</label>
+                        <div class="col-sm-8"  style="height:300px;border-radius: 3px;background-color: silver">
+                            <img src="" id="pic_url" width="95%" height="95%">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-4 control-label">微信</label>
+                        <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="wexin">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-4 control-label">电话</label>
+                        <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="phone">
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="col-lg-6" style="padding-top: 20px">
+                <form class="form-horizontal form-style" >
+
+                    <div class="form-group">
+                        <label  class="col-sm-4 control-label">特长</label>
+                        <div class="col-sm-8" style="width:80%;height:200px;margin-top:20px" id="feature">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-4 control-label">比赛和项目经历</label>
+                        <div class="col-sm-8" style="width:80%;height:200px;margin-top:20px" id="exprience">
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div>
+                <form class="form-horizontal form-style" >
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" class="btn btn-default " href="javascript:history(-1)">返回</button>
+                            <button type="button" class="btn btn-default " style="margin-left: 300px" onclick="opertion()">邀请</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.js}" ></script>
+<script>
+    var userId=0;
+    $(function(){
+        var url =decodeURI(location.href) ;
+        if(url.indexOf("?")>-1) {
+            var id = url.substring(url.indexOf("?") + 1, url.length);
+            getContent(id)
+        }
+    })
+
+    function getContent(userId){
+        $.ajax({
+            "url":"/getsingleuser",
+            "type":"GET",
+            "dataType":"JSON",
+            "data":{"userId":userId},
+            "success":function (data) {
+                if(data){
+                    handledata(data.userDetail,data.user)
+                }
+            }
+        })
+    }
+    function handledata(userDetail,user){
+        userId=user.id;
+        var username=user.username;
+        var sex=userDetail.sex;
+        var studentNum=userDetail.studentID;
+        var department=userDetail.department;
+        var major=userDetail.major;
+        var email=userDetail.email;
+        var weichart=userDetail.weichart;
+        var isShowWei=userDetail.isShowWei;
+        var phoneNum=userDetail.phoneNum;
+        var isShowPhoneNum=userDetail.isShowPhoneNum;
+        var photo=userDetail.photo;
+        var specialty=userDetail.specialty;
+        var competitionExperience=userDetail.competitionExperience;
+        $("#name").html(name)
+        if(photo){
+            $("#pic_url").attr("src","/upload-dir/"+photo)
+        }
+        $("#wexin").html(weichart)
+        if(isShowPhoneNum==0){
+            $("#phone").html(phoneNum)
+        }else{
+            $("#phone").html("未公开")
+        }
+
+        $("#feature").html(specialty)
+        $("#exprience").html(competitionExperience)
+    }
+    function opertion(){
+        $.ajax({
+            "url":"/application",
+            "type":"POST",
+            "dataType":"JSON",
+            "data":{
+                "projectId":profileId,
+                "ownId":userId,
+                "type":0
+            },
+            "success":function (data) {
+                if(data>0){
+                    window.location.href="searchperson.html"
+                }
+            }
+        })
+    }
+</script>
+</html>

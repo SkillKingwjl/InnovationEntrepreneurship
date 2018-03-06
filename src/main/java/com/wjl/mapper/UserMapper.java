@@ -1,9 +1,9 @@
 package com.wjl.mapper;
 
-import com.wjl.model.User;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import com.wjl.model.*;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 /**
  * @author wjl
@@ -11,9 +11,106 @@ import org.apache.ibatis.annotations.Select;
  */
 @Mapper
 public interface UserMapper {
-    @Select("SELECT * FROM user WHERE userName = #{userName} and userPass = #{userPass}")
-    User findUser(@Param("userName") String userName, @Param("userPass") String userPass);
+    /*
+     查找用户
+     */
+    @Select("SELECT * FROM user WHERE username = #{userName} and password = #{passWord} and flag=#{flag}")
+    public User findUser(@Param("userName") String userName, @Param("passWord") String userPass,@Param("flag") int flag);
+    /*
+      分页获取所有用户
+     */
+    @Select("SELECT * FROM user where id!=#{id} limit #{page},#{pageSize}")
+    public List<User> getAllUser(@Param("id") Integer id,@Param("page") Integer page, @Param("pageSize") Integer pageSize);
+    /*
+    获取单个用户
+     */
+    @Select("SELECT * FROM user where id=#{id}")
+    public User getSingleUser(@Param("id") Integer id);
+    /*
+     新增用户
+     */
+    @Insert({"INSERT INTO user(username,password,flag) VALUES (#{user.username},#{user.password},#{user.flag})"})
+    @Options(useGeneratedKeys=true, keyProperty = "user.id",keyColumn="id")
+    public void insert(@Param("user")User user);
+    /*
+     新增用户的具体信息
+     */
+    @Insert("INSERT INTO userdetil(userID,sex,studentID,department,major,email,weichart,isShowWei,phoneNum,isShowPhoneNum,photo,specialty,competitionExperience)" +
+            "values(#{userID},#{sex},#{studentID},#{department},#{major},#{email},#{weichart},#{isShowWei},#{phoneNum},#{isShowPhoneNum},#{photo},#{specialty},#{competitionExperience})")
+    public int insertDetail(@Param("userID") int userId,@Param("sex") int sex,@Param("studentID") String studentNum,@Param("department")String college,
+                     @Param("major")String profession,@Param("email")String inputEmail,@Param("weichart")String wechat,@Param("isShowWei")int wechatP,
+                     @Param("phoneNum")String phone,@Param("isShowPhoneNum")int phoneP,@Param("photo")String pic,@Param("specialty")String feature,
+                     @Param("competitionExperience")String exprience );
+    /*
+     获取用户具体信息根据userID
+     */
+    @Select("Select * from userdetil where userID=${userID}")
+    public UserDetail getUserDeatil(@Param("userID") int userId);
+    /*
+     更新用户
+     */
+    @Update("update user set username=${userName} where id=${id}")
+    public int updateUser(@Param("userName") String userName,@Param("id") int id);
+    @Update("update userdetil set sex=${sex},studentID=${studentID},department=${department},major=${major},email=${email},weichart=${weichart},isShowWei=${isShowWei}" +
+            ",phoneNum=${phoneNum},isShowPhoneNum=${isShowPhoneNum},photo=${photo},specialty=${specialty},competitionExperience=${competitionExperience} where userId=${userID}" )
+    public int updateDetail(@Param("userID") int userId,@Param("sex") int sex,@Param("studentID") String studentNum,@Param("department")String college,
+                            @Param("major")String profession,@Param("email")String inputEmail,@Param("weichart")String wechat,@Param("isShowWei")int wechatP,
+                            @Param("phoneNum")String phone,@Param("isShowPhoneNum")int phoneP,@Param("photo")String pic,@Param("specialty")String feature,
+                            @Param("competitionExperience")String exprience );
+    /*
+     新增项目
+     */
+    @Insert("insert into projetdetail(userId,title,name,type,processType,introdution,leder,teacher,findType,findNum,findIntrodution)" +
+            "values(#{userId},#{title},#{name},#{type},#{processType},#{introdution},#{leder},#{teacher},#{findType},#{findNum},#{findIntrodution})")
+    public int insertProjectDetail(@Param("userId") Integer userId,@Param("title") String title,@Param("name")String name,@Param("type")Integer type,
+                                   @Param("processType")Integer processType,@Param("introdution")String introdution
+            ,@Param("leder")String leder,@Param("teacher")String teacher,@Param("findType")Integer findType,@Param("findNum")Integer findNum,@Param("findIntrodution")String findIntrodution);
+   /*
+    分页查找我创建的项目
+    */
+    @Select("select * from projetdetail where userId=#{userId} limit #{page},#{pageSize}")
+    public List<ProjectDetail> getMeProjectDetail(@Param("userId") Integer userID,@Param("page") Integer page, @Param("pageSize") Integer pageSize);
 
-    @Select("INSERT INTO user(userName,userPass,flag) VALUES (#{userName},)#{userPass},#{flag}")
-    int insert(@Param("userName") String userName, @Param("userPass") String userPass, @Param("flag") Integer flag);
+    @Select("select * from projetdetail where userId!=#{userId} limit #{page},#{pageSize}")
+    public List<ProjectDetail> getAllProjectDetail(@Param("userId") Integer userID,@Param("page") Integer page, @Param("pageSize") Integer pageSize);
+    /*
+     查询单个项目
+     */
+    @Select("select * from projectdetail where id=#{id}")
+    public ProjectDetail getSingeProjectDeatil(@Param("id")Integer id);
+    /*
+     新增消息
+     */
+    @Insert("insert into message(userID,ownID,projectID,type)values(#{userID},#{ownID},#{projectID},#{type},#{status}) ")
+    public int insertMessage(@Param("userID")Integer userID,@Param("ownID")Integer ownID,@Param("projectID")Integer projectID,@Param("type")Integer type,
+                             @Param("status") Integer status);
+    /*
+     获取消息内容
+     */
+    @Select("select * from message where id=#{id}")
+    public Message getSingleMessage(@Param("id") int id);
+    /*
+     获取我接受的消息列表
+     */
+    @Select("select  * from message where userID=#{userId} limit #{page},#{pageSize}")
+    public List<Message> getMeMessageList(@Param("userId") Integer userId,@Param("page") int page,@Param("pageSize") int  pageSize);
+    /*
+     获取我发送的消息列表
+     */
+    @Select("select  * from message where ownID=#{userId} limit #{page},#{pageSize}")
+    public List<Message> getSendMessageList(@Param("userId") Integer userId,@Param("page") int page,@Param("pageSize") int  pageSize);
+    /*
+     获取申请的状态
+     */
+    @Insert("insert into ownproject(userID,ownID,projectID,status,flag)values(#{userID},#{ownID},#{projectID},#{status}),#{flag}")
+    public int insertOwnProject(@Param("userID")Integer userID,@Param("ownID")Integer ownID,@Param("projectID")Integer projectID,@Param("status")Integer status,@Param("flag") Integer flag);
+
+    @Select("select * from ownproject where flag=0 and status=#{status} and userID=#{userID} limit #{page},#{pageSize} order by createTime desc")
+    public List<OwnProject> getOwnProjectList(@Param("status") Integer status,@Param("userID") Integer userId,@Param("page") Integer page,@Param("pageSize")Integer pageSize);
+    @Select("select * from ownproject where flag=0 and projectID=#{projectId}  order by createTime desc")
+    public List<OwnProject> getOwnProjectUserList(@Param("projectId") Integer projectId);
+    @Update("update message set status=${status} where id=${id}")
+    public int updateMessage(@Param("status") Integer status,@Param("id") int id);
+    @Update("update ownproject set flag=${flag} where userID=${id} and projectID=${projectID}")
+    public int updateOwnProject(@Param("flag") Integer flag,@Param("userID") int userId,@Param("projectID")Integer projectId);
 }

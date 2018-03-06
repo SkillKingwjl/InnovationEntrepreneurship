@@ -10,85 +10,88 @@
 <div style="width: 1500px;min-height: 960px;margin: auto">
     <div class="col-lg-2" style="margin: 90px auto;background-color: #fff">
         <ul class="nav nav-pills nav-stacked">
-            <li class="active" style="margin-top: 10px"><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
+            <li  style="margin-top: 10px"><a href="showinfo.html">个人信息</a></li>
+            <li ><a href="pubproject.html">发布项目</a></li>
+            <li class="active"><a href="searchproject.html">寻找项目</a></li>
+            <li ><a href="searchperson.html">寻找合伙人</a></li>
+            <li ><a href="meproject.html">已创建项目</a></li>
+            <li ><a href="signupproject.html">已报名项目</a></li>
+            <li ><a href="message.html">通知</a></li>
         </ul>
     </div>
     <div class="col-lg-10">
         <div style="margin: 90px auto;background-color:#ffffff;padding-bottom: 90px;border-radius: 5px">
             <div class="table-responsive">
-                <table class="table table-bordered">
-                    <tr>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                    </tr>
-                    <tr>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                    </tr>
-                    <tr>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                    </tr>
-                    <tr>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                    </tr>
-                    <tr>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                    </tr>
-                    <tr>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                    </tr>
-                    <tr>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                        <td>1111</td>
-                    </tr>
+                <div class="col-lg-4 col-lg-offset-4"><h3>寻找项目</h3></div>
+                <table class="table table-bordered" id="content">
+
                 </table>
             </div>
         </div>
     </div>
 </div>
 </body>
-<script th:href="@{/js/jquery-3.3.1.min.js}"></script>
-<script th:href="@{/js/bootstrap.js}" ></script>
-<script th:href="@{/js/login.js}"></script>
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.js}" ></script>
+<script>
+    $(function(){
+        getContent(1,15)
+    })
+    function getContent(page,pageSize){
+        $.ajax({
+            "url":"/getallprojectdetail",
+            "type":"POST",
+            "dataType":"JSON",
+            "data":{
+                "flag":1,
+                "page":page,
+                "pageSize":pageSize
+            },
+            "success":function (data) {
+                if(data){
+                    handlerdata(data)
+                }
+            }
+        })
+    }
+    function handlerdata(data){
+        var url="<tbody><tr>\n" +
+            "                        <td>项目名称</td>\n" +
+            "                        <td>比赛类别</td>\n" +
+            "                        <td>寻找对象</td>\n" +
+            "                        <td>人数</td>\n" +
+            "                        <td>创建时间</td>\n" +
+            "                    </tr>";
+        $.each(data,function(n,value){
+            var id=value.id
+            var name=value.name;
+            var title=value.title;
+            var type=value.type;
+            var typename="互联网+"
+            if(type==1){
+                typename="挑战杯"
+            }else if(type==2){
+                typename="创青春"
+            }else if(type==3){
+                typename="微软创青春"
+            }
+
+            var findType=value.findType;
+            var findName="队员"
+            if(findType==1){
+                findName="项目负责人"
+            }else if(findType==2){
+                findName="创新创业导师"
+            }
+            var findNum=value.findNum;
+            var createTime=value.createTime;
+            url+="<tr onclick='skinto("+id+")'><td>"+title+"</td><td>"+name+"</td><td>"+typename+"</td><td>"+findNum+"人</td><td>"+createTime+"</td>"
+        })
+        url+="</tbody>"
+        $("#content").html(url)
+    }
+    function skin(id){
+
+    }
+</script>
 </html>

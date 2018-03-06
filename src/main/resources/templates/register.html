@@ -14,7 +14,13 @@
 
 <body style="background-color: #f7f7f7">
 <div style="min-width: 1600px;min-height: 960px;">
-    <div style="margin: 90px auto;width: 1600px;background-color:#ffffff;padding-bottom: 90px;height:600px;border-radius: 5px">
+    <div style="margin: 90px auto;width: 1600px;background-color:#ffffff;padding-bottom: 90px;height:700px;border-radius: 5px">
+        <div>
+            <div class="col-lg-4" style="height:60px"></div>
+            <div class="col-lg-4" style="height:60px"><h3>个人信息</h3></div>
+            <div class="col-lg-4" style="height:60px"></div>
+        </div>
+
         <div class="col-lg-4" style="padding-top: 20px">
             <form class="form-horizontal form-style" >
                 <div class="form-group">
@@ -35,17 +41,17 @@
                 <div class="form-group">
                     <label for="role" class="col-sm-2 control-label">角色</label>
                     <div class="col-sm-10">
-                        <select  class="form-control" id="role">
-                            <option value="0">企业人员</option>
+                        <select  class="form-control" id="role" onchange="changeWord()">
+                            <option value="0" selected>学生</option>
                             <option value="1">教师</option>
-                            <option value="1">学生</option>
+                            <option value="2">企业人员</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="studentNum" class="col-sm-2 control-label" id="studentNum1">学号</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" id="studentNum" placeholder="学号">
+                        <input type="text" class="form-control" id="studentNum" placeholder="学号">
                     </div>
                 </div>
                 <div class="form-group">
@@ -64,13 +70,13 @@
                 <div class="form-group">
                     <label for="college" class="col-sm-2 control-label" id="college1">院系</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" id="college" placeholder="院系">
+                        <input type="text" class="form-control" id="college" placeholder="院系">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="profession" class="col-sm-2 control-label" id="profession1">专业</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" id="profession" placeholder="专业">
+                        <input type="text" class="form-control" id="profession" placeholder="专业">
                     </div>
                 </div>
             </form>
@@ -87,7 +93,7 @@
                 <div class="form-group">
                     <label for="wechat" class="col-sm-2 control-label" >微信</label>
                     <div class="col-sm-7">
-                        <input type="password" class="form-control" id="wechat" placeholder="微信">
+                        <input type="text" class="form-control" id="wechat" placeholder="微信">
                     </div>
                     <div class="col-sm-3">
                         <select class="form-control" id="wechatP">
@@ -99,7 +105,7 @@
                 <div class="form-group">
                     <label for="phone" class="col-sm-2 control-label">电话</label>
                     <div class="col-sm-7">
-                        <input type="password" class="form-control" id="phone" placeholder="电话">
+                        <input type="text" class="form-control" id="phone" placeholder="电话">
                     </div>
                     <div class="col-sm-3">
                         <select class="form-control" id="phoneP">
@@ -112,27 +118,26 @@
                 <div class="form-group">
                     <label for="pic" class="col-sm-2 control-label">照片</label>
                     <div class="col-sm-8" id="pic" style="height:300px;border-radius: 3px;background-color: silver">
-                        <img src="">
+                        <img src="" id="pic_url" width="100%" height="100%">
                     </div>
                     <div class="col-sm-2">
-                        <button class="btn btn-default">上传</button>
+                        <input type="file" id="file1" onchange="doChange()" name="file1" style="display:none">
+                        <button class="btn btn-default" onclick="file1.click()">上传</button>
                     </div>
                 </div>
             </form>
         </div>
         <div class="col-lg-4" style="padding-top: 20px">
             <form class="form-horizontal form-style" >
-
-
                 <div class="form-group">
-                    <label for="feature" class="col-sm-2 control-label" id="">特长</label>
+                    <label for="feature" class="col-sm-2 control-label" id="feature1">特长</label>
                     <div class="col-sm-10" >
                         <textarea class="form-control" id="feature" placeholder="" style="height:230px">
                         </textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="exprience" class="col-sm-2 control-label" id="exprience1">经历</label>
+                    <label for="exprience" class="col-sm-2 control-label" id="exprience1">比赛和项目经历</label>
                     <div class="col-sm-10">
                         <textarea class="form-control" id="exprience" placeholder="" style="height:230px">
                         </textarea>
@@ -144,8 +149,8 @@
             <form class="form-horizontal form-style" >
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default " >返回</button>
-                        <button type="submit" class="btn btn-default " style="margin-left: 300px">注册</button>
+                        <button type="button" class="btn btn-default " href="javascript:history.go(-1)">返回</button>
+                        <button type="button" class="btn btn-default " style="margin-left: 300px" onclick="register()">注册</button>
                     </div>
                 </div>
             </form>
@@ -153,7 +158,142 @@
     </div>
 </div>
 </body>
-<script th:href="@{/js/jquery-3.3.1.min.js}"></script>
-<script th:href="@{/js/bootstrap.js}" ></script>
-<script th:href="@{/js/login.js}"></script>
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.js}" ></script>
+<script th:src="@{/js/ajaxfileupload.js}" ></script>
+<script>
+    function register(){
+        var name=$("#name").val();
+        var sex=$("#sex").val()
+        var role=$("#role").val();
+        var studentNum=$("#studentNum").val();
+        var password=$("#password").val();
+        var password1=$("#password1").val();
+        var college=$("#college").val();
+        var profession=$("#profession").val();
+        var inputEmail=$("#inputEmail").val();
+        var wechat=$("#wechat").val();
+        var wechatP=$("#wechatP").val();
+        var phone=$("#phone").val();
+        var phoneP=$("#phoneP").val();
+        var pic=$("#pic_url").val();
+        var feature=$("#feature").val();
+        var exprience=$("#exprience").val();
+        if(!name){
+            alert("姓名不能为空");
+            return;
+        }
+        if(!password){
+            alert("密码不能为空");
+            return;
+        }
+
+        if(!password1){
+            alert("确认密码不能为空");
+            return;
+        }
+        if(password!=password1){
+            alert("密码不一致，请重新输入");
+            return;
+        }
+        if(role==0){
+            if(!studentNum){
+                alert("学号不能为空");
+                return;
+            }
+            if(!college){
+                alert("院系不能为空");
+                return;
+            }
+            if(!profession){
+                alert("专业不能为空");
+                return;
+            }
+        }else if(role==1){
+            if(!college){
+                alert("院系不能为空");
+                return;
+            }
+        }else{
+            if(!profession){
+                alert("学历不能为空");
+                return;
+            }
+        }
+
+        if(!inputEmail){
+            alert("邮箱不能为空");
+            return;
+        }
+        var data1={
+            "name":name,
+            "password":password,
+            "sex":sex,
+            "studentNum":studentNum,
+            "college":college,
+            "profession":profession,
+            "inputEmail":inputEmail,
+            "wechat":wechat,
+            "wechatP":wechatP,
+            "phone":phone,
+            "phoneP":phoneP,
+            "pic":pic,
+            "feature":feature,
+            "exprience":exprience,
+            "flag":role
+        };
+        $.ajax({
+            "url":"/register",
+            "type":"POST",
+            "dataType":"JSON",
+            "data":data1,
+            "success":function (data) {
+                if(data.result){
+                    window.href.location="";
+                }
+            }
+        })
+ }
+ function changeWord(){
+        var role=$("#role").val();
+        if(role==0){
+            $("#studentNum1").text("学号");
+            $("#college1").text("院系");
+            $("#profession1").text("专业");
+            $("#feature1").text("特长");
+            $("#exprience1").text("比赛和项目经历")
+        }else if(role==1){
+            $("#studentNum1").text("工号");
+            $("#college1").text("院系");
+            $("#profession1").text("职称");
+            $("#feature1").text("个人简介");
+            $("#exprience1").text("研究方向")
+        }else{
+            $("#studentNum1").text("企业名称");
+            $("#college1").text("岗位");
+            $("#profession1").text("学历");
+            $("#feature1").text("个人简介");
+            $("#exprience1").text("工作经历")
+        }
+ }
+    function doChange(){
+     $.ajaxFileUpload({
+            url: "/upload", //用于文件上传的服务器端请求地址
+            secureuri: false, //是否需要安全协议，一般设置为false
+            fileElementId: 'file1', //文件上传域的ID
+            dataType: 'json', //返回值类型 一般设置为json
+            type:"POST",
+            success: function (data, status){
+                if(data!='false'){
+                    var fileName="/upload-dir/"+data.filename
+                   $("#pic_url").attr("src",fileName);
+                }
+            },
+            error: function (data, status, e)//服务器响应失败处理函数
+            {
+                alert(e);
+            }
+        })
+    }
+</script>
 </html>

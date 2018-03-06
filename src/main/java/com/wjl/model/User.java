@@ -1,15 +1,18 @@
 package com.wjl.model;
 
+import javax.persistence.Column;
+import javax.persistence.Table;
 import java.util.Objects;
 
 /**
  * @author wjl
  * @date 2018/2/8
  */
+
 public class User {
     private Integer id;
-    private String userName;
-    private String userPass;
+    private String username;
+    private String password;
     private Integer flag;
 
     public Integer getId() {
@@ -20,20 +23,20 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getUserPass() {
-        return userPass;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserPass(String userPass) {
-        this.userPass = userPass;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Integer getFlag() {
@@ -50,14 +53,14 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return Objects.equals(id, user.id) &&
-                Objects.equals(userName, user.userName) &&
-                Objects.equals(userPass, user.userPass) &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(password, user.password) &&
                 Objects.equals(flag, user.flag);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, userName, userPass, flag);
+        return Objects.hash(id, username, password, flag);
     }
 }

@@ -10,20 +10,24 @@
 <div style="width: 1500px;min-height: 960px;margin: auto">
     <div class="col-lg-2" style="margin: 90px auto;background-color: #fff">
         <ul class="nav nav-pills nav-stacked">
-            <li class="active" style="margin-top: 10px"><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
-            <li ><a href="#">个人信息</a></li>
+            <li class="active" style="margin-top: 10px"><a href="showinfo.html">个人信息</a></li>
+            <li ><a href="pubproject.html">发布项目</a></li>
+            <li ><a href="searchproject.html">寻找项目</a></li>
+            <li ><a href="searchperson.html">寻找合伙人</a></li>
+            <li ><a href="meproject.html">已创建项目</a></li>
+            <li ><a href="signupproject.html">已报名项目</a></li>
+            <li ><a href="message.html">通知</a></li>
         </ul>
     </div>
     <div class="col-lg-10">
+
         <div style="margin: 90px auto;background-color:#ffffff;padding-bottom: 90px;border-radius: 5px">
+            <div>
+                 <div class="col-lg-4" style="height:60px"></div>
+                 <div class="col-lg-4" style="height:60px"><h3>个人信息</h3></div>
+                 <div class="col-lg-4" style="height:60px"></div>
+            </div>
+
             <div class="col-lg-4" style="padding-top: 20px">
                 <form class="form-horizontal form-style" >
                     <div class="form-group">
@@ -42,44 +46,34 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="role" class="col-sm-2 control-label">角色</label>
-                        <div class="col-sm-10">
-                            <select  class="form-control" id="role">
-                                <option value="0">企业人员</option>
-                                <option value="1">教师</option>
-                                <option value="1">学生</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="studentNum" class="col-sm-2 control-label" id="studentNum1">学号</label>
                         <div class="col-sm-10">
                             <input type="password" class="form-control" id="studentNum" placeholder="学号">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="password" class="col-sm-2 control-label">密码</label>
-                        <div class="col-sm-10">
-                            <input type="password" class="form-control" id="password" placeholder="密码">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password1" class="col-sm-2 control-label">确认密码</label>
-                        <div class="col-sm-10">
-                            <input type="password" class="form-control" id="password1" placeholder="确认密码">
-                        </div>
-                    </div>
+                    <!--<div class="form-group">-->
+                        <!--<label for="password" class="col-sm-2 control-label">密码</label>-->
+                        <!--<div class="col-sm-10">-->
+                            <!--<input type="password" class="form-control" id="password" placeholder="密码">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="password1" class="col-sm-2 control-label">确认密码</label>-->
+                        <!--<div class="col-sm-10">-->
+                            <!--<input type="password" class="form-control" id="password1" placeholder="确认密码">-->
+                        <!--</div>-->
+                    <!--</div>-->
 
                     <div class="form-group">
                         <label for="college" class="col-sm-2 control-label" id="college1">院系</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="college" placeholder="院系">
+                            <input type="text" class="form-control" id="college" placeholder="院系">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="profession" class="col-sm-2 control-label" id="profession1">专业</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="profession" placeholder="专业">
+                            <input type="text" class="form-control" id="profession" placeholder="专业">
                         </div>
                     </div>
                 </form>
@@ -96,7 +90,7 @@
                     <div class="form-group">
                         <label for="wechat" class="col-sm-2 control-label" >微信</label>
                         <div class="col-sm-7">
-                            <input type="password" class="form-control" id="wechat" placeholder="微信">
+                            <input type="text" class="form-control" id="wechat" placeholder="微信">
                         </div>
                         <div class="col-sm-3">
                             <select class="form-control" id="wechatP">
@@ -108,7 +102,7 @@
                     <div class="form-group">
                         <label for="phone" class="col-sm-2 control-label">电话</label>
                         <div class="col-sm-7">
-                            <input type="password" class="form-control" id="phone" placeholder="电话">
+                            <input type="text" class="form-control" id="phone" placeholder="电话">
                         </div>
                         <div class="col-sm-3">
                             <select class="form-control" id="phoneP">
@@ -121,7 +115,7 @@
                     <div class="form-group">
                         <label for="pic" class="col-sm-2 control-label">照片</label>
                         <div class="col-sm-7" id="pic" style="height:300px;border-radius: 3px;background-color: silver">
-                            <img src="">
+                            <img src="" id="pic-url" width="100%" height="100%">
                         </div>
                         <div class="col-sm-3">
                             <button class="btn btn-default">上传</button>
@@ -131,8 +125,6 @@
             </div>
             <div class="col-lg-4" style="padding-top: 20px">
                 <form class="form-horizontal form-style" >
-
-
                     <div class="form-group">
                         <label for="feature" class="col-sm-2 control-label" id="">特长</label>
                         <div class="col-sm-10" >
@@ -153,8 +145,8 @@
                 <form class="form-horizontal form-style" >
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default " >修改</button>
-                            <button type="submit" class="btn btn-default " style="margin-left: 300px">确认修改</button>
+                            <button type="button" class="btn btn-default " >修改</button>
+                            <button type="button" class="btn btn-default " style="margin-left: 300px">确认修改</button>
                         </div>
                     </div>
                 </form>
@@ -165,7 +157,151 @@
 </div>
 
 </body>
-<script th:href="@{/js/jquery-3.3.1.min.js}"></script>
-<script th:href="@{/js/bootstrap.js}" ></script>
-<script th:href="@{/js/login.js}"></script>
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.js}" ></script>
+<script th:src="@{/js/ajaxfileupload.js}" ></script>
+<script>
+    $(function(){
+        info();
+    })
+    function info(){
+        $.ajax({
+            "url":"/user",
+            "type":"GET",
+            "dataType":"JSON",
+            "success":function (data) {
+                if(data){
+                    handledata(data.userDetail,data.user)
+                }
+            }
+        })
+    }
+    function handledata(userDetail,user){
+       var username=user.username;
+       var sex=userDetail.sex;
+       var studentNum=userDetail.studentID;
+       var password=user.password;
+       var department=userDetail.department;
+       var major=userDetail.major;
+       var email=userDetail.email;
+       var weichart=userDetail.weichart;
+       var isShowWei=userDetail.isShowWei;
+       var phoneNum=userDetail.phoneNum;
+       var isShowPhoneNum=userDetail.isShowPhoneNum;
+       var photo=userDetail.photo;
+       var specialty=userDetail.specialty;
+       var competitionExperience=userDetail.competitionExperience;
+       $("#name").val(username);
+       $("#sex").val(sex)
+       $("#studentNum").val(studentNum);//
+//       $("#password").val(password);
+//       $("#password1").val(password);
+       $("#college").val(department)
+       $("#profession").val(major);
+       $("#inputEmail").val(email);
+       $("#wechat").val(weichart);
+       $("#wechatP").val(isShowWei);
+       $("#phone").val(phoneNum);
+       $("#phoneP").val(isShowPhoneNum);
+       if(photo){
+           $("#pic-url").attr("src","/upload-dir/"+photo);
+       }
+       $("#feature").val(specialty);
+       $("#exprience").val(competitionExperience);
+    }
+    function update(){
+        var name=$("#name").val();
+        var sex=$("#sex").val()
+        var studentNum=$("#studentNum").val();
+//        var password=$("#password").val();
+//        var password1=$("#password1").val();
+        var college=$("#college").val();
+        var profession=$("#profession").val();
+        var inputEmail=$("#inputEmail").val();
+        var wechat=$("#wechat").val();
+        var wechatP=$("#wechatP").val();
+        var phone=$("#phone").val();
+        var phoneP=$("#phoneP").val();
+        var pic=$("#pic_url").val();
+        var feature=$("#feature").val();
+        var exprience=$("#exprience").val();
+        if(!name){
+            alert("姓名不能为空");
+            return;
+        }
+//        if(!password){
+//            alert("密码不能为空");
+//            return;
+//        }
+//
+//        if(!password1){
+//            alert("确认密码不能为空");
+//            return;
+//        }
+//        if(password!=password1){
+//            alert("密码不一致，请重新输入");
+//            return;
+//        }
+
+        if(!studentNum){
+            alert("学号不能为空");
+            return;
+        }
+        if(!college){
+            alert("院系不能为空");
+            return;
+        }
+        if(!profession){
+            alert("专业不能为空");
+            return;
+        }
+        var data1={
+            "name":name,
+//            "password":password,
+            "sex":sex,
+            "studentNum":studentNum,
+            "college":college,
+            "profession":profession,
+            "inputEmail":inputEmail,
+            "wechat":wechat,
+            "wechatP":wechatP,
+            "phone":phone,
+            "phoneP":phoneP,
+            "pic":pic,
+            "feature":feature,
+            "exprience":exprience,
+            "flag":role
+        };
+        $.ajax({
+            "url":"/update",
+            "type":"POST",
+            "dataType":"JSON",
+            "data":data1,
+            "success":function (data) {
+                if(data.result){
+                    window.href.location="";
+                }
+            }
+        })
+    }
+    function doChange(){
+        $.ajaxFileUpload({
+            url: "/upload", //用于文件上传的服务器端请求地址
+            secureuri: false, //是否需要安全协议，一般设置为false
+            fileElementId: 'file1', //文件上传域的ID
+            dataType: 'json', //返回值类型 一般设置为json
+            type:"POST",
+            success: function (data, status){
+                if(data!='false'){
+                    var fileName="/upload-dir/"+data.filename
+                    $("#pic_url").attr("src",fileName);
+                }
+            },
+            error: function (data, status, e)//服务器响应失败处理函数
+            {
+                alert(e);
+            }
+        })
+    }
+</script>
 </html>

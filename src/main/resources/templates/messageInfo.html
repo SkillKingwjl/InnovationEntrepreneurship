@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>发布项目</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+</head>
+<body style="background-color: #f7f7f7">
+<div style="width: 1500px;min-height: 960px;margin: auto">
+    <div class="col-lg-2" style="margin: 90px auto;background-color: #fff">
+        <ul class="nav nav-pills nav-stacked">
+            <li  style="margin-top: 10px"><a href="showinfo.html">个人信息</a></li>
+            <li ><a href="pubproject.html">发布项目</a></li>
+            <li ><a href="searchproject.html">寻找项目</a></li>
+            <li ><a href="searchperson.html">寻找合伙人</a></li>
+            <li ><a href="meproject.html">已创建项目</a></li>
+            <li ><a href="signupproject.html">已报名项目</a></li>
+            <li class="active"><a href="message.html">通知</a></li>
+        </ul>
+    </div>
+    <div class="col-lg-10">
+        <div style="margin: 90px auto;background-color:#ffffff;padding-bottom: 90px;border-radius: 5px">
+            <div>
+                <div class="col-lg-4" style="height:60px"></div>
+                <div class="col-lg-4" style="height:60px"><h3 style="padding-left: 150px">消息通知</h3></div>
+                <div class="col-lg-4" style="height:60px"></div>
+            </div>
+            <div>
+                <button type="button" class="btn btn-default " style="margin-left:160px;width:300px">接收的消息</button>
+                <button type="button" class="btn btn-default " style="margin-left: 300px;width:300px">发送的消息</button>
+            </div>
+            <div style="min-height: 500px;width:80%;margin:20px auto;border:1px dashed #cccccc">
+                <div class="col-lg-6" style="padding-top: 20px">
+                    <form class="form-horizontal form-style" >
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" id="application_persion">申请者</label>
+                            <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="name">
+                                xxxxxx
+                            </div>
+                        </div>
+                        <div class="form-group" style="padding-top: 150px">
+                            <label  class="col-sm-4 control-label" id="application_title">申请项目</label>
+                            <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="title">
+                                xxxx
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="col-lg-6" style="padding-top: 20px">
+                    <form class="form-horizontal form-style" >
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" id="application_introduction">申请者简介</label>
+                            <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;width:80%;min-height: 120px" id="introduction">
+                                xxxxxx
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            <label  class="col-sm-4 control-label" id="application_email">申请者邮箱</label>
+                            <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="email">
+                                xxxx
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <form class="form-horizontal form-style" >
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <button type="button" class="btn btn-default " onclick="operation(0)">接受</button>
+                            <button type="button" class="btn btn-default " style="margin-left: 300px"  onclick="operation(2)">拒绝</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.js}" ></script>
+<script>
+
+    $(function(){
+        var url =decodeURI(location.href) ;
+        if(url.indexOf("?")>-1) {
+            var messageId = url.substring(url.indexOf("?") + 1, url.length);
+            message_id=messageId
+            getContent(messageId)
+        }
+    })
+    function  getContent(id){
+        $.ajax({
+            "url":"/getsinglemessage",
+            "type":"GET",
+            "dataType":"JSON",
+            "data":{
+                "messageId":id
+            },
+
+            "success":function (data) {
+                if(data){
+                    handledata(data.userDetail,data.user,user.projectDetail,data.message,data.own,data.ownDetail)
+                }
+            }
+        })
+    }
+    var message_id=0;
+    var project_Id=0;
+    var send_type=0;
+    var user_id=0
+    function handledata(userDetail,user,projectDetail,message,own,ownDetail){
+        var type=message.type;
+        user_id=user.id
+        send_type=type
+        if(type==0){
+            $("#application_persion").text("申请者")
+            $("#application_title").text("申请项目")
+            $("#application_introduction").text("申请者简介")
+            $("#application_email").text("申请者邮箱");
+            var name=user.username;
+            var title=projectDetail.title;
+            var introdution=userDetail.specialty
+            var email=userDetail.email;
+            $("#name").html(name);
+            $("#title").html(title);
+            $("#introduction").html(introdution);
+            $("#email").html(email);
+        }else{
+            $("#application_persion").text("邀请者")
+            $("#application_title").text("邀请项目")
+            $("#application_introduction").text("邀请者简介")
+            $("#application_email").text("邀请者邮箱")
+            var name=own.username;
+            var title=projectDetail.title;
+            var introdution=ownDetail.specialty
+            var email=ownDetail.email;
+            $("#name").html(name);
+            $("#title").html(title);
+            $("#introduction").html(introdution);
+            $("#email").html(email);
+        }
+
+    }
+    function operation(type){
+        $.ajax({
+            "url":"/updatemessage",
+            "type":"GET",
+            "dataType":"JSON",
+            "data":{
+                "messageId":message_id,
+                "projectId":project_Id,
+                "status":type,
+                "userId":user_id
+            },
+
+            "success":function (data) {
+                if(data){
+                    if(send_type==0){
+                        window.location.href="message.html?0"
+                    }else{
+                        window.location.href="message.html?1"
+                    }
+
+                }
+            }
+        })
+    }
+</script>
+</html>
