@@ -1,6 +1,7 @@
 package com.wjl.model;
 
 public class ProjectDetail {
+    private Integer id;
     private Integer userId;
     private String title;
     private String name;
@@ -13,6 +14,14 @@ public class ProjectDetail {
     private Integer findNum;
     private String findIntrodution;
     private String createTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getUserId() {
         return userId;

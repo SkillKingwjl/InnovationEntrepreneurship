@@ -6,6 +6,8 @@ public class ProjectInfo {
     private ProjectDetail projectDetail;
     private List<UserBean> userList;
 
+    private int flag;//是否已经申请过了该项目
+
     public ProjectDetail getProjectDetail() {
         return projectDetail;
     }
@@ -20,5 +22,13 @@ public class ProjectInfo {
 
     public void setUserList(List<UserBean> userList) {
         this.userList = userList;
+    }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 }

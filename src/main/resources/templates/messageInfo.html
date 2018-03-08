@@ -8,15 +8,17 @@
 </head>
 <body style="background-color: #f7f7f7">
 <div style="width: 1500px;min-height: 960px;margin: auto">
+    <input type="text"  th:value="${messageId}" style="display:none" id="messageId">
+    <input type="text"  th:value="${userId}" style="display:none" id="userId">
     <div class="col-lg-2" style="margin: 90px auto;background-color: #fff">
         <ul class="nav nav-pills nav-stacked">
-            <li  style="margin-top: 10px"><a href="showinfo.html">个人信息</a></li>
-            <li ><a href="pubproject.html">发布项目</a></li>
-            <li ><a href="searchproject.html">寻找项目</a></li>
-            <li ><a href="searchperson.html">寻找合伙人</a></li>
-            <li ><a href="meproject.html">已创建项目</a></li>
-            <li ><a href="signupproject.html">已报名项目</a></li>
-            <li class="active"><a href="message.html">通知</a></li>
+            <li  style="margin-top: 10px"><a href="showinfo">个人信息</a></li>
+            <li ><a href="pubproject">发布项目</a></li>
+            <li ><a href="searchproject">寻找项目</a></li>
+            <li ><a href="searchperson">寻找合伙人</a></li>
+            <li ><a href="meproject">已创建项目</a></li>
+            <li ><a href="signupproject">已报名项目</a></li>
+            <li class="active"><a href="message?flag=0">通知</a></li>
         </ul>
     </div>
     <div class="col-lg-10">
@@ -27,8 +29,8 @@
                 <div class="col-lg-4" style="height:60px"></div>
             </div>
             <div>
-                <button type="button" class="btn btn-default " style="margin-left:160px;width:300px">接收的消息</button>
-                <button type="button" class="btn btn-default " style="margin-left: 300px;width:300px">发送的消息</button>
+                <button type="button" class="btn btn-default " style="margin-left:160px;width:300px" onclick="skintoReceive()">接收的消息</button>
+                <button type="button" class="btn btn-default " style="margin-left: 300px;width:300px" onclick="skintoSend()">发送的消息</button>
             </div>
             <div style="min-height: 500px;width:80%;margin:20px auto;border:1px dashed #cccccc">
                 <div class="col-lg-6" style="padding-top: 20px">
@@ -36,13 +38,13 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" id="application_persion">申请者</label>
                             <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="name">
-                                xxxxxx
+
                             </div>
                         </div>
                         <div class="form-group" style="padding-top: 150px">
                             <label  class="col-sm-4 control-label" id="application_title">申请项目</label>
                             <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="title">
-                                xxxx
+
                             </div>
                         </div>
 
@@ -54,13 +56,13 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" id="application_introduction">申请者简介</label>
                             <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;width:80%;min-height: 120px" id="introduction">
-                                xxxxxx
+
                             </div>
                         </div>
                         <div class="form-group" >
                             <label  class="col-sm-4 control-label" id="application_email">申请者邮箱</label>
                             <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="email">
-                                xxxx
+
                             </div>
                         </div>
 
@@ -68,7 +70,7 @@
                 </div>
             </div>
 
-            <div>
+            <div id="operator">
                 <form class="form-horizontal form-style" >
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-8">
@@ -88,17 +90,13 @@
 <script>
 
     $(function(){
-        var url =decodeURI(location.href) ;
-        if(url.indexOf("?")>-1) {
-            var messageId = url.substring(url.indexOf("?") + 1, url.length);
-            message_id=messageId
-            getContent(messageId)
-        }
+        var messageId=parseInt($("#messageId").val())
+        getContent(messageId)
     })
     function  getContent(id){
         $.ajax({
             "url":"/getsinglemessage",
-            "type":"GET",
+            "type":"POST",
             "dataType":"JSON",
             "data":{
                 "messageId":id
@@ -106,7 +104,7 @@
 
             "success":function (data) {
                 if(data){
-                    handledata(data.userDetail,data.user,user.projectDetail,data.message,data.own,data.ownDetail)
+                    handledata(data.userDetail,data.user,data.projectDetail,data.message,data.own,data.ownDetail)
                 }
             }
         })
@@ -117,8 +115,27 @@
     var user_id=0
     function handledata(userDetail,user,projectDetail,message,own,ownDetail){
         var type=message.type;
-        user_id=user.id
-        send_type=type
+        user_id=user.id;
+        send_type=type;
+        message_id=message.id;
+        tempId=message.userID;
+        tempId1=message.ownID;
+        project_Id=message.projectID
+        var status=message.status
+        var ownId=$("#userId").val()
+        if(type==0){
+            if(tempId==ownId){
+                $("#operator").css("display","none")
+            }
+        }else{
+            if(tempId1==ownId){
+                $("#operator").css("display","none")
+            }
+        }
+        if(status!=1){
+            $("#operator").css("display","none")
+        }
+
         if(type==0){
             $("#application_persion").text("申请者")
             $("#application_title").text("申请项目")
@@ -151,7 +168,7 @@
     function operation(type){
         $.ajax({
             "url":"/updatemessage",
-            "type":"GET",
+            "type":"POST",
             "dataType":"JSON",
             "data":{
                 "messageId":message_id,
@@ -163,14 +180,21 @@
             "success":function (data) {
                 if(data){
                     if(send_type==0){
-                        window.location.href="message.html?0"
+                        window.location.href="message?flag=0"
                     }else{
-                        window.location.href="message.html?1"
+                        window.location.href="message?flag=1"
                     }
 
                 }
             }
         })
+    }
+
+    function skintoReceive(){
+        window.location.href="message?flag=0"
+    }
+    function skintoSend(){
+        window.location.href="message?flag=1"
     }
 </script>
 </html>

@@ -7,17 +7,19 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
 </head>
 <body style="background-color: #f7f7f7">
+<input type="text"  th:value="${projectId}" style="display:none" id="projectId">
+<input type="text"  th:value="${userId}" style="display:none" id="userId">
 <div style="width: 1500px;min-height: 960px;margin: auto">
     <div class="col-lg-2" style="margin: 90px auto;background-color: #fff">
         <ul class="nav nav-pills nav-stacked">
             <ul class="nav nav-pills nav-stacked">
-                <li  style="margin-top: 10px"><a href="showinfo.html">个人信息</a></li>
-                <li ><a href="pubproject.html">发布项目</a></li>
-                <li class="active"><a href="searchproject.html">寻找项目</a></li>
-                <li ><a href="searchperson.html">寻找合伙人</a></li>
-                <li ><a href="meproject.html">已创建项目</a></li>
-                <li ><a href="signupproject.html">已报名项目</a></li>
-                <li ><a href="message.html">通知</a></li>
+                <li  style="margin-top: 10px"><a href="showinfo">个人信息</a></li>
+                <li ><a href="pubproject">发布项目</a></li>
+                <li class="active"><a href="searchproject">寻找项目</a></li>
+                <li ><a href="searchperson">寻找合伙人</a></li>
+                <li ><a href="meproject">已创建项目</a></li>
+                <li ><a href="signupproject">已报名项目</a></li>
+                <li ><a href="message?flag=0">通知</a></li>
             </ul>
         </ul>
     </div>
@@ -76,7 +78,7 @@
                     </div>
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">项目简介</label>
-                        <div class="col-sm-8" style="width:80%;height:200px;margin-top:20px" id="introduce">
+                        <div class="col-sm-8" style="height:200px;margin-top:20px" id="introduce">
 
                         </div>
                     </div>
@@ -93,8 +95,8 @@
                 <form class="form-horizontal form-style" >
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="button" class="btn btn-default " href="javascript:history(-1)" >返回</button>
-                            <button type="button" class="btn btn-default " style="margin-left: 300px" onclick="operation()">申请加入</button>
+                            <button type="button" class="btn btn-default "  onclick="javascript:history.go(-1)" >返回</button>
+                            <button type="button" class="btn btn-default " id="operator"style="margin-left: 300px" onclick="operation()">申请加入</button>
                         </div>
                     </div>
                 </form>
@@ -107,29 +109,31 @@
 <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
 <script th:src="@{/js/bootstrap.js}" ></script>
 <script>
-    var profileId=0;
+    var projectId=0;
     var userId=0;
     $(function(){
-        var url =decodeURI(location.href) ;
-        if(url.indexOf("?")>-1) {
-            var projectId = url.substring(url.indexOf("?") + 1, url.length);
-            getContent(projectId)
-        }
+        projectId=parseInt($("#projectId").val())
+        getContent(projectId)
     })
-    function getcontent(id){
+    function getContent(id){
         $.ajax({
-            "url":"/user",
-            "type":"GET",
+            "url":"/getsingleproject",
+            "type":"POST",
             "dataType":"JSON",
+            "data":{
+                "projectId":id
+            },
             "success":function (data) {
                 if(data){
                     handledata(data.projectDetail,data.userList)
+                    if(data.flag>0){
+                        $("#operator").css("display","none")
+                    }
                 }
             }
         })
     }
     function handledata(projectDetail,userList){
-        projectId=projectDetail.id;
         userId=projectDetail.userId;
         var name=projectDetail.name;
         var title=projectDetail.title;
@@ -178,6 +182,10 @@
             var url="</tbody>";
             $("#content").html(url)
         }
+        var tempId=$("#userId").val()
+        if(userId==tempId){
+           $("#operator").css("display","none")
+        }
     }
     function operation(){
         $.ajax({
@@ -185,13 +193,14 @@
             "type":"POST",
             "dataType":"JSON",
             "data":{
-                "projectId":profileId,
-                "ownId":userId,
+                "projectId":projectId,
+                "userId":userId,
                 "type":0
             },
             "success":function (data) {
                 if(data>0){
-                    window.location.href="searchproject.html"
+                    alert("申请已发送成功！")
+                    window.location.href="searchproject"
                 }
             }
         })

@@ -7,16 +7,17 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
 </head>
 <body style="background-color: #f7f7f7">
+<input type="text"  th:value="${flag}" style="display:none" id="flag">
 <div style="width: 1500px;min-height: 960px;margin: auto">
     <div class="col-lg-2" style="margin: 90px auto;background-color: #fff">
         <ul class="nav nav-pills nav-stacked">
-            <li  style="margin-top: 10px"><a href="showinfo.html">个人信息</a></li>
-            <li ><a href="pubproject.html">发布项目</a></li>
-            <li ><a href="searchproject.html">寻找项目</a></li>
-            <li ><a href="searchperson.html">寻找合伙人</a></li>
-            <li ><a href="meproject.html">已创建项目</a></li>
-            <li ><a href="signupproject.html">已报名项目</a></li>
-            <li class="active"><a href="message.html">通知</a></li>
+            <li  style="margin-top: 10px"><a href="showinfo">个人信息</a></li>
+            <li ><a href="pubproject">发布项目</a></li>
+            <li ><a href="searchproject">寻找项目</a></li>
+            <li ><a href="searchperson">寻找合伙人</a></li>
+            <li ><a href="meproject">已创建项目</a></li>
+            <li ><a href="signupproject">已报名项目</a></li>
+            <li class="active"><a href="message?flag=0">通知</a></li>
         </ul>
     </div>
     <div class="col-lg-10">
@@ -28,10 +29,10 @@
                     <div class="col-lg-4" style="height:60px"></div>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-default active" style="margin-left:160px;width:300px" id="receive">接收的消息</button>
-                    <button type="button" class="btn btn-default " style="margin-left: 300px;width:300px" id="sand">发送的消息</button>
+                    <button type="button" class="btn btn-default active" style="margin-left:160px;width:300px" id="receive" onclick="skintoReceive()">接收的消息</button>
+                    <button type="button" class="btn btn-default " style="margin-left: 300px;width:300px" id="send" onclick="skintoSend()">发送的消息</button>
                 </div>
-                <table class="table table-bordered" id="content">
+                <table class="table table-bordered" id="content" style="margin-top: 20px">
 
                 </table>
             </div>
@@ -44,12 +45,12 @@
 <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
 <script th:src="@{/js/bootstrap.js}" ></script>
 <script>
+    var flag =0;
     $(function(){
-        var url =decodeURI(location.href) ;
-        if(url.indexOf("?")>-1) {
-            var flag = url.substring(url.indexOf("?") + 1, url.length);
+
+            flag = parseInt($("#flag").val())
             getContent(flag, 1, 15)
-        }
+
     })
     function getContent(flag,page,pageSize){
         $.ajax({
@@ -74,7 +75,7 @@
                         $("#send").addClass("active")
                         $("#receive").removeClass("active")
                     }
-                    handlerdata(data)
+                    handlerData(data)
                 }
             }
         })
@@ -110,8 +111,15 @@
         url+="</tbody>"
         $("#content").html(url)
     }
-    function skin(id){
-        window.location.href="messageInfo.html?"+id
+    function skinto(id){
+        window.location.href="messageinfo?messageId="+id
+    }
+
+    function skintoReceive(){
+        window.location.href="message?flag=0"
+    }
+    function skintoSend(){
+        window.location.href="message?flag=1"
     }
 </script>
 </html>

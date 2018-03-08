@@ -26,7 +26,7 @@
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label">姓名</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="name" placeholder="姓名">
+                        <input type="text" class="form-control" id="name" placeholder="姓名" onblur="checkName()">
                     </div>
                 </div>
                 <div class="form-group">
@@ -148,9 +148,9 @@
         <div>
             <form class="form-horizontal form-style" >
                 <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="button" class="btn btn-default " href="javascript:history.go(-1)">返回</button>
-                        <button type="button" class="btn btn-default " style="margin-left: 300px" onclick="register()">注册</button>
+                    <div class="col-sm-offset-4 col-sm-10">
+                        <button type="button" class="btn btn-default " onclick="javascript:history.go(-1)">返回</button>
+                        <button type="button" class="btn btn-default " style="margin-left: 500px" onclick="register()">注册</button>
                     </div>
                 </div>
             </form>
@@ -292,6 +292,21 @@
             error: function (data, status, e)//服务器响应失败处理函数
             {
                 alert(e);
+            }
+        })
+    }
+    function checkName(){
+        var name=$("#name").val();
+        $.ajax({
+            "url":"/checkname",
+            "type":"POST",
+            "dataType":"JSON",
+            "data":{"name":name},
+            "success":function (data) {
+                if(data>0){
+                    alert("姓名重复，请重新输入")
+                    $("#name").val("")
+                }
             }
         })
     }

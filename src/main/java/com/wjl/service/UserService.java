@@ -41,9 +41,9 @@ public class UserService {
         return userMapper.getUserDeatil(userId);
     }
 
-    public int  updateUserInfo(String userName,  Integer flag,Integer userId,int sex,String studentNum,String college,String profession,
-                          String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience){
-        int result1=userMapper.updateUser(userName,userId);
+    public int  updateUserInfo(String userName,  Integer flag,Integer userId,int sex,String studentNum,String college,String profession,String inputEmail,
+                          String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience,String password){
+        int result1=userMapper.updateUser(userName,userId,password);
         if(result1>0){
             int result=userMapper.updateDetail(userId,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
             return result;
@@ -111,9 +111,9 @@ public class UserService {
         List<MessageInfo> list=new ArrayList<>();
         List<Message> messageList=null;
         if(flag==1){
-            messageList=userMapper.getMeMessageList(userId,page,pageSize);
+            messageList=userMapper.getMeSendMessageList(userId,page,pageSize);
         }else{
-            messageList=userMapper.getSendMessageList(userId,page,pageSize);
+            messageList=userMapper.getMeMessageList(userId,page,pageSize);
         }
         if(messageList!=null&&messageList.size()>0){
             for(Message message:messageList ){
@@ -142,7 +142,7 @@ public class UserService {
         return list;
     }
 
-    public ProjectInfo getProjectInfo(int projectId){
+    public ProjectInfo getProjectInfo(int projectId,int ownId){
         ProjectInfo info=new ProjectInfo();
         ProjectDetail projectDetail=userMapper.getSingeProjectDeatil(projectId);
         if(projectDetail!=null){
@@ -160,6 +160,12 @@ public class UserService {
 
                 }
             }
+            //是否是已报名的项目
+            info.setFlag(0);
+            List<OwnProject> ownProjectsList=userMapper.getOwnProjectbyProjectIdAndUserId(projectId,ownId);
+            if(ownProjectsList!=null&&ownProjectsList.size()>0){
+                info.setFlag(1);
+            }
             info.setProjectDetail(projectDetail);
             info.setUserList(userList);
         }
@@ -171,38 +177,57 @@ public class UserService {
         Message message=userMapper.getSingleMessage(id);
         if(message!=null){
             int userId=message.getUserID();
-            User user=userMapper.getSingleUser(id);
+            User user=userMapper.getSingleUser(userId);
             UserDetail userDetail=userMapper.getUserDeatil(userId);
-            int ownId=message.getOwnID();
             messageBean.setUser(user);
             messageBean.setUserDetail(userDetail);
             ProjectDetail projectDetail=userMapper.getSingeProjectDeatil(message.getProjectID());
+            int ownId=message.getOwnID();
+            User own=userMapper.getSingleUser(ownId);
+            UserDetail ownDetail=userMapper.getUserDeatil(ownId);
+            messageBean.setOwn(own);
+            messageBean.setOwnDetail(ownDetail);
             messageBean.setProjectDetail(projectDetail);
             messageBean.setMessage(message);
         }
         return messageBean;
     }
 
-    public UserBean getSingleUser(int id){
+    public UserBean getSingleUser(int id,int ownId){
        UserBean userBean=new UserBean();
        User user=userMapper.getSingleUser(id);
        if(user!=null){
            userBean.setUser(user);
            UserDetail userDetail=userMapper.getUserDeatil(id);
            userBean.setUserDetail(userDetail);
+           List<ProjectDetail> project=userMapper.getMeProjectDetail(ownId,0,Integer.MAX_VALUE);
+           userBean.setProject(project);
        }
         return userBean;
     }
 
     public int applicationProject(int userId,int ownId,int projectId,int type){
-       int result=userMapper.insertMessage(userId,ownId,projectId,type,1);
-       if(result>0){
-           int result2=userMapper.insertOwnProject(userId,ownId,projectId,type,1);
-           if(result2>0){
-               return 1;
-           }
-       }
-       return 0;
+        if(type==0){
+            int result=userMapper.insertMessage(ownId,userId,projectId,type,1);
+            if(result>0){
+                int result2=userMapper.insertOwnProject(ownId,userId,projectId,type,1);
+                if(result2>0){
+                    return 1;
+                }
+            }
+            return 0;
+        }else{
+            int result=userMapper.insertMessage(userId,ownId,projectId,type,1);
+            if(result>0){
+                int result2=userMapper.insertOwnProject(userId,ownId,projectId,type,1);
+                if(result2>0){
+                    return 1;
+                }
+            }
+            return 0;
+        }
+
+
     }
 
     public int updateMessage(int projectId,int userId,int messageId,int status){
@@ -214,5 +239,13 @@ public class UserService {
             }
         }
         return 0;
+    }
+
+    public int getUserByName(String name){
+        List<User> list=userMapper.getUserByName(name);
+        if(list==null||list.size()==0){
+            return 0;
+        }
+        return 1;
     }
 }

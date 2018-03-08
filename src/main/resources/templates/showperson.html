@@ -7,16 +7,17 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
 </head>
 <body style="background-color: #f7f7f7">
+<input type="text"  th:value="${userId}" style="display:none" id="userId">
 <div style="width: 1500px;min-height: 960px;margin: auto">
     <div class="col-lg-2" style="margin: 90px auto;background-color: #fff">
         <ul class="nav nav-pills nav-stacked">
-            <li style="margin-top: 10px"><a href="showinfo.html">个人信息</a></li>
-            <li ><a href="pubproject.html">发布项目</a></li>
-            <li ><a href="searchproject.html">寻找项目</a></li>
-            <li  class="active"><a href="searchperson.html">寻找合伙人</a></li>
-            <li ><a href="meproject.html">已创建项目</a></li>
-            <li ><a href="signupproject.html">已报名项目</a></li>
-            <li ><a href="message.html">通知</a></li>
+            <li style="margin-top: 10px"><a href="showinfo">个人信息</a></li>
+            <li ><a href="pubproject">发布项目</a></li>
+            <li ><a href="searchproject">寻找项目</a></li>
+            <li  class="active"><a href="searchperson">寻找合伙人</a></li>
+            <li ><a href="meproject">已创建项目</a></li>
+            <li ><a href="signupproject">已报名项目</a></li>
+            <li ><a href="message?flag=0">通知</a></li>
         </ul>
     </div>
     <div class="col-lg-10">
@@ -55,15 +56,21 @@
 
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">特长</label>
-                        <div class="col-sm-8" style="width:80%;height:200px;margin-top:20px" id="feature">
+                        <div class="col-sm-8" style="height:150px;margin-top:20px" id="feature">
 
                         </div>
                     </div>
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">比赛和项目经历</label>
-                        <div class="col-sm-8" style="width:80%;height:200px;margin-top:20px" id="exprience">
+                        <div class="col-sm-8" style="height:150px;margin-top:20px" id="exprience">
 
                         </div>
+                    </div>
+                    <label for="project" class="col-sm-4 control-label">项目</label>
+                    <div class="col-sm-8">
+                        <select  class="form-control" id="project">
+
+                        </select>
                     </div>
                 </form>
             </div>
@@ -71,8 +78,8 @@
             <div>
                 <form class="form-horizontal form-style" >
                     <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="button" class="btn btn-default " href="javascript:history(-1)">返回</button>
+                        <div class="col-sm-offset-4 col-sm-10">
+                            <button type="button" class="btn btn-default " onclick="javascript:history.go(-1)">返回</button>
                             <button type="button" class="btn btn-default " style="margin-left: 300px" onclick="opertion()">邀请</button>
                         </div>
                     </div>
@@ -89,27 +96,24 @@
 <script>
     var userId=0;
     $(function(){
-        var url =decodeURI(location.href) ;
-        if(url.indexOf("?")>-1) {
-            var id = url.substring(url.indexOf("?") + 1, url.length);
-            getContent(id)
-        }
+        userId=parseInt($("#userId").val())
+        getContent(userId)
     })
 
     function getContent(userId){
         $.ajax({
             "url":"/getsingleuser",
-            "type":"GET",
+            "type":"POST",
             "dataType":"JSON",
             "data":{"userId":userId},
             "success":function (data) {
-                if(data){
-                    handledata(data.userDetail,data.user)
+                if(data.user){
+                    handledata(data.userDetail,data.user,data.project)
                 }
             }
         })
     }
-    function handledata(userDetail,user){
+    function handledata(userDetail,user,project){
         userId=user.id;
         var username=user.username;
         var sex=userDetail.sex;
@@ -124,7 +128,7 @@
         var photo=userDetail.photo;
         var specialty=userDetail.specialty;
         var competitionExperience=userDetail.competitionExperience;
-        $("#name").html(name)
+        $("#name").html(username)
         if(photo){
             $("#pic_url").attr("src","/upload-dir/"+photo)
         }
@@ -137,20 +141,39 @@
 
         $("#feature").html(specialty)
         $("#exprience").html(competitionExperience)
+        if(project){
+            var url=""
+            $.each(project,function(n,value){
+                var id=value.id;
+                var title=value.title;
+                if(value==0){
+                    url+="<option value="+id+" selected>"+title+"</option>"
+                }else{
+                    url+="<option value="+id+">"+title+"</option>"
+                }
+
+            })
+            $("#project").html(url);
+        }
     }
     function opertion(){
+        var projectId=$("#project").val()
+        if(!projectId){
+           alert("您还没有创建项目，请创建项目后再邀请")
+        }
         $.ajax({
             "url":"/application",
             "type":"POST",
             "dataType":"JSON",
             "data":{
-                "projectId":profileId,
-                "ownId":userId,
-                "type":0
+                "projectId":projectId,
+                "userId":userId,
+                "type":1
             },
             "success":function (data) {
                 if(data>0){
-                    window.location.href="searchperson.html"
+                    alert("邀请成功");
+                    window.location.href="searchperson"
                 }
             }
         })

@@ -10,13 +10,13 @@
 <div style="width: 1500px;min-height: 960px;margin: auto">
     <div class="col-lg-2" style="margin: 90px auto;background-color: #fff">
         <ul class="nav nav-pills nav-stacked">
-            <li class="active" style="margin-top: 10px"><a href="showinfo.html">个人信息</a></li>
-            <li ><a href="pubproject.html">发布项目</a></li>
-            <li ><a href="searchproject.html">寻找项目</a></li>
-            <li ><a href="searchperson.html">寻找合伙人</a></li>
-            <li ><a href="meproject.html">已创建项目</a></li>
-            <li ><a href="signupproject.html">已报名项目</a></li>
-            <li ><a href="message.html">通知</a></li>
+            <li class="active" style="margin-top: 10px"><a href="showinfo">个人信息</a></li>
+            <li ><a href="pubproject">发布项目</a></li>
+            <li ><a href="searchproject">寻找项目</a></li>
+            <li ><a href="searchperson">寻找合伙人</a></li>
+            <li ><a href="meproject">已创建项目</a></li>
+            <li ><a href="signupproject">已报名项目</a></li>
+            <li ><a href="message?flag=0">通知</a></li>
         </ul>
     </div>
     <div class="col-lg-10">
@@ -33,13 +33,13 @@
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">姓名</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="name" placeholder="姓名">
+                            <input type="text" class="form-control" id="name" placeholder="姓名" disabled="disabled" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="sex" class="col-sm-2 control-label">性别</label>
                         <div class="col-sm-10">
-                            <select  class="form-control" id="sex">
+                            <select  class="form-control" id="sex" disabled="disabled" >
                                 <option value="0">男</option>
                                 <option value="1">女</option>
                             </select>
@@ -48,32 +48,32 @@
                     <div class="form-group">
                         <label for="studentNum" class="col-sm-2 control-label" id="studentNum1">学号</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="studentNum" placeholder="学号">
+                            <input type="text" class="form-control" id="studentNum" placeholder="学号" disabled="disabled" >
                         </div>
                     </div>
-                    <!--<div class="form-group">-->
-                        <!--<label for="password" class="col-sm-2 control-label">密码</label>-->
-                        <!--<div class="col-sm-10">-->
-                            <!--<input type="password" class="form-control" id="password" placeholder="密码">-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label for="password1" class="col-sm-2 control-label">确认密码</label>-->
-                        <!--<div class="col-sm-10">-->
-                            <!--<input type="password" class="form-control" id="password1" placeholder="确认密码">-->
-                        <!--</div>-->
-                    <!--</div>-->
+                    <div class="form-group">
+                        <label for="password" class="col-sm-2 control-label">密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="password" placeholder="密码" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password1" class="col-sm-2 control-label">确认密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="password1" placeholder="确认密码" disabled="disabled">
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label for="college" class="col-sm-2 control-label" id="college1">院系</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="college" placeholder="院系">
+                            <input type="text" class="form-control" id="college" placeholder="院系" disabled="disabled" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="profession" class="col-sm-2 control-label" id="profession1">专业</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="profession" placeholder="专业">
+                            <input type="text" class="form-control" id="profession" placeholder="专业" disabled="disabled" >
                         </div>
                     </div>
                 </form>
@@ -83,17 +83,17 @@
                     <div class="form-group">
                         <label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="inputEmail" placeholder="邮箱">
+                            <input type="email" class="form-control" id="inputEmail" placeholder="邮箱" disabled="disabled" >
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="wechat" class="col-sm-2 control-label" >微信</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="wechat" placeholder="微信">
+                            <input type="text" class="form-control" id="wechat" placeholder="微信" disabled="disabled" >
                         </div>
                         <div class="col-sm-3">
-                            <select class="form-control" id="wechatP">
+                            <select class="form-control" id="wechatP" disabled="disabled">
                                 <option value="0" selected>公开</option>
                                 <option value="1">不公开</option>
                             </select>
@@ -102,10 +102,10 @@
                     <div class="form-group">
                         <label for="phone" class="col-sm-2 control-label">电话</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="phone" placeholder="电话">
+                            <input type="text" class="form-control" id="phone" placeholder="电话" disabled="disabled" >
                         </div>
                         <div class="col-sm-3">
-                            <select class="form-control" id="phoneP">
+                            <select class="form-control" id="phoneP" disabled="disabled">
                                 <option value="0" selected>公开</option>
                                 <option value="1" >不公开</option>
                             </select>
@@ -115,10 +115,11 @@
                     <div class="form-group">
                         <label for="pic" class="col-sm-2 control-label">照片</label>
                         <div class="col-sm-7" id="pic" style="height:300px;border-radius: 3px;background-color: silver">
-                            <img src="" id="pic-url" width="100%" height="100%">
+                            <img src="" id="pic_url" width="100%" height="100%">
                         </div>
                         <div class="col-sm-3">
-                            <button class="btn btn-default">上传</button>
+                            <input type="file" id="file1" onchange="doChange()" name="file1" style="display:none">
+                            <button class="btn btn-default" onclick="file1.click()">上传</button>
                         </div>
                     </div>
                 </form>
@@ -128,14 +129,14 @@
                     <div class="form-group">
                         <label for="feature" class="col-sm-2 control-label" id="">特长</label>
                         <div class="col-sm-10" >
-                        <textarea class="form-control" id="feature" placeholder="" style="height:230px">
+                        <textarea class="form-control" id="feature" placeholder="" style="height:230px" disabled="disabled" >
                         </textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="exprience" class="col-sm-2 control-label" id="exprience1">经历</label>
                         <div class="col-sm-10">
-                        <textarea class="form-control" id="exprience" placeholder="" style="height:230px">
+                        <textarea class="form-control" id="exprience" placeholder="" style="height:230px" disabled="disabled" >
                         </textarea>
                         </div>
                     </div>
@@ -145,8 +146,8 @@
                 <form class="form-horizontal form-style" >
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="button" class="btn btn-default " >修改</button>
-                            <button type="button" class="btn btn-default " style="margin-left: 300px">确认修改</button>
+                            <button type="button" class="btn btn-default " onclick="canUpdate()">修改</button>
+                            <button type="button" class="btn btn-default " style="margin-left: 300px" onclick="update()">确认修改</button>
                         </div>
                     </div>
                 </form>
@@ -194,8 +195,6 @@
        $("#name").val(username);
        $("#sex").val(sex)
        $("#studentNum").val(studentNum);//
-//       $("#password").val(password);
-//       $("#password1").val(password);
        $("#college").val(department)
        $("#profession").val(major);
        $("#inputEmail").val(email);
@@ -210,11 +209,14 @@
        $("#exprience").val(competitionExperience);
     }
     function update(){
+        if(can_do==0){
+            return;
+        }
         var name=$("#name").val();
         var sex=$("#sex").val()
         var studentNum=$("#studentNum").val();
-//        var password=$("#password").val();
-//        var password1=$("#password1").val();
+        var password=$("#password").val();
+        var password1=$("#password1").val();
         var college=$("#college").val();
         var profession=$("#profession").val();
         var inputEmail=$("#inputEmail").val();
@@ -222,27 +224,19 @@
         var wechatP=$("#wechatP").val();
         var phone=$("#phone").val();
         var phoneP=$("#phoneP").val();
-        var pic=$("#pic_url").val();
+        var pic=$("#pic_url").attr("src");
         var feature=$("#feature").val();
         var exprience=$("#exprience").val();
         if(!name){
             alert("姓名不能为空");
             return;
         }
-//        if(!password){
-//            alert("密码不能为空");
-//            return;
-//        }
-//
-//        if(!password1){
-//            alert("确认密码不能为空");
-//            return;
-//        }
-//        if(password!=password1){
-//            alert("密码不一致，请重新输入");
-//            return;
-//        }
-
+        if(password||password1){
+            if(password!=password1){
+                alert("密码不一致，请重新输入");
+                return;
+            }
+        }
         if(!studentNum){
             alert("学号不能为空");
             return;
@@ -257,8 +251,8 @@
         }
         var data1={
             "name":name,
-//            "password":password,
             "sex":sex,
+            "password":password,
             "studentNum":studentNum,
             "college":college,
             "profession":profession,
@@ -270,7 +264,7 @@
             "pic":pic,
             "feature":feature,
             "exprience":exprience,
-            "flag":role
+            "flag":0
         };
         $.ajax({
             "url":"/update",
@@ -278,8 +272,8 @@
             "dataType":"JSON",
             "data":data1,
             "success":function (data) {
-                if(data.result){
-                    window.href.location="";
+                if(data>0){
+                    window.location.reload();
                 }
             }
         })
@@ -302,6 +296,24 @@
                 alert(e);
             }
         })
+    }
+    var can_do=0;
+    function canUpdate(){
+        can_do=1
+        $("#name").removeAttr("disabled");
+        $("#sex").removeAttr("disabled");
+        $("#studentNum").removeAttr("disabled");
+        $("#college").removeAttr("disabled");
+        $("#profession").removeAttr("disabled");
+        $("#inputEmail").removeAttr("disabled");
+        $("#wechat").removeAttr("disabled");
+        $("#wechatP").removeAttr("disabled");
+        $("#phone").removeAttr("disabled");
+        $("#phoneP").removeAttr("disabled");
+        $("#feature").removeAttr("disabled");
+        $("#exprience").removeAttr("disabled");
+        $("#password").removeAttr("disabled");
+        $("#password1").removeAttr("disabled");
     }
 </script>
 </html>

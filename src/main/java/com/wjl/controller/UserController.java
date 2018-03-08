@@ -1,12 +1,15 @@
 package com.wjl.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.wjl.model.User;
 import com.wjl.model.UserDetail;
 import com.wjl.service.UserService;
+import com.wjl.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,7 +46,8 @@ public class UserController {
         return "meproject";
     }
     @RequestMapping(value = "message")
-    public String skinToMessage(){
+    public String skinToMessage(Model model, Integer flag){
+        model.addAttribute("flag",flag);
         return "message";
     }
     @RequestMapping(value = "pubproject")
@@ -63,6 +67,32 @@ public class UserController {
     @RequestMapping(value = "signupproject")
     public String skinToSignupProject(){
         return "signupproject";
+    }
+    @RequestMapping(value = "projectdetail")
+    public String skinToProjectDetail(Model model, Integer projectId){
+        model.addAttribute("projectId",projectId);
+        User user=(User)session.getAttribute("user");
+        if(user!=null){
+            model.addAttribute("userId",user.getId());
+        }
+
+        return "projectdetail";
+    }
+    @RequestMapping(value = "showperson")
+    public String skinToShowPerson(Model model, Integer userId){
+        model.addAttribute("userId",userId);
+        return "showperson";
+    }
+    @RequestMapping(value = "messageinfo")
+    public String skinToMessageInfo(Model model, Integer messageId){
+        User user= (User) session.getAttribute("user");
+        if(user!=null){
+            int userId=user.getId();
+            model.addAttribute("userId",userId);
+        }
+        model.addAttribute("messageId",messageId);
+
+        return "messageInfo";
     }
     @RequestMapping(value = "login",method = RequestMethod.POST)
     @ResponseBody
@@ -97,14 +127,21 @@ public class UserController {
 
     @RequestMapping(value = "update",method = RequestMethod.POST)
     @ResponseBody
-    public Object updateUser(String name, Integer flag,int sex,String studentNum,String college,String profession,
+    public Object updateUser(String name, Integer flag,int sex,String studentNum,String college,String profession,String password,
                               String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience){
         User user= (User) session.getAttribute("user");
         if(user==null){
             return false;
         }
         int userId=user.getId();
-        return userService.updateUserInfo(name,flag,userId,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
+        if(StringUtils.isEmpty(password)){
+            password=user.getPassword();
+        }else{
+            password = MD5Util.getMD5(password);
+        }
+        feature=feature.trim();
+        exprience=exprience.trim();
+        return userService.updateUserInfo(name,flag,userId,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience,password);
     }
 
 
@@ -184,7 +221,7 @@ public class UserController {
     }
     @RequestMapping(value = "getsignprojectdetail",method = RequestMethod.POST)
     @ResponseBody
-    public Object getSignProjectDetail(Integer flag,Integer page,Integer pageSize){
+    public Object getSignProjectDetail(Integer page,Integer pageSize){
         User user= (User) session.getAttribute("user");
         if(user==null){
             return false;
@@ -211,7 +248,7 @@ public class UserController {
             return false;
         }
         int userId=user.getId();
-        return userService.getProjectInfo(projectId);
+        return userService.getProjectInfo(projectId,userId);
     }
 
     @RequestMapping(value = "getsinglemessage",method = RequestMethod.POST)
@@ -228,23 +265,32 @@ public class UserController {
     @RequestMapping(value = "getsingleuser",method = RequestMethod.POST)
     @ResponseBody
     public Object getSingleUser(Integer userId){
-
-        return userService.getSingleUser(userId);
-    }
-
-    @RequestMapping(value = "application",method = RequestMethod.POST)
-    @ResponseBody
-    public Object application(Integer projectId,Integer ownId,Integer type){
         User user= (User) session.getAttribute("user");
         if(user==null){
             return false;
         }
-        int userId=user.getId();
+        int ownId=user.getId();
+        return userService.getSingleUser(userId,ownId);
+    }
+
+    @RequestMapping(value = "application",method = RequestMethod.POST)
+    @ResponseBody
+    public Object application(Integer projectId,Integer userId,Integer type){
+        User user= (User) session.getAttribute("user");
+        if(user==null){
+            return false;
+        }
+        int ownId=user.getId();
         return userService.applicationProject(userId,ownId,projectId,type);
     }
     @RequestMapping(value = "updatemessage",method = RequestMethod.POST)
     @ResponseBody
     public Object updateMessage(Integer projectId,Integer userId,Integer messageId,Integer status){
         return userService.updateMessage(projectId,userId,messageId,status);
+    }
+    @RequestMapping(value = "checkname",method = RequestMethod.POST)
+    @ResponseBody
+    public Object checkName(String name){
+        return userService.getUserByName(name);
     }
 }
