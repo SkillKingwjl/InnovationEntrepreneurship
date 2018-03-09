@@ -60,7 +60,19 @@ public class UserService {
     /*
        分页获取职位列表
      */
-    public List<UserBean> getUserList(int id,int page,int pageSize){
+    public UserInfo getUserList(int id,int page,int pageSize){
+        UserInfo message=new UserInfo();
+        int count=userMapper.getAllUserNum(id);
+        if(count==0){
+            message.setCount(0);
+            message.setPageNum(0);
+            message.setNowPage(page);
+        }else{
+            int allPage=(int)Math.ceil(Double.parseDouble(String.valueOf(count))/(double)pageSize);
+            message.setCount(count);
+            message.setPageNum(allPage);
+            message.setNowPage(page);
+        }
          List<UserBean> list=new ArrayList<>();
          List<User> userList=userMapper.getAllUser(id,page,pageSize);
          if(userList!=null&&userList.size()>0){
@@ -73,27 +85,82 @@ public class UserService {
                     list.add(userBean);
              }
          }
-         return list;
+        message.setUserBean(list);
+        return message;
      }
     /*
     分页获取我的项目
      */
-    public List<ProjectDetail> getProjectDetail(Integer userId,int page,int pageSize){
-        return userMapper.getMeProjectDetail(userId,page,pageSize);
+    public ProjectMessage getProjectDetail(Integer userId,int page,int pageSize){
+        ProjectMessage message=new ProjectMessage();
+        int count=userMapper.getMeProjectDetailNum(userId);
+        if(count==0){
+            message.setCount(0);
+            message.setPageNum(0);
+            message.setNowPage(page);
+        }else{
+            int allPage=(int)Math.ceil(Double.parseDouble(String.valueOf(count))/(double)pageSize);
+            message.setCount(count);
+            message.setPageNum(allPage);
+            message.setNowPage(page);
+        }
+        List<ProjectDetail> list=userMapper.getMeProjectDetail(userId,page,pageSize);
+        message.setProjectDetail(list);
+        return message;
     }
     /*
     分页获取所有项目
      */
-    public List<ProjectDetail> getAllProjectDetail(int flag,Integer userId,int page,int pageSize){
+    public ProjectMessage getAllProjectDetail(int flag,Integer userId,int page,int pageSize){
+        ProjectMessage message=new ProjectMessage();
         if(flag==1){
-            return userMapper.getAllProjectDetail(userId,page,pageSize);
+            List<ProjectDetail> list=userMapper.getAllProjectDetail(userId,page,pageSize);
+            int count=userMapper.getAllProjectDetailNum(userId);
+            if(count==0){
+                message.setCount(0);
+                message.setPageNum(0);
+                message.setNowPage(page);
+            }else{
+                int allPage=(int)Math.ceil(Double.parseDouble(String.valueOf(count))/(double)pageSize);
+                message.setCount(count);
+                message.setPageNum(allPage);
+                message.setNowPage(page);
+            }
+            message.setProjectDetail(list);
+            userMapper.getMeProjectDetailNum(userId);
+            return message;
         }
-        return userMapper.getMeProjectDetail(userId,page,pageSize);
+        List<ProjectDetail> list= userMapper.getMeProjectDetail(userId,page,pageSize);
+        int count=userMapper.getMeProjectDetailNum(userId);
+        if(count==0){
+            message.setCount(0);
+            message.setPageNum(0);
+            message.setNowPage(page);
+        }else{
+            int allPage=(int)Math.ceil(Double.parseDouble(String.valueOf(count))/(double)pageSize);
+            message.setCount(count);
+            message.setPageNum(allPage);
+            message.setNowPage(page);
+        }
+        message.setProjectDetail(list);
+        return message;
     }
 
 
-    public List<ProjectDetail> getAllSign(int userId,int page,int pageSize){
+    public ProjectMessage getAllSign(int userId,int page,int pageSize){
+        ProjectMessage message=new ProjectMessage();
         List<ProjectDetail> list=new ArrayList<>();
+        int count=userMapper.getOwnProjectCount(0,userId);
+        if(count==0){
+            message.setCount(0);
+            message.setPageNum(0);
+            message.setNowPage(page);
+        }else{
+            int allPage=(int)Math.ceil(Double.parseDouble(String.valueOf(count))/(double)pageSize);
+            message.setCount(count);
+            message.setPageNum(allPage);
+            message.setNowPage(page);
+        }
         List<OwnProject> ownList=userMapper.getOwnProjectList(0,userId,page,pageSize);
         if(ownList!=null&&ownList.size()>0){
             for(OwnProject ownProject:ownList){
@@ -104,16 +171,41 @@ public class UserService {
                 }
             }
         }
-        return list;
+        message.setProjectDetail(list);
+        return message;
     }
 
-    public List<MessageInfo> getMessage(int flag,int userId,int page,int pageSize){
+    public MessagePoJo getMessage(int flag,int userId,int page,int pageSize){
+        MessagePoJo messagePoJo=new MessagePoJo();
+
         List<MessageInfo> list=new ArrayList<>();
         List<Message> messageList=null;
         if(flag==1){
             messageList=userMapper.getMeSendMessageList(userId,page,pageSize);
+            int count=userMapper.getMeSendMessageListNum(userId);
+            if(count==0){
+                messagePoJo.setCount(0);
+                messagePoJo.setPageNum(0);
+                messagePoJo.setNowPage(page);
+            }else{
+                int allPage=(int)Math.ceil(Double.parseDouble(String.valueOf(count))/(double)pageSize);
+                messagePoJo.setCount(count);
+                messagePoJo.setPageNum(allPage);
+                messagePoJo.setNowPage(page);
+            }
         }else{
             messageList=userMapper.getMeMessageList(userId,page,pageSize);
+            int count=userMapper.getMeMessageListNum(userId);
+            if(count==0){
+                messagePoJo.setCount(0);
+                messagePoJo.setPageNum(0);
+                messagePoJo.setNowPage(page);
+            }else{
+                int allPage=(int)Math.ceil(Double.parseDouble(String.valueOf(count))/(double)pageSize);
+                messagePoJo.setCount(count);
+                messagePoJo.setPageNum(allPage);
+                messagePoJo.setNowPage(page);
+            }
         }
         if(messageList!=null&&messageList.size()>0){
             for(Message message:messageList ){
@@ -139,7 +231,8 @@ public class UserService {
                 list.add(info);
             }
         }
-        return list;
+        messagePoJo.setMessageInfo(list);
+        return messagePoJo;
     }
 
     public ProjectInfo getProjectInfo(int projectId,int ownId){

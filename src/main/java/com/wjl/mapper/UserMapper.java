@@ -21,6 +21,9 @@ public interface UserMapper {
      */
     @Select("SELECT * FROM user where id!=#{id} limit #{page},#{pageSize}")
     public List<User> getAllUser(@Param("id") Integer id,@Param("page") Integer page, @Param("pageSize") Integer pageSize);
+
+    @Select("SELECT count(*) FROM user where id!=#{id} ")
+    public int getAllUserNum(@Param("id") Integer id);
     /*
     获取单个用户
      */
@@ -70,9 +73,14 @@ public interface UserMapper {
     */
     @Select("select * from projetdetail where userId=#{userId} limit #{page},#{pageSize}")
     public List<ProjectDetail> getMeProjectDetail(@Param("userId") Integer userID,@Param("page") Integer page, @Param("pageSize") Integer pageSize);
+    @Select("select count(*) from projetdetail where userId=#{userId} ")
+    public int  getMeProjectDetailNum(@Param("userId") Integer userID);
+
 
     @Select("select * from projetdetail where userId!=#{userId} limit #{page},#{pageSize}")
     public List<ProjectDetail> getAllProjectDetail(@Param("userId") Integer userID,@Param("page") Integer page, @Param("pageSize") Integer pageSize);
+    @Select("select count(*) from projetdetail where userId!=#{userId} ")
+    public int getAllProjectDetailNum(@Param("userId") Integer userID);
     /*
      查询单个项目
      */
@@ -94,11 +102,15 @@ public interface UserMapper {
      */
     @Select("select  * from message where (ownID=#{ownId} and type=1) or(userID=#{ownId} and type=0) limit #{page},#{pageSize}")
     public List<Message> getMeSendMessageList(@Param("ownId") Integer userId,@Param("page") int page,@Param("pageSize") int  pageSize);
+    @Select("select  count(*) from message where (ownID=#{ownId} and type=1) or(userID=#{ownId} and type=0) ")
+    public int getMeSendMessageListNum(@Param("ownId") Integer userId);
     /*
      获取我接受的消息列表
      */
     @Select("select  * from message where (userID=#{userId} and type=1) or(ownID=#{userId} and type=0) limit #{page},#{pageSize}")
     public List<Message> getMeMessageList(@Param("userId") Integer userId,@Param("page") int page,@Param("pageSize") int  pageSize);
+    @Select("select  count(*) from message where (userID=#{userId} and type=1) or(ownID=#{userId} and type=0) ")
+    public int getMeMessageListNum(@Param("userId") Integer userId);
     /*
      获取申请的状态
      */
@@ -117,4 +129,7 @@ public interface UserMapper {
     public List<User> getUserByName(@Param("name") String name);
     @Select("select * from ownproject where  projectID=#{projectId} and userID=#{userId}  order by createTime desc")
     public List<OwnProject> getOwnProjectbyProjectIdAndUserId(@Param("projectId") Integer projectId,@Param("userId") Integer userId);
+    @Select("select count(*)  from ownproject where status=#{status} and userID=#{userID} ")
+    public int getOwnProjectCount(@Param("status") Integer status,@Param("userID") Integer userId);
+
 }

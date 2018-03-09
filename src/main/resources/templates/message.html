@@ -38,6 +38,12 @@
             </div>
         </div>
     </div>
+    <nav aria-label="..." >
+        <ul class="pager">
+            <li><a href="" id="prev">上一页</a></li>
+            <li><a href="" id="next">下一页</a></li>
+        </ul>
+    </nav>
 
 </div>
 
@@ -63,7 +69,7 @@
                 "pageSize":pageSize
             },
             "success":function (data) {
-                if(data){
+                if(data.count>0){
                     if(flag==0){
                        $("#title1").css("display","")
                        $("#title2").css("display","none")
@@ -75,10 +81,38 @@
                         $("#send").addClass("active")
                         $("#receive").removeClass("active")
                     }
-                    handlerData(data)
+                    handlerData(data.messageInfo);
+                    var pageNum=data.pageNum;
+                    var prevPage=page-1;
+                    var nextPage=page+1;
+                    $("#prev").attr("href","javascript:getPageInfo("+prevPage+","+pageNum+",0)")
+                    $("#next").attr("href","javascript:getPageInfo("+nextPage+","+pageNum+",1)")
                 }
             }
         })
+    }
+
+    function getPageInfo(page,pageNum,flags){
+        if(flags==0){
+            if(page<=0){
+                alert("没有上一页");
+                return;
+            }else{
+                getcontent(flag,page,15)
+            }
+
+        }else{
+            if(page>pageNum){
+                alert("没有下一页");
+                return;
+            }else{
+                if(page>0){
+                    getcontent(flag,page,15)
+                }
+            }
+
+        }
+
     }
     function handlerData(data){
         var url="<tbody>";

@@ -29,15 +29,21 @@
             </div>
         </div>
     </div>
+    <nav aria-label="..." >
+        <ul class="pager">
+            <li><a href="" id="prev">上一页</a></li>
+            <li><a href="" id="next">下一页</a></li>
+        </ul>
+    </nav>
 </div>
 </body>
 <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
 <script th:src="@{/js/bootstrap.js}" ></script>
 <script>
     $(function(){
-        getContent(1,15)
+        getcontent(1,15)
     })
-    function getContent(page,pageSize){
+    function getcontent(page,pageSize){
         $.ajax({
             "url":"/getalluser",
             "type":"POST",
@@ -48,10 +54,38 @@
             },
             "success":function (data) {
                 if(data){
-                    handlerdata(data)
+                    handlerdata(data.userBean)
+                    var pageNum=data.pageNum;
+                    var prevPage=page-1;
+                    var nextPage=page+1;
+                    $("#prev").attr("href","javascript:getPageInfo("+prevPage+","+pageNum+",0)")
+                    $("#next").attr("href","javascript:getPageInfo("+nextPage+","+pageNum+",1)")
                 }
             }
         })
+    }
+
+    function getPageInfo(page,pageNum,flag){
+        if(flag==0){
+            if(page<=0){
+                alert("没有上一页");
+                return;
+            }else{
+                getcontent(page,15)
+            }
+
+        }else{
+            if(page>pageNum){
+                alert("没有下一页");
+                return;
+            }else{
+                if(page>0){
+                    getcontent(page,15)
+                }
+            }
+
+        }
+
     }
     function handlerdata(data){
         var url="<tbody><tr>\n" +

@@ -1,6 +1,7 @@
 package com.wjl.model;
 
 public class ProjectDetail {
+
     private Integer id;
     private Integer userId;
     private String title;
@@ -118,4 +119,5 @@ public class ProjectDetail {
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
+
 }
