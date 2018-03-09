@@ -5,6 +5,8 @@ import com.wjl.model.*;
 import com.wjl.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +33,13 @@ public class UserService {
         userMapper.insert(user);
         return user.getId();
     }
-
+    @Transactional
+    public int register(String name,  String password, Integer flag,int sex,String studentNum,String college,String profession,
+                        String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience){
+        int userId=this.insert(name,password,flag);
+        int result=insertDetailService(userId,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
+        return result;
+    }
     public int insertDetailService( Integer userId,int sex,String studentNum,String college,String profession,
                                    String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience){
         return userMapper.insertDetail(userId,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
@@ -40,7 +48,7 @@ public class UserService {
     public UserDetail getUserDetailService(int userId){
         return userMapper.getUserDeatil(userId);
     }
-
+    @Transactional
     public int  updateUserInfo(String userName,  Integer flag,Integer userId,int sex,String studentNum,String college,String profession,String inputEmail,
                           String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience,String password){
         int result1=userMapper.updateUser(userName,userId,password);
@@ -298,7 +306,7 @@ public class UserService {
        }
         return userBean;
     }
-
+    @Transactional
     public int applicationProject(int userId,int ownId,int projectId,int type){
         if(type==0){
             int result=userMapper.insertMessage(ownId,userId,projectId,type,1);
@@ -322,7 +330,7 @@ public class UserService {
 
 
     }
-
+    @Transactional
     public int updateMessage(int projectId,int userId,int messageId,int status){
         int result1=userMapper.updateMessage(status,messageId);
         if(result1>0){

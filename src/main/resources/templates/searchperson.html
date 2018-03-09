@@ -17,6 +17,7 @@
             <li ><a href="meproject">已创建项目</a></li>
             <li ><a href="signupproject">已报名项目</a></li>
             <li ><a href="message?flag=0">通知</a></li>
+            <li ><a href="loginout">退出</a></li>
         </ul>
     </div>
     <div class="col-lg-10">
@@ -53,6 +54,10 @@
                 "pageSize":pageSize
             },
             "success":function (data) {
+                if(data==false){
+                    window.location.href="index"
+                    return
+                }
                 if(data){
                     handlerdata(data.userBean)
                     var pageNum=data.pageNum;

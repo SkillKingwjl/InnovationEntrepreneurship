@@ -86,7 +86,7 @@
                 <div class="form-group">
                     <label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail" placeholder="邮箱">
+                        <input type="email" class="form-control" id="inputEmail" placeholder="邮箱" onblur="checkEmail()">
                     </div>
                 </div>
 
@@ -105,7 +105,7 @@
                 <div class="form-group">
                     <label for="phone" class="col-sm-2 control-label">电话</label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" id="phone" placeholder="电话">
+                        <input type="text" class="form-control" id="phone" placeholder="电话" onblur="checkPhone()">
                     </div>
                     <div class="col-sm-3">
                         <select class="form-control" id="phoneP">
@@ -196,6 +196,30 @@
             alert("密码不一致，请重新输入");
             return;
         }
+        var inputEmail=$("#email").val();
+        var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        if(!myreg.test(inputEmail)){
+            alert('请输入有效的E_mail！');
+            $("#email").val("");
+            $("#email").focus();
+            return;
+        }
+        if(phone){
+            var mobile=/^((13[0-9]{1})|159|153)+\d{8}$/;
+            if(!mobile.test(phone)){
+                alert('请输入有效的手机号！');
+                $("#phone").val("");
+                $("#phone").focus();
+                return;
+            }
+            if(mobile.length!=11){
+                alert('手机号长度不能超过11位！');
+                $("#phone").val("");
+                $("#phone").focus();
+                return;
+            }
+        }
+
         if(role==0){
             if(!studentNum){
                 alert("学号不能为空");
@@ -248,8 +272,15 @@
             "dataType":"JSON",
             "data":data1,
             "success":function (data) {
-                if(data.result){
-                    window.href.location="";
+                if(data>0){
+                    alert("注册成功");
+                    window.href.location="index";
+                }else{
+                    if(data==-1){
+                       alert("姓名重复，请重新输入")
+                    }else{
+                        alert("注册失败");
+                    }
                 }
             }
         })
@@ -309,6 +340,33 @@
                 }
             }
         })
+    }
+    function checkEmail(){
+        var email=$("#email").val();
+        var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        if(!myreg.test(email)){
+            alert('请输入有效的E_mail！');
+            $("#email").val("");
+            $("#email").focus();
+            return;
+        }
+
+    }
+    function checkPhone(){
+        var phone=$("#phone").val();
+        var mobile=/^((13[0-9]{1})|159|153)+\d{8}$/;
+        if(!mobile.test(phone)){
+            alert('请输入有效的手机号！');
+            $("#phone").val("");
+            $("#phone").focus();
+            return;
+        }
+        if(mobile.length!=11){
+            alert('手机号长度不能超过11位！');
+            $("#phone").val("");
+            $("#phone").focus();
+            return;
+        }
     }
 </script>
 </html>

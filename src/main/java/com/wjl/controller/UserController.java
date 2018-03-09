@@ -37,6 +37,12 @@ public class UserController {
     public String skinToLogin(){
         return "login";
     }
+    @RequestMapping(value = "loginout")
+    public String skinToLoginOut(){
+        session.removeAttribute("user");
+        session.removeAttribute("userDetail");
+        return "login";
+    }
     @RequestMapping(value = "register")
     public String skinToRegister(){
         return "register";
@@ -112,8 +118,11 @@ public class UserController {
     @ResponseBody
     public Object insert(String name,  String password, Integer flag,int sex,String studentNum,String college,String profession,
     String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience){
-        int userId= userService.insert(name,password,flag);
-        int result=userService.insertDetailService(userId,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
+        int count=userService.getUserByName(name);
+        if(count>-1){
+            return -1;
+        }
+        int result= userService.register(name,password,flag,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
         return result;
     }
     @RequestMapping(value = "user",method = RequestMethod.GET)
@@ -132,6 +141,10 @@ public class UserController {
         User user= (User) session.getAttribute("user");
         if(user==null){
             return false;
+        }
+        int count=userService.getUserByName(name);
+        if(count>-1){
+            return -1;
         }
         int userId=user.getId();
         if(StringUtils.isEmpty(password)){
