@@ -74,7 +74,7 @@
                     window.location.href="index"
                     return
                 }
-                if(data.count>0){
+                if(data){
                     if(flag==0){
                        $("#title1").css("display","")
                        $("#title2").css("display","none")
@@ -143,7 +143,7 @@
             if(flag==0){
                 url+="<tr onclick='skinto("+id+")'><td>"+typeName+"</td><td>"+name+"</td><td>"+createTime+"</td>"
             }else{
-                url+="<tr onclick='skinto("+id+")'><td>"+typeName+"</td><td>"+status+"</td><td>"+createTime+"</td>"
+                url+="<tr><td>"+typeName+"</td><td>"+status+"</td><td>"+createTime+"</td>"
             }
 
         })

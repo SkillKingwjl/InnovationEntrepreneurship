@@ -119,7 +119,7 @@ public class UserController {
     public Object insert(String name,  String password, Integer flag,int sex,String studentNum,String college,String profession,
     String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience){
         int count=userService.getUserByName(name);
-        if(count>-1){
+        if(count>0){
             return -1;
         }
         int result= userService.register(name,password,flag,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
@@ -142,10 +142,14 @@ public class UserController {
         if(user==null){
             return false;
         }
-        int count=userService.getUserByName(name);
-        if(count>-1){
-            return -1;
+        String username=user.getUsername();
+        if(!name.equals(username)){
+            int count=userService.getUserByName(name);
+            if(count>0){
+                return -1;
+            }
         }
+
         int userId=user.getId();
         if(StringUtils.isEmpty(password)){
             password=user.getPassword();
@@ -304,6 +308,15 @@ public class UserController {
     @RequestMapping(value = "checkname",method = RequestMethod.POST)
     @ResponseBody
     public Object checkName(String name){
+        User user= (User) session.getAttribute("user");
+        if(user==null){
+            return userService.getUserByName(name);
+        }
+        String username=user.getUsername();
+        if(name.equals(username)){
+            return 0;
+
+        }
         return userService.getUserByName(name);
     }
 }
