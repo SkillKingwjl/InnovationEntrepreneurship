@@ -7,7 +7,7 @@ public class MessageInfo {
     private String createTime;
     private String status;
     private String typeName;
-
+    private String projectName;
     public int getId() {
         return id;
     }
@@ -54,5 +54,13 @@ public class MessageInfo {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 }

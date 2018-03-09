@@ -219,8 +219,9 @@ public class UserService {
             for(Message message:messageList ){
                 MessageInfo info=new MessageInfo();
                 int ownId=message.getOwnID();
-                User user=userMapper.getSingleUser(ownId);
-                info.setName(user.getUsername());
+                int tmpId=message.getUserID();
+                User own=userMapper.getSingleUser(ownId);
+                User user=userMapper.getSingleUser(tmpId);
                 info.setId(message.getId());
                 info.setCreateTime(message.getCreateTime());
                 info.setProjectId(message.getProjectID());
@@ -233,8 +234,14 @@ public class UserService {
                 }
                 int type=message.getType();
                 info.setTypeName("申请");
+                info.setName(user.getUsername());
                 if(type==1){
                     info.setTypeName("邀请");
+                    info.setName(own.getUsername());
+                }
+                ProjectDetail projectDetail=userMapper.getSingeProjectDeatil(message.getProjectID());
+                if(projectDetail!=null){
+                    info.setProjectName(projectDetail.getTitle());
                 }
                 list.add(info);
             }
