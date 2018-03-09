@@ -19,7 +19,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Table structure for studentdetil
 -- ----------------------------
 DROP TABLE IF EXISTS `userdetil`;
-CREATE TABLE `studentdetil` (
+CREATE TABLE `userdetil` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userID` int(11) NOT NULL,
   `sex` tinyint(1) NOT NULL,
