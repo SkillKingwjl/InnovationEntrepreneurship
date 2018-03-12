@@ -15,7 +15,7 @@
             <ul class="nav nav-pills nav-stacked">
                 <li  style="margin-top: 10px"><a href="showinfo">个人信息</a></li>
                 <li ><a href="pubproject">发布项目</a></li>
-                <li class="active"><a href="searchproject">寻找项目</a></li>
+                <li ><a href="searchproject">寻找项目</a></li>
                 <li ><a href="searchperson">寻找合伙人</a></li>
                 <li ><a href="meproject">已创建项目</a></li>
                 <li ><a href="signupproject">已报名项目</a></li>
@@ -55,7 +55,7 @@
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">队员</label>
                         <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;">
-                            <table id="content">
+                            <table id="content" class="table table-bordered">
 
                             </table>
                         </div>
@@ -83,9 +83,17 @@
 
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">寻找对象</label>
                         <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="find_num">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <label  class="col-sm-4 control-label">还需人数</label>
+                        <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="left_num">
 
                         </div>
                     </div>
@@ -132,7 +140,8 @@
                 if(data){
                     handledata(data.projectDetail,data.userList)
                     if(data.flag>0){
-                        $("#operator").css("display","none")
+                        $("#operator").attr("onclick","cancle()")
+                        $("#operator").addClass("active")
                     }
                 }
             }
@@ -163,6 +172,7 @@
         }
         var introdution=projectDetail.findIntrodution;
         var findnum=projectDetail.findNum;
+        var leftNum=projectDetail.leftNum;
         $("#name").html(name)
         $("#title").html(title)
         if(teacher){
@@ -175,8 +185,9 @@
         $("#process").html(processname)
         $("#introduce").html(introdution)
         $("#find_num").html(findnum)
+        $("#left_num").html(leftNum)
         if(userList){
-            var url="<tbody></tbody>";
+            var url="<tbody><tr><td>姓名</td><td>专业</td></tr>";
             $.each(userList,function(n,value){
                 var user=value.user;
                 var userDetail=value.userDetail
@@ -184,12 +195,13 @@
                 var major=userDetail.major;
                 url+="<tr><td>"+name+"</td><td>"+major+"</td></tr>"
             })
-            var url="</tbody>";
+            url+="</tbody>";
             $("#content").html(url)
         }
         var tempId=$("#userId").val()
-        if(userId==tempId){
-           $("#operator").css("display","none")
+        if(userId==tempId||leftNum==0){
+           $("#operator").attr("onclick","cancle()");
+           $("#operator").addClass("active")
         }
     }
     function operation(){
@@ -203,12 +215,22 @@
                 "type":0
             },
             "success":function (data) {
+                if(data==-1){
+                    alert("项目人数已达上限");
+                    return;
+                }
                 if(data>0){
                     alert("申请已发送成功！")
                     window.location.href="searchproject"
+                }else{
+                    alert("申请失败，请联系管理员！")
                 }
             }
         })
+    }
+
+    function cancle(){
+        alert("无效操作")
     }
 </script>
 </html>

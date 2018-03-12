@@ -122,13 +122,13 @@
     function handlerData(data){
         var url="<tbody>";
         if(flag==0){
-            url+="<tr>\n" +
+            url+="<tr>\n" +             "<td>项目名称</td>\n" +
                 "                        <td>消息类型</td>\n" +
                 "                        <td>发送者</td>\n" +
                 "                        <td>发送时间</td>\n" +
                 "                    </tr>"
         }else{
-            url+="<tr>\n" +
+            url+="<tr>\n" +             "<td>项目名称</td>\n" +
                 "                        <td>消息类型</td>\n" +
                 "                        <td>消息状态</td>\n" +
                 "                        <td>发送时间</td>\n" +
@@ -140,10 +140,11 @@
             var status=value.status;
             var createTime=value.createTime;
             var typeName=value.typeName;
+            var projectName=value.projectName;
             if(flag==0){
-                url+="<tr onclick='skinto("+id+")'><td>"+typeName+"</td><td>"+name+"</td><td>"+createTime+"</td>"
+                url+="<tr onclick='skinto("+id+")'><td>"+projectName+"</td><td>"+typeName+"</td><td>"+name+"</td><td>"+createTime+"</td>"
             }else{
-                url+="<tr><td>"+typeName+"</td><td>"+status+"</td><td>"+createTime+"</td>"
+                url+="<tr><td>"+projectName+"</td><td>"+typeName+"</td><td>"+status+"</td><td>"+createTime+"</td>"
             }
 
         })

@@ -63,7 +63,7 @@ public class UserService {
      */
     public int insertProjectDetail(Integer userId,String title,String name,Integer type,Integer processType,String introdution
             ,String leder,String teacher,Integer findType,Integer findNum,String findIntrodution){
-       return  userMapper.insertProjectDetail(userId,title,name,type,processType,introdution,leder,teacher,findType,findNum,findIntrodution);
+       return  userMapper.insertProjectDetail(userId,title,name,type,processType,introdution,leder,teacher,findType,findNum,findNum,findIntrodution);
     }
     /*
        分页获取职位列表
@@ -219,8 +219,9 @@ public class UserService {
             for(Message message:messageList ){
                 MessageInfo info=new MessageInfo();
                 int ownId=message.getOwnID();
-                User user=userMapper.getSingleUser(ownId);
-                info.setName(user.getUsername());
+                int tmpId=message.getUserID();
+                User own=userMapper.getSingleUser(ownId);
+                User user=userMapper.getSingleUser(tmpId);
                 info.setId(message.getId());
                 info.setCreateTime(message.getCreateTime());
                 info.setProjectId(message.getProjectID());
@@ -233,8 +234,14 @@ public class UserService {
                 }
                 int type=message.getType();
                 info.setTypeName("申请");
+                info.setName(user.getUsername());
                 if(type==1){
                     info.setTypeName("邀请");
+                    info.setName(own.getUsername());
+                }
+                ProjectDetail projectDetail=userMapper.getSingeProjectDeatil(message.getProjectID());
+                if(projectDetail!=null){
+                    info.setProjectName(projectDetail.getTitle());
                 }
                 list.add(info);
             }
@@ -308,34 +315,56 @@ public class UserService {
     }
     @Transactional
     public int applicationProject(int userId,int ownId,int projectId,int type){
+        ProjectDetail projectDetail= userMapper.getSingeProjectDeatil(projectId);
+        int leftNum=projectDetail.getLeftNum();
+        if(leftNum==0){
+           return -1;
+        }
         if(type==0){
             int result=userMapper.insertMessage(ownId,userId,projectId,type,1);
-            if(result>0){
-                int result2=userMapper.insertOwnProject(ownId,userId,projectId,type,1);
-                if(result2>0){
-                    return 1;
+            int count=userMapper.getOwnProjectNum(projectId,ownId,type);
+            if(count==0){
+                if(result>0){
+                    int result2=userMapper.insertOwnProject(ownId,userId,projectId,type,1);
+                    if(result2>0){
+                        return 1;
+                    }
                 }
+            }else{
+                return 1;
             }
             return 0;
         }else{
             int result=userMapper.insertMessage(userId,ownId,projectId,type,1);
-            if(result>0){
-                int result2=userMapper.insertOwnProject(userId,ownId,projectId,type,1);
-                if(result2>0){
-                    return 1;
+            int count=userMapper.getOwnProjectNum(projectId,ownId,type);
+            if(count==0){
+                if(result>0){
+                    int result2=userMapper.insertOwnProject(userId,ownId,projectId,type,1);
+                    if(result2>0){
+                        return 1;
+                    }
                 }
+            }else{
+                return 1;
             }
             return 0;
         }
 
-
     }
     @Transactional
     public int updateMessage(int projectId,int userId,int messageId,int status){
+        if(status==0){
+            ProjectDetail projectDetail=userMapper.getSingeProjectDeatil(projectId);
+            int leftNum=projectDetail.getLeftNum();
+            if(leftNum==0){
+                return -1;
+            }
+        }
         int result1=userMapper.updateMessage(status,messageId);
         if(result1>0){
             int result2=userMapper.updateOwnProject(status,userId,projectId);
-            if(result2>0){
+            int result3=userMapper.updateProjectLeftNum(projectId);
+            if(result3>0){
                 return 1;
             }
         }

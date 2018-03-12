@@ -120,7 +120,7 @@
                         </div>
                         <div class="col-sm-3">
                             <input type="file" id="file1" onchange="doChange()" name="file1" style="display:none">
-                            <button class="btn btn-default" onclick="file1.click()">上传</button>
+                            <button class="btn btn-default" type="button" onclick="file1.click()">上传</button>
                         </div>
                     </div>
                 </form>
@@ -208,7 +208,7 @@
        $("#phone").val(phoneNum);
        $("#phoneP").val(isShowPhoneNum);
        if(photo){
-           $("#pic-url").attr("src","/upload-dir/"+photo);
+           $("#pic_url").attr("src",photo);
        }
        $("#feature").val(specialty);
        $("#exprience").val(competitionExperience);

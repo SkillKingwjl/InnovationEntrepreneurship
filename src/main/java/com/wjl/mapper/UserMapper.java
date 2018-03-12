@@ -63,11 +63,12 @@ public interface UserMapper {
     /*
      新增项目
      */
-    @Insert("insert into projetdetail(userId,title,name,type,processType,introdution,leder,teacher,findType,findNum,findIntrodution)" +
-            "values(#{userId},#{title},#{name},#{type},#{processType},#{introdution},#{leder},#{teacher},#{findType},#{findNum},#{findIntrodution})")
+    @Insert("insert into projetdetail(userId,title,name,type,processType,introdution,leder,teacher,findType,findNum,leftNum,findIntrodution)" +
+            "values(#{userId},#{title},#{name},#{type},#{processType},#{introdution},#{leder},#{teacher},#{findType},#{findNum},#{leftNum},#{findIntrodution})")
     public int insertProjectDetail(@Param("userId") Integer userId,@Param("title") String title,@Param("name")String name,@Param("type")Integer type,
                                    @Param("processType")Integer processType,@Param("introdution")String introdution
-            ,@Param("leder")String leder,@Param("teacher")String teacher,@Param("findType")Integer findType,@Param("findNum")Integer findNum,@Param("findIntrodution")String findIntrodution);
+            ,@Param("leder")String leder,@Param("teacher")String teacher,@Param("findType")Integer findType,@Param("findNum")Integer findNum,
+                                   @Param("leftNum")Integer leftNum,@Param("findIntrodution")String findIntrodution);
    /*
     分页查找我创建的项目
     */
@@ -127,9 +128,13 @@ public interface UserMapper {
     public int updateOwnProject(@Param("flag") Integer flag,@Param("userID") int userId,@Param("projectID")Integer projectId);
     @Select("select* from user where username=#{name}")
     public List<User> getUserByName(@Param("name") String name);
-    @Select("select * from ownproject where  projectID=#{projectId} and userID=#{userId}  order by createTime desc")
+    @Select("select * from ownproject where  projectID=#{projectId} and userID=#{userId} and flag=0  order by createTime desc")
     public List<OwnProject> getOwnProjectbyProjectIdAndUserId(@Param("projectId") Integer projectId,@Param("userId") Integer userId);
     @Select("select count(*)  from ownproject where status=#{status} and userID=#{userID} ")
     public int getOwnProjectCount(@Param("status") Integer status,@Param("userID") Integer userId);
+    @Update("update projetdetail set leftNum=leftNum-1 where id=#{projectId}")
+    public int updateProjectLeftNum(@Param("projectId") Integer projectId);
+    @Select("select count(*) from ownproject where  projectID=#{projectId} and userID=#{userId} and status=#{status} and flag!=2")
+    public int getOwnProjectNum(@Param("projectId") Integer projectId,@Param("userId") Integer userId,@Param("status") Integer status);
 
 }

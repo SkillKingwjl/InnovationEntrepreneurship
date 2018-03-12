@@ -176,9 +176,15 @@
                 "type":1
             },
             "success":function (data) {
+                if(data==-1){
+                    alert("项目人数已达上限");
+                    return;
+                }
                 if(data>0){
                     alert("邀请成功");
                     window.location.href="searchperson"
+                }else{
+                    alert("申请失败，请联系管理员！")
                 }
             }
         })

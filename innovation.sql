@@ -50,9 +50,9 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--------------------------
---项目表
------------------------
+-- -----------------------
+-- 项目表
+-- -----------------------
 DROP TABLE IF EXISTS `projetdetail`;
 CREATE TABLE `projetdetail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -70,9 +70,9 @@ CREATE TABLE `projetdetail` (
   `createTime` TIMESTAMP  not null DEFAULT  CURRENT_TIMESTAMP comment'创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-----------------------------
---消息表
---------------------------
+-- --------------------------
+-- 消息表
+-- --------------------------
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -84,9 +84,9 @@ CREATE TABLE `message` (
   `status` INT(1) NOT NULL DEFAULT 1 COMMENT '0：通过 1:审核中 2;拒绝',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
--------------------------
---项目状态
-------------------------
+-- -----------------------
+-- 项目状态
+-- -----------------------
 DROP TABLE IF EXISTS `ownproject`;
 CREATE TABLE `ownproject` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

@@ -184,12 +184,7 @@
 
             "success":function (data) {
                 if(data){
-                    if(send_type==0){
-                        window.location.href="message?flag=0"
-                    }else{
-                        window.location.href="message?flag=1"
-                    }
-
+                   window.location.reload()
                 }
             }
         })

@@ -129,6 +129,10 @@ public class UserController {
     @ResponseBody
     public Object getUser(HttpServletRequest request){
         Map<String,Object> result=new HashMap<>();
+        User user= (User) session.getAttribute("user");
+        if(user==null){
+            return false;
+        }
         result.put("user",session.getAttribute("user"));
         result.put("userDetail",session.getAttribute("userDetail"));
         return result;
@@ -158,7 +162,18 @@ public class UserController {
         }
         feature=feature.trim();
         exprience=exprience.trim();
-        return userService.updateUserInfo(name,flag,userId,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience,password);
+        int result= userService.updateUserInfo(name,flag,userId,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience,password);
+        if(result>0){
+            User user1= new User();
+            user1.setFlag(flag);
+            user1.setPassword(password);
+            user1.setUsername(name);
+            int userId1=user.getId();
+            UserDetail userDetail=userService.getUserDetailService(userId1);
+            session.setAttribute("user",user1);
+            session.setAttribute("userDetail",userDetail);
+        }
+        return result;
     }
 
 

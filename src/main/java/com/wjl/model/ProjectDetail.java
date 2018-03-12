@@ -13,6 +13,7 @@ public class ProjectDetail {
     private String teacher;
     private Integer findType;
     private Integer findNum;
+    private Integer leftNum;
     private String findIntrodution;
     private String createTime;
 
@@ -120,4 +121,11 @@ public class ProjectDetail {
         this.createTime = createTime;
     }
 
+    public Integer getLeftNum() {
+        return leftNum;
+    }
+
+    public void setLeftNum(Integer leftNum) {
+        this.leftNum = leftNum;
+    }
 }

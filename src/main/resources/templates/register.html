@@ -122,7 +122,7 @@
                     </div>
                     <div class="col-sm-2">
                         <input type="file" id="file1" onchange="doChange()" name="file1" style="display:none">
-                        <button class="btn btn-default" onclick="file1.click()">上传</button>
+                        <button class="btn btn-default" type="button" onclick="file1.click()">上传</button>
                     </div>
                 </div>
             </form>
@@ -176,7 +176,7 @@
         var wechatP=$("#wechatP").val();
         var phone=$("#phone").val();
         var phoneP=$("#phoneP").val();
-        var pic=$("#pic_url").val();
+        var pic=$("#pic_url").attr("src");
         var feature=$("#feature").val();
         var exprience=$("#exprience").val();
         if(!name){
