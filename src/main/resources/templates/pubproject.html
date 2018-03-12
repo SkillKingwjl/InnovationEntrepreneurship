@@ -127,6 +127,21 @@
 <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
 <script th:src="@{/js/bootstrap.js}" ></script>
 <script>
+    $(function(){
+        $.ajax({
+            "url":"/user",
+            "type":"GET",
+            "dataType":"JSON",
+            "success":function (data) {
+                if(data==false){
+                    alert("请先登录")
+                    window.location.href="index"
+                    return
+                }
+
+            }
+        })
+    })
     function save(){
         var name=$("#name").val();
         var type=$("#type").val();
@@ -172,6 +187,11 @@
             "dataType":"JSON",
             "data":data1,
             "success":function (data) {
+                if(data==false){
+                    alert("请先登录")
+                    window.location.href="index"
+                    return
+                }
                 if(data==1){
                     window.location.href="/meproject";
                 }else{
