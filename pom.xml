@@ -3,8 +3,8 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.wjl</groupId>
   <artifactId>InnovationEntrepreneurship</artifactId>
-  <packaging>war</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <version>1.0-RELEASE</version>
   <name>InnovationEntrepreneurship Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <parent>
@@ -88,10 +88,17 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>1.5.10.RELEASE</version>
+        <configuration>
+          <mainClass>com.wjl.Application</mainClass>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <!-- mybatis generator 自动生成代码插件 -->
       <plugin>

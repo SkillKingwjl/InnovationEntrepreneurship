@@ -37,6 +37,10 @@ public class UserController {
     public String skinToLogin(){
         return "login";
     }
+    @RequestMapping(value = "/")
+    public String login(){
+        return "login";
+    }
     @RequestMapping(value = "loginout")
     public String skinToLoginOut(){
         session.removeAttribute("user");
