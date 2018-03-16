@@ -34,6 +34,9 @@
         <ul class="pager">
             <li><a href="" id="prev">上一页</a></li>
             <li><a href="" id="next">下一页</a></li>
+            <li>第<label id="nowPage"></label>页</li>
+            <li>共<label id="allPage"></label>页</li>
+            <li style="margin-left: 100px"><label >至</label><input type="text" id="skinTo" style="width:80px;border-radius: 3px;margin-left: 10px;" ><label style="margin-left: 10px;">页</label> <a href="javascript:skinPage()">跳转</a></li>
         </ul>
     </nav>
 </div>
@@ -44,6 +47,7 @@
     $(function(){
         getContent(1,15)
     })
+    var allPageNum=0;
     function getContent(page,pageSize){
         $.ajax({
             "url":"/getprojectdetail",
@@ -55,17 +59,19 @@
             },
             "success":function (data) {
                 if(data==false){
-                    alert("请先登录")
-                    window.location.href="index"
-                    return;
+                  window.location.href="index"
                 }
                 if(data){
                     handlerdata(data.projectDetail);
                     var pageNum=data.pageNum;
+                    allPageNum=pageNum
                     var prevPage=page-1;
                     var nextPage=page+1;
+                    allPageNum=pageNum;
                     $("#prev").attr("href","javascript:getPageInfo("+prevPage+","+pageNum+",0)")
                     $("#next").attr("href","javascript:getPageInfo("+nextPage+","+pageNum+",1)")
+                    $("#nowPage").text(page);
+                    $("#allPage").text(pageNum)
                 }
             }
         })
@@ -118,7 +124,7 @@
             var findNum=value.findNum;
             var createTime=value.createTime;
 
-            url+="<tr onclick='skinto("+id+")'><td>"+title+"</td><td>"+name+"</td><td>"+typename+"</td><td>"+findNum+"人</td><td>"+createTime+"</td></tr>"
+            url+="<tr onclick='skinto("+id+")'><td>"+title+"</td><td>"+typename+"</td><td>"+findName+"</td><td>"+findNum+"人</td><td>"+createTime+"</td></tr>"
         })
         url+="</tbody>"
         $("#content").html(url)
@@ -126,5 +132,23 @@
     function skinto(id){
         window.location.href="projectdetail?projectId="+id;
     }
+    function skinPage(){
+        var page=$("#skinTo").val()
+        var num=/^[0-9]*$/;
+        if(!num.test(page)){
+            alert('请输入数字！');
+            return;
+        }
+        if(parseInt(page)>allPageNum){
+            alert('输入页数大于总页数，请重新输入！');
+            return;
+        }
+        if(parseInt(page)<=0){
+            alert('输入页数需大于0，请重新输入！');
+            return;
+        }
+        getContent(parseInt(page),15)
+    }
+
 </script>
 </html>

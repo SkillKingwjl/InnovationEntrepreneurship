@@ -38,14 +38,14 @@
                     <form class="form-horizontal form-style" >
                         <div class="form-group">
                             <label class="col-sm-4 control-label" id="application_persion">申请者</label>
-                            <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="name">
-
+                            <div class="col-sm-8">
+                                <input  style="line-height: inherit;text-align: center;vertical-align: middle;" id="name" disabled="disabled" class="form-control"/>
                             </div>
                         </div>
                         <div class="form-group" style="padding-top: 150px">
                             <label  class="col-sm-4 control-label" id="application_title">申请项目</label>
-                            <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="title">
-
+                            <div class="col-sm-8">
+                                <input  style="line-height: inherit;text-align: center;vertical-align: middle;" id="title" disabled="disabled" class="form-control"/>
                             </div>
                         </div>
 
@@ -56,14 +56,14 @@
                     <form class="form-horizontal form-style" >
                         <div class="form-group">
                             <label class="col-sm-4 control-label" id="application_introduction">申请者简介</label>
-                            <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;width:80%;min-height: 120px" id="introduction">
-
+                            <div class="col-sm-8">
+                                 <textarea  style="height:150px;" class="form-control" disabled="disabled" id="introduction" />
                             </div>
                         </div>
-                        <div class="form-group" >
+                        <div class="form-group" style="padding-top: 30px">
                             <label  class="col-sm-4 control-label" id="application_email">申请者邮箱</label>
-                            <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="email">
-
+                            <div class="col-sm-8">
+                                <input  style="line-height: inherit;text-align: center;vertical-align: middle;" id="email" class="form-control" disabled="disabled"/>
                             </div>
                         </div>
 
@@ -105,7 +105,6 @@
 
             "success":function (data) {
                 if(data==false){
-                    alert("请先登录")
                     window.location.href="index"
                     return
                 }
@@ -151,10 +150,10 @@
             var title=projectDetail.title;
             var introdution=userDetail.specialty
             var email=userDetail.email;
-            $("#name").html(name);
-            $("#title").html(title);
-            $("#introduction").html(introdution);
-            $("#email").html(email);
+            $("#name").val(name);
+            $("#title").val(title);
+            $("#introduction").val(introdution);
+            $("#email").val(email);
         }else{
             $("#application_persion").text("邀请者")
             $("#application_title").text("邀请项目")
@@ -164,10 +163,10 @@
             var title=projectDetail.title;
             var introdution=ownDetail.specialty
             var email=ownDetail.email;
-            $("#name").html(name);
-            $("#title").html(title);
-            $("#introduction").html(introdution);
-            $("#email").html(email);
+            $("#name").val(name);
+            $("#title").val(title);
+            $("#introduction").val(introdution);
+            $("#email").val(email);
         }
 
     }

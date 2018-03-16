@@ -1,6 +1,7 @@
 package com.wjl.controller;
 
 import com.alibaba.druid.util.StringUtils;
+import com.wjl.model.ProjectInfo;
 import com.wjl.model.User;
 import com.wjl.model.UserDetail;
 import com.wjl.service.UserService;
@@ -116,13 +117,13 @@ public class UserController {
 
     @RequestMapping(value = "register",method = RequestMethod.POST)
     @ResponseBody
-    public Object insert(String name,  String password, Integer flag,int sex,String studentNum,String college,String profession,
+    public Object insert(String username,String name,  String password, Integer flag,int sex,String studentNum,String college,String profession,
     String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience){
         int count=userService.getUserByName(name);
         if(count>0){
             return -1;
         }
-        int result= userService.register(name,password,flag,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
+        int result= userService.register(username,name,password,flag,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
         return result;
     }
     @RequestMapping(value = "user",method = RequestMethod.GET)
@@ -146,31 +147,12 @@ public class UserController {
         if(user==null){
             return false;
         }
-        String username=user.getUsername();
-        if(!name.equals(username)){
-            int count=userService.getUserByName(name);
-            if(count>0){
-                return -1;
-            }
-        }
-
         int userId=user.getId();
-        if(StringUtils.isEmpty(password)){
-            password=user.getPassword();
-        }else{
-            password = MD5Util.getMD5(password);
-        }
         feature=feature.trim();
         exprience=exprience.trim();
-        int result= userService.updateUserInfo(name,flag,userId,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience,password);
+        int result= userService.updateUserInfo(userId,name,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience,password);
         if(result>0){
-            User user1= new User();
-            user1.setFlag(flag);
-            user1.setPassword(password);
-            user1.setUsername(name);
-            int userId1=user.getId();
-            UserDetail userDetail=userService.getUserDetailService(userId1);
-            session.setAttribute("user",user1);
+            UserDetail userDetail=userService.getUserDetailService(userId);
             session.setAttribute("userDetail",userDetail);
         }
         return result;
@@ -185,12 +167,16 @@ public class UserController {
         if(user==null){
             return false;
         }
+        int flag=user.getFlag();
+        if(flag==4){
+           return -1;
+        }
         int userId=user.getId();
         int result=userService.insertProjectDetail(userId,title,name,type,processType,introdution,leder,teacher,findType,findNum,findIntrodution);
         if(result>0){
-            return true;
+            return 1;
         }
-        return false;
+        return 0;
     }
     @RequestMapping(value = "upload",method = RequestMethod.POST)
     @ResponseBody
@@ -280,7 +266,9 @@ public class UserController {
             return false;
         }
         int userId=user.getId();
-        return userService.getProjectInfo(projectId,userId);
+        ProjectInfo info= userService.getProjectInfo(projectId,userId);
+        info.setUser(user);
+        return info;
     }
 
     @RequestMapping(value = "getsinglemessage",method = RequestMethod.POST)
@@ -322,12 +310,12 @@ public class UserController {
     }
     @RequestMapping(value = "checkname",method = RequestMethod.POST)
     @ResponseBody
-    public Object checkName(String name){
+    public Object checkName(String username){
         User user= (User) session.getAttribute("user");
         if(user==null){
-            return userService.getUserByName(name);
+            return userService.getUserByName(username);
         }
-        String username=user.getUsername();
+        String name=user.getUsername();
         if(name.equals(username)){
             return 0;
 

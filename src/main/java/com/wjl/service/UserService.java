@@ -34,29 +34,25 @@ public class UserService {
         return user.getId();
     }
     @Transactional
-    public int register(String name,  String password, Integer flag,int sex,String studentNum,String college,String profession,
+    public int register(String username,String name,  String password, Integer flag,int sex,String studentNum,String college,String profession,
                         String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience){
-        int userId=this.insert(name,password,flag);
-        int result=insertDetailService(userId,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
+        int userId=this.insert(username,password,flag);
+        int result=insertDetailService(userId,name,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
         return result;
     }
-    public int insertDetailService( Integer userId,int sex,String studentNum,String college,String profession,
+    public int insertDetailService( Integer userId,String name,int sex,String studentNum,String college,String profession,
                                    String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience){
-        return userMapper.insertDetail(userId,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
+        return userMapper.insertDetail(userId,name,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
     }
 
     public UserDetail getUserDetailService(int userId){
         return userMapper.getUserDeatil(userId);
     }
     @Transactional
-    public int  updateUserInfo(String userName,  Integer flag,Integer userId,int sex,String studentNum,String college,String profession,String inputEmail,
+    public int  updateUserInfo(Integer userId,String name,int sex,String studentNum,String college,String profession,String inputEmail,
                           String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience,String password){
-        int result1=userMapper.updateUser(userName,userId,password);
-        if(result1>0){
-            int result=userMapper.updateDetail(userId,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
+            int result=userMapper.updateDetail(userId,name,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
             return result;
-        }
-        return 0;
     }
     /*
       增加项目
@@ -113,6 +109,12 @@ public class UserService {
             message.setNowPage(page);
         }
         List<ProjectDetail> list=userMapper.getMeProjectDetail(userId,page,pageSize);
+        if(list!=null&&list.size()>0){
+            for(ProjectDetail projectDetail:list){
+                String times=projectDetail.getCreateTime();
+                projectDetail.setCreateTime(times.substring(0,13));
+            }
+        }
         message.setProjectDetail(list);
         return message;
     }
@@ -122,8 +124,16 @@ public class UserService {
     public ProjectMessage getAllProjectDetail(int flag,Integer userId,int page,int pageSize){
         ProjectMessage message=new ProjectMessage();
         if(flag==1){
-            List<ProjectDetail> list=userMapper.getAllProjectDetail(userId,page,pageSize);
-            int count=userMapper.getAllProjectDetailNum(userId);
+            int hasNum=userMapper.getSignNum(userId);
+            List<ProjectDetail> list=null;
+            int count=0;
+            if(hasNum>0){
+                list=userMapper.getAllProjectDetail(userId,page,pageSize);
+                count=userMapper.getAllProjectDetailNum(userId);
+            }else{
+                list=userMapper.getAllProjectDetailNew(userId,page,pageSize);
+                count=userMapper.getAllProjectDetailNumNew(userId);
+            }
             if(count==0){
                 message.setCount(0);
                 message.setPageNum(0);
@@ -134,11 +144,24 @@ public class UserService {
                 message.setPageNum(allPage);
                 message.setNowPage(page);
             }
+            if(list!=null&&list.size()>0){
+                for(ProjectDetail projectDetail:list){
+                    String times=projectDetail.getCreateTime();
+                    projectDetail.setCreateTime(times.substring(0,13));
+                }
+            }
             message.setProjectDetail(list);
             userMapper.getMeProjectDetailNum(userId);
             return message;
+
         }
         List<ProjectDetail> list= userMapper.getMeProjectDetail(userId,page,pageSize);
+        if(list!=null&&list.size()>0){
+            for(ProjectDetail projectDetail:list){
+                String times=projectDetail.getCreateTime();
+                projectDetail.setCreateTime(times.substring(0,13));
+            }
+        }
         int count=userMapper.getMeProjectDetailNum(userId);
         if(count==0){
             message.setCount(0);
@@ -175,6 +198,8 @@ public class UserService {
               int projectId=ownProject.getProjectID();
                 ProjectDetail projectDetail=userMapper.getSingeProjectDeatil(projectId);
                 if(projectDetail!=null){
+                    String times=projectDetail.getCreateTime();
+                    projectDetail.setCreateTime(times.substring(0,13));
                     list.add(projectDetail);
                 }
             }
@@ -223,7 +248,7 @@ public class UserService {
                 User own=userMapper.getSingleUser(ownId);
                 User user=userMapper.getSingleUser(tmpId);
                 info.setId(message.getId());
-                info.setCreateTime(message.getCreateTime());
+                info.setCreateTime(message.getCreateTime().substring(1,13));
                 info.setProjectId(message.getProjectID());
                 int status=message.getStatus();
                 info.setStatus("通过");
@@ -321,9 +346,9 @@ public class UserService {
            return -1;
         }
         if(type==0){
-            int result=userMapper.insertMessage(ownId,userId,projectId,type,1);
-            int count=userMapper.getOwnProjectNum(projectId,ownId,type);
+            int count=userMapper.getOwnProjectNum(projectId,ownId,userId,type);
             if(count==0){
+                int result=userMapper.insertMessage(ownId,userId,projectId,type,1);
                 if(result>0){
                     int result2=userMapper.insertOwnProject(ownId,userId,projectId,type,1);
                     if(result2>0){
@@ -331,13 +356,14 @@ public class UserService {
                     }
                 }
             }else{
-                return 1;
+                return 2;
             }
             return 0;
         }else{
-            int result=userMapper.insertMessage(userId,ownId,projectId,type,1);
-            int count=userMapper.getOwnProjectNum(projectId,ownId,type);
+
+            int count=userMapper.getOwnProjectNum(projectId,userId,ownId,type);
             if(count==0){
+                int result=userMapper.insertMessage(userId,ownId,projectId,type,1);
                 if(result>0){
                     int result2=userMapper.insertOwnProject(userId,ownId,projectId,type,1);
                     if(result2>0){
@@ -345,7 +371,7 @@ public class UserService {
                     }
                 }
             }else{
-                return 1;
+                return 2;
             }
             return 0;
         }
@@ -363,10 +389,15 @@ public class UserService {
         int result1=userMapper.updateMessage(status,messageId);
         if(result1>0){
             int result2=userMapper.updateOwnProject(status,userId,projectId);
-            int result3=userMapper.updateProjectLeftNum(projectId);
-            if(result3>0){
+            if(status==0){
+                int result3=userMapper.updateProjectLeftNum(projectId);
+                if(result3>0){
+                    return 1;
+                }
+            }else{
                 return 1;
             }
+
         }
         return 0;
     }

@@ -53,19 +53,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="password" class="col-sm-2 control-label">密码</label>
-                        <div class="col-sm-10">
-                            <input type="password" class="form-control" id="password" placeholder="密码" disabled="disabled">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password1" class="col-sm-2 control-label">确认密码</label>
-                        <div class="col-sm-10">
-                            <input type="password" class="form-control" id="password1" placeholder="确认密码" disabled="disabled">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <label for="college" class="col-sm-2 control-label" id="college1">院系</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="college" placeholder="院系" disabled="disabled" >
@@ -173,7 +160,6 @@
             "dataType":"JSON",
             "success":function (data) {
                 if(data==false){
-                    alert("请先登录")
                     window.location.href="index"
                     return
                 }
@@ -184,10 +170,9 @@
         })
     }
     function handledata(userDetail,user){
-       var username=user.username;
+       var name=userDetail.name;
        var sex=userDetail.sex;
        var studentNum=userDetail.studentID;
-       var password=user.password;
        var department=userDetail.department;
        var major=userDetail.major;
        var email=userDetail.email;
@@ -198,7 +183,7 @@
        var photo=userDetail.photo;
        var specialty=userDetail.specialty;
        var competitionExperience=userDetail.competitionExperience;
-       $("#name").val(username);
+       $("#name").val(name);
        $("#sex").val(sex)
        $("#studentNum").val(studentNum);//
        $("#college").val(department)
@@ -278,11 +263,6 @@
             "dataType":"JSON",
             "data":data1,
             "success":function (data) {
-                if(data==false){
-                    alert("请先登录")
-                   window.location.href="index";
-                   return
-                }
                 if(data>0){
                     alert("修改成功");
                     window.location.reload();

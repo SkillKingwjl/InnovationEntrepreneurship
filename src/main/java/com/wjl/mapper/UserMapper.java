@@ -38,9 +38,9 @@ public interface UserMapper {
     /*
      新增用户的具体信息
      */
-    @Insert("INSERT INTO userdetil(userID,sex,studentID,department,major,email,weichart,isShowWei,phoneNum,isShowPhoneNum,photo,specialty,competitionExperience)" +
-            "values(#{userID},#{sex},#{studentID},#{department},#{major},#{email},#{weichart},#{isShowWei},#{phoneNum},#{isShowPhoneNum},#{photo},#{specialty},#{competitionExperience})")
-    public int insertDetail(@Param("userID") int userId,@Param("sex") int sex,@Param("studentID") String studentNum,@Param("department")String college,
+    @Insert("INSERT INTO userdetil(userID,name,sex,studentID,department,major,email,weichart,isShowWei,phoneNum,isShowPhoneNum,photo,specialty,competitionExperience)" +
+            "values(#{userID},#{name},#{sex},#{studentID},#{department},#{major},#{email},#{weichart},#{isShowWei},#{phoneNum},#{isShowPhoneNum},#{photo},#{specialty},#{competitionExperience})")
+    public int insertDetail(@Param("userID") int userId,@Param("name")String name,@Param("sex") int sex,@Param("studentID") String studentNum,@Param("department")String college,
                      @Param("major")String profession,@Param("email")String inputEmail,@Param("weichart")String wechat,@Param("isShowWei")int wechatP,
                      @Param("phoneNum")String phone,@Param("isShowPhoneNum")int phoneP,@Param("photo")String pic,@Param("specialty")String feature,
                      @Param("competitionExperience")String exprience );
@@ -54,9 +54,9 @@ public interface UserMapper {
      */
     @Update("update user set username=${userName},password=#{password} where id=${id}")
     public int updateUser(@Param("userName") String userName,@Param("id") int id,@Param("password") String password);
-    @Update("update userdetil set sex=${sex},studentID=${studentID},department=${department},major='${major}',email='${email}',weichart='${weichart}',isShowWei=${isShowWei}" +
-            ",phoneNum='${phoneNum}',isShowPhoneNum=${isShowPhoneNum},photo='${photo}',specialty='${specialty}',competitionExperience='${competitionExperience}' where userId=${userID}" )
-    public int updateDetail(@Param("userID") int userId,@Param("sex") int sex,@Param("studentID") String studentNum,@Param("department")String college,
+    @Update("update userdetil set sex=#{sex},name=#{name},studentID=#{studentID},department=#{department},major=#{major},email=#{email},weichart=#{weichart},isShowWei=#{isShowWei}" +
+            ",phoneNum=#{phoneNum},isShowPhoneNum=#{isShowPhoneNum},photo=#{photo},specialty=#{specialty},competitionExperience=#{competitionExperience} where userId=#{userID}" )
+    public int updateDetail(@Param("userID") int userId,@Param("name")String name,@Param("sex") int sex,@Param("studentID") String studentNum,@Param("department")String college,
                             @Param("major")String profession,@Param("email")String inputEmail,@Param("weichart")String wechat,@Param("isShowWei")int wechatP,
                             @Param("phoneNum")String phone,@Param("isShowPhoneNum")int phoneP,@Param("photo")String pic,@Param("specialty")String feature,
                             @Param("competitionExperience")String exprience );
@@ -77,10 +77,30 @@ public interface UserMapper {
     @Select("select count(*) from projetdetail where userId=#{userId} ")
     public int  getMeProjectDetailNum(@Param("userId") Integer userID);
 
-
-    @Select("select * from projetdetail where userId!=#{userId} limit #{page},#{pageSize}")
+    /*
+     获取去掉userid已报名外的其他的项目
+     */
+    @Select("select * from projetdetail where id not in (select  projectId from ownproject where userId=#{userId} and flag!=2) and userId!=#{userId} and leftNum>0 order by createTime desc limit #{page},#{pageSize}")
     public List<ProjectDetail> getAllProjectDetail(@Param("userId") Integer userID,@Param("page") Integer page, @Param("pageSize") Integer pageSize);
-    @Select("select count(*) from projetdetail where userId!=#{userId} ")
+    /*
+     获取项目表中不属于userId的项目集合
+     */
+    @Select("select count(*) from projetdetail where userId!=#{userId} and leftNum>0")
+    public int getAllProjectDetailNumNew(@Param("userId") Integer userID);
+    /*
+    获取项目表中不属于userId的项目数量
+     */
+    @Select("select count(*) from projetdetail where userId!=#{userId} and leftNum>0 order by createTime desc limit #{page},#{pageSize}")
+    public List<ProjectDetail> getAllProjectDetailNew(@Param("userId") Integer userID,@Param("page") Integer page, @Param("pageSize") Integer pageSize);
+    /*
+     获取已报名但是没有拒绝的项目数量
+     */
+    @Select("select count(*) from ownproject where userId=#{userId} and flag!=2")
+    public int getSignNum(@Param("userId") Integer userID);
+    /*
+         获取去掉userid已报名外的其他的项目的数量
+         */
+    @Select("select count(*) from projetdetail where id not in (select  projectId from ownproject where userId=#{userId} and flag!=2) and userId!=#{userId} and leftNum>0 ")
     public int getAllProjectDetailNum(@Param("userId") Integer userID);
     /*
      查询单个项目
@@ -134,7 +154,7 @@ public interface UserMapper {
     public int getOwnProjectCount(@Param("status") Integer status,@Param("userID") Integer userId);
     @Update("update projetdetail set leftNum=leftNum-1 where id=#{projectId}")
     public int updateProjectLeftNum(@Param("projectId") Integer projectId);
-    @Select("select count(*) from ownproject where  projectID=#{projectId} and userID=#{userId} and status=#{status} and flag!=2")
-    public int getOwnProjectNum(@Param("projectId") Integer projectId,@Param("userId") Integer userId,@Param("status") Integer status);
+    @Select("select count(*) from ownproject where  projectID=#{projectId} and userID=#{userId} and ownID=#{ownId} and status=#{status} and flag!=2")
+    public int getOwnProjectNum(@Param("projectId") Integer projectId,@Param("userId") Integer userId,@Param("ownId") Integer ownId,@Param("status") Integer status);
 
 }

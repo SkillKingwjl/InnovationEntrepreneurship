@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS `userdetil`;
 CREATE TABLE `userdetil` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userID` int(11) NOT NULL,
+  `name` VARCHAR(255) NOT NULL ,
   `sex` tinyint(1) NOT NULL,
   `studentID` varchar(255) NOT NULL,
   `department` varchar(255) NOT NULL,
@@ -29,7 +30,7 @@ CREATE TABLE `userdetil` (
   `email` varchar(255) NOT NULL,
   `weichart` varchar(255) NOT NULL,
   `isShowWei` tinyint(1) NOT NULL,
-  `phoneNum` int(11) NOT NULL,
+  `phoneNum` VARCHAR(11) NOT NULL,
   `isShowPhoneNum` tinyint(1) NOT NULL,
   `photo` varchar(255) NOT NULL,
   `specialty` text,
@@ -66,8 +67,9 @@ CREATE TABLE `projetdetail` (
   `teacher` VARCHAR(255) not NULL DEFAULT '' COMMENT '导师',
   `findType` INT(1) NOT NULL DEFAULT 0 COMMENT '0:队员 1：项目负责人 2：创新创业导师',
   `findNum` INT(2) NOT NULL  DEFAULT  1 COMMENT '寻找人数',
+  `leftNum` INT(2) NOT NULL  DEFAULT  1 COMMENT '还需人数',
   `findIntrodution` VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '寻找说明',
-  `createTime` TIMESTAMP  not null DEFAULT  CURRENT_TIMESTAMP comment'创建时间',
+  `createTime` dateTime  not null DEFAULT  CURRENT_TIMESTAMP comment'创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 -- --------------------------

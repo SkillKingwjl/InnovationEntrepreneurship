@@ -2,6 +2,7 @@ package com.wjl.model;
 
 public class UserDetail {
     private Integer id;
+    private String name;
     private Integer userID;
     private Integer sex;
     private String studentID;
@@ -126,5 +127,13 @@ public class UserDetail {
 
     public void setCompetitionExperience(String competitionExperience) {
         this.competitionExperience = competitionExperience;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

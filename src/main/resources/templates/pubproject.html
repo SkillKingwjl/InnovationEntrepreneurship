@@ -26,13 +26,14 @@
                 <form class="form-horizontal form-style" >
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">发布人</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-9">
                             <input type="text" class="form-control" id="name" placeholder="发布人">
                         </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
                     <div class="form-group">
                         <label for="type" class="col-sm-2 control-label">类型</label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <select  class="form-control" id="type">
                                 <option value="0" selected>互联网+</option>
                                 <option value="1">挑战杯</option>
@@ -40,6 +41,7 @@
                                 <option value="3">微软创青春</option>
                             </select>
                         </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
                         <label for="process" class="col-sm-2 control-label">进度</label>
                         <div class="col-sm-4">
                             <select  class="form-control" id="process">
@@ -51,16 +53,18 @@
                     </div>
                     <div class="form-group">
                         <label for="projectname" class="col-sm-2 control-label">项目名称</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-9">
                             <input type="text" class="form-control" id="projectname" placeholder="项目名称">
                         </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
                     <div class="form-group">
                         <label for="feature" class="col-sm-2 control-label">创意简介</label>
-                        <div class="col-sm-10" >
-                        <textarea class="form-control" id="feature" placeholder="" style="height:230px">
+                        <div class="col-sm-9" >
+                            <textarea class="form-control" id="feature" placeholder="" style="height:230px">
                         </textarea>
                         </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
                 </form>
             </div>
@@ -79,15 +83,16 @@
 
                     <div class="form-group">
                         <label for="search" class="col-sm-2 control-label">寻找</label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <select  class="form-control" id="search">
                                 <option value="0">队员</option>
                                 <option value="1">项目负责人</option>
                                 <option value="2">创新创业导师</option>
                             </select>
                         </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
                         <label for="search_num" class="col-sm-2 control-label">人数</label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <select  class="form-control" id="search_num">
                                 <option value="1">1人</option>
                                 <option value="2">2人</option>
@@ -98,6 +103,7 @@
                                 <option value="7">7人</option>
                             </select>
                         </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
                     <div class="form-group">
                         <label for="search_know" class="col-sm-2 control-label">寻找说明</label>
@@ -134,11 +140,20 @@
             "dataType":"JSON",
             "success":function (data) {
                 if(data==false){
-                    alert("请先登录")
-                    window.location.href="index"
-                    return
+                    window.location.href="/index";
+                }else{
+                    var user=data.user;
+                    var userdetail=data.userDetail;
+                    var flag=user.flag;
+                    if(flag==4){
+                        alert("您不具备发布项目的权限")
+                        window.location.href="showinfo";
+                    }else{
+                        var name=userdetail.name;
+                        $("#name").val(name);
+                        $("#for_person").val(name)
+                    }
                 }
-
             }
         })
     })
@@ -169,6 +184,10 @@
             alert("导师不能为空");
             return;
         }
+        if(!feature){
+            alert("创意简介不能为空");
+            return;
+        }
         var data1={
             "title":projectname,
             "name":name,
@@ -187,15 +206,16 @@
             "dataType":"JSON",
             "data":data1,
             "success":function (data) {
-                if(data==false){
-                    alert("请先登录")
-                    window.location.href="index"
-                    return
-                }
                 if(data==1){
                     window.location.href="/meproject";
-                }else{
+                }else if(data==0){
                     alert("创建失败");
+                }else if(data==-1){
+                    alert("您没有权限创建项目");
+                    window.location.href="showinfo";
+                }else{
+                    alert("您没有登录，请登录");
+                    window.location.href="index";
                 }
             }
         })
