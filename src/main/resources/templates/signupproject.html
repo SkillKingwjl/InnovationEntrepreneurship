@@ -34,6 +34,9 @@
         <ul class="pager">
             <li><a href="" id="prev">上一页</a></li>
             <li><a href="" id="next">下一页</a></li>
+            <li>第<label id="nowPage"></label>页</li>
+            <li>共<label id="allPage"></label>页</li>
+            <li style="margin-left: 100px"><label >至</label><input type="text" id="skinTo" style="width:80px;border-radius: 3px;margin-left: 10px;" ><label style="margin-left: 10px;">页</label> <a href="javascript:skinPage()">跳转</a></li>
         </ul>
     </nav>
 
@@ -45,6 +48,7 @@
     $(function(){
         getcontent(1,15)
     })
+    var allPageNum=0;
     function getcontent(page,pageSize){
         $.ajax({
             "url":"/getsignprojectdetail",
@@ -56,17 +60,19 @@
             },
             "success":function (data) {
                 if(data==false){
-                    alert("请先登录")
                     window.location.href="index"
                     return
                 }
                 if(data.count>0){
                     handlerdata(data.projectDetail);
                     var pageNum=data.pageNum;
+                    allPageNum=pageNum
                     var prevPage=page-1;
                     var nextPage=page+1;
                     $("#prev").attr("href","javascript:getPageInfo("+prevPage+","+pageNum+",0)")
                     $("#next").attr("href","javascript:getPageInfo("+nextPage+","+pageNum+",1)")
+                    $("#nowPage").text(page);
+                    $("#allPage").text(pageNum)
                 }
             }
         })
@@ -95,16 +101,18 @@
     }
     function handlerdata(data){
         var url="<tbody<tr>\n" +
-            "                        <td>项目名称</td>\n" +
-            "                        <td>发布人</td>\n" +
-            "                        <td>比赛类型</td>\n" +
-            "                        <td>报名时间</td>\n" +
-            "                    </tr>";
+            "<td>项目名称</td>\n" +
+            "<td>发布人</td>\n" +
+            "<td>比赛类型</td>\n" +
+            "<td>报名时间</td>\n" +
+            "<td>状态</td>\n" +
+            "</tr>";
         $.each(data,function(n,value){
             var id=value.id
             var name=value.name;
             var title=value.title;
             var type=value.type;
+            var flag=value.flag;
             var typename="互联网+"
             if(type==1){
                 typename="挑战杯"
@@ -121,14 +129,37 @@
             }else if(findType==2){
                 findName="创新创业导师"
             }
+            var flagName="通过";
+            if(flag==1){
+                flagName="审核中";
+            }else if(flag==2){
+                flagName="拒绝";
+            }
             var createTime=value.createTime;
-            url+="<tr onclick='skinto("+id+")'><td>"+title+"</td><td>"+name+"</td><td>"+typename+"</td><td>"+createTime+"</td>"
+            url+="<tr onclick='skinto("+id+")'><td>"+title+"</td><td>"+name+"</td><td>"+typename+"</td><td>"+createTime+"</td><td>"+flagName+"</td>"
         })
         url+="</tbody>"
         $("#content").html(url)
     }
     function skinto(id){
         window.location.href="projectdetail?projectId="+id;
+    }
+    function skinPage(){
+        var page=$("#skinTo").val()
+        var num=/^[0-9]*$/;
+        if(!num.test(page)){
+            alert('请输入数字！');
+            return;
+        }
+        if(parseInt(page)>allPageNum){
+            alert('输入页数大于总页数，请重新输入！');
+            return;
+        }
+        if(parseInt(page)<=0){
+            alert('输入页数需大于0，请重新输入！');
+            return;
+        }
+        getcontent(parseInt(page),15)
     }
 </script>
 </html>

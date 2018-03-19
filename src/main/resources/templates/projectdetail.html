@@ -30,27 +30,31 @@
                 <form class="form-horizontal form-style" >
                     <div class="form-group">
                         <label class="col-sm-4 control-label">项目名称</label>
-                        <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="title">
-
+                        <div class="col-sm-8">
+                            <input  style="line-height: inherit;text-align: center;vertical-align: middle;" id="title" class="form-control" disabled="disabled" />
                         </div>
+
                     </div>
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">发布人</label>
-                        <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="name">
-
+                        <div class="col-sm-8">
+                            <input  style="line-height: inherit;text-align: center;vertical-align: middle;" id="name" class="form-control" disabled="disabled"/>
                         </div>
+
                     </div>
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">创新创业导师</label>
-                        <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="teacher">
-
+                        <div class="col-sm-8">
+                            <input  style="line-height: inherit;text-align: center;vertical-align: middle;" id="teacher" class="form-control" disabled="disabled" />
                         </div>
+
                     </div>
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">项目负责人</label>
-                        <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="for_person">
-
+                        <div class="col-sm-8">
+                            <input  style="line-height: inherit;text-align: center;vertical-align: middle;" id="for_person" class="form-control" disabled="disabled" />
                         </div>
+
                     </div>
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">队员</label>
@@ -67,38 +71,45 @@
 
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">比赛类型</label>
-                        <div class="col-sm-8"style="line-height: inherit;text-align: center;vertical-align: middle;" id="type">
-
+                        <div class="col-sm-8">
+                            <input style="line-height: inherit;text-align: center;vertical-align: middle;" id="type" class="form-control" disabled="disabled" />
                         </div>
+
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">比赛进度</label>
-                        <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="process">
-
+                        <div class="col-sm-8">
+                            <input style="line-height: inherit;text-align: center;vertical-align: middle;" id="process" disabled="disabled" class="form-control" />
                         </div>
+
                     </div>
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">项目简介</label>
-                        <div class="col-sm-8" style="height:200px;margin-top:20px" id="introduce">
-
+                        <div class="col-sm-8">
+                            <textarea  style="height:150px;margin-top:20px" id="introduce" disabled="true" class="form-control">
+                            </textarea>
                         </div>
+
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" style="margin-top:10px">
                         <label  class="col-sm-4 control-label">寻找对象</label>
-                        <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="find_num">
-
+                        <div class="col-sm-8">
+                            <input  style="line-height: inherit;text-align: center;vertical-align: middle;" id="find_num" class="form-control" disabled="disabled" />
                         </div>
+
                     </div>
                     <div class="form-group">
 
                         <label  class="col-sm-4 control-label">还需人数</label>
-                        <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="left_num">
-
+                        <div class="col-sm-8">
+                            <input  style="line-height: inherit;text-align: center;vertical-align: middle;" id="left_num" class="form-control" disabled="disabled" />
                         </div>
+
                     </div>
                 </form>
             </div>
+
 
             <div>
                 <form class="form-horizontal form-style" >
@@ -112,8 +123,7 @@
             </div>
         </div>
     </div>
-
-</div>
+ </div>
 </body>
 <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
 <script th:src="@{/js/bootstrap.js}" ></script>
@@ -134,12 +144,11 @@
             },
             "success":function (data) {
                 if(data==false){
-                    alert("请先登录")
                     window.location.href="index"
                     return
                 }
                 if(data){
-                    handledata(data.projectDetail,data.userList)
+                    handledata(data.projectDetail,data.userList,data.user)
                     if(data.flag>0){
                         $("#operator").attr("onclick","cancle()")
                         $("#operator").addClass("active")
@@ -148,7 +157,7 @@
             }
         })
     }
-    function handledata(projectDetail,userList){
+    function handledata(projectDetail,userList,users){
         userId=projectDetail.userId;
         var name=projectDetail.name;
         var title=projectDetail.title;
@@ -174,19 +183,19 @@
         var introdution=projectDetail.findIntrodution;
         var findnum=projectDetail.findNum;
         var leftNum=projectDetail.leftNum;
-        $("#name").html(name)
-        $("#title").html(title)
+        $("#name").val(name)
+        $("#title").val(title)
         if(teacher){
-            $("#teacher").html(teacher)
+            $("#teacher").val(teacher)
         }else{
-            $("#teacher").html("无")
+            $("#teacher").val("无")
         }
-        $("#for_person").html(leder)
-        $("#type").html(typename)
-        $("#process").html(processname)
-        $("#introduce").html(introdution)
-        $("#find_num").html(findnum)
-        $("#left_num").html(leftNum)
+        $("#for_person").val(leder)
+        $("#type").val(typename)
+        $("#process").val(processname)
+        $("#introduce").val(introdution)
+        $("#find_num").val(findnum)
+        $("#left_num").val(leftNum)
         if(userList){
             var url="<tbody><tr><td>姓名</td><td>专业</td></tr>";
             $.each(userList,function(n,value){
@@ -194,7 +203,8 @@
                 var userDetail=value.userDetail
                 var name=user.username;
                 var major=userDetail.major;
-                url+="<tr><td>"+name+"</td><td>"+major+"</td></tr>"
+                var id=user.id;
+                url+="<tr onclick='skinToUser("+id+")'><td>"+name+"</td><td>"+major+"</td></tr>"
             })
             url+="</tbody>";
             $("#content").html(url)
@@ -203,6 +213,11 @@
         if(userId==tempId||leftNum==0){
            $("#operator").attr("onclick","cancle()");
            $("#operator").addClass("active")
+        }
+        var flag=user.flag;
+        if(findType==0&&flag==4){
+            $("#operator").attr("onclick","cantcle()");
+            $("#operator").addClass("active")
         }
     }
     function operation(){
@@ -220,9 +235,12 @@
                     alert("项目人数已达上限");
                     return;
                 }
-                if(data>0){
+                if(data==1){
                     alert("申请已发送成功！")
                     window.location.href="searchproject"
+                }else if(data==2){
+                    alert("您已经申请，请勿再次申请！");
+                    return;
                 }else{
                     alert("申请失败，请联系管理员！")
                 }
@@ -232,6 +250,12 @@
 
     function cancle(){
         alert("无效操作")
+    }
+    function skinToUser(id){
+        window.location.href="showperson?userId="+id
+    }
+    function cantcle(){
+        alert("您是企业导师，无法申请成为队员");
     }
 </script>
 </html>

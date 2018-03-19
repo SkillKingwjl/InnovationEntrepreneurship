@@ -27,26 +27,26 @@
                 <form class="form-horizontal form-style" >
                     <div class="form-group">
                         <label class="col-sm-4 control-label">姓名</label>
-                        <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="name">
-
+                        <div class="col-sm-8">
+                            <input  style="line-height: inherit;text-align: center;vertical-align: middle;" id="name" disabled="disabled" class="form-control"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">照片</label>
                         <div class="col-sm-8"  style="height:300px;border-radius: 3px;background-color: silver">
-                            <img src="" id="pic_url" width="95%" height="95%">
+                            <img src="" id="pic_url" width="95%" height="95%" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">微信</label>
-                        <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="wexin">
-
+                        <div class="col-sm-8">
+                            <input  style="line-height: inherit;text-align: center;vertical-align: middle;" id="wexin" disabled="disabled" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">电话</label>
-                        <div class="col-sm-8" style="line-height: inherit;text-align: center;vertical-align: middle;" id="phone">
-
+                        <div class="col-sm-8">
+                             <input  style="line-height: inherit;text-align: center;vertical-align: middle;" id="phone" disabled="disabled" class="form-control" />
                         </div>
                     </div>
 
@@ -57,14 +57,14 @@
 
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">特长</label>
-                        <div class="col-sm-8" style="height:150px;margin-top:20px" id="feature">
-
+                        <div class="col-sm-8">
+                            <textarea  style="height:150px;margin-top:20px" id="feature" disabled="disabled" class="form-control"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label  class="col-sm-4 control-label">比赛和项目经历</label>
-                        <div class="col-sm-8" style="height:150px;margin-top:20px" id="exprience">
-
+                        <div class="col-sm-8">
+                            <textarea  style="height:150px;margin-top:20px" id="exprience" disabled="disabled" class="form-control"/>
                         </div>
                     </div>
                     <label for="project" class="col-sm-4 control-label">项目</label>
@@ -109,7 +109,6 @@
             "data":{"userId":userId},
             "success":function (data) {
                 if(data==false){
-                    alert("请先登录")
                     window.location.href="index"
                     return
                 }
@@ -134,19 +133,19 @@
         var photo=userDetail.photo;
         var specialty=userDetail.specialty;
         var competitionExperience=userDetail.competitionExperience;
-        $("#name").html(username)
+        $("#name").val(username)
         if(photo){
             $("#pic_url").attr("src","/upload-dir/"+photo)
         }
-        $("#wexin").html(weichart)
+        $("#wexin").val(weichart)
         if(isShowPhoneNum==0){
-            $("#phone").html(phoneNum)
+            $("#phone").val(phoneNum)
         }else{
-            $("#phone").html("未公开")
+            $("#phone").val("未公开")
         }
 
-        $("#feature").html(specialty)
-        $("#exprience").html(competitionExperience)
+        $("#feature").val(specialty)
+        $("#exprience").val(competitionExperience)
         if(project){
             var url=""
             $.each(project,function(n,value){
@@ -181,9 +180,12 @@
                     alert("项目人数已达上限");
                     return;
                 }
-                if(data>0){
+                if(data==1){
                     alert("邀请成功");
                     window.location.href="searchperson"
+                }else if(data==2){
+                    alert("您已经邀请此人，请勿再次邀请！");
+                    return;
                 }else{
                     alert("申请失败，请联系管理员！")
                 }

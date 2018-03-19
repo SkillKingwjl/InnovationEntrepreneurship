@@ -5,6 +5,15 @@ import java.util.List;
 public class ProjectInfo {
     private ProjectDetail projectDetail;
     private List<UserBean> userList;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     private int flag;//是否已经申请过了该项目
 

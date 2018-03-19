@@ -14,138 +14,155 @@
 
 <body style="background-color: #f7f7f7">
 <div style="min-width: 1600px;min-height: 960px;">
-    <div style="margin: 90px auto;width: 1600px;background-color:#ffffff;padding-bottom: 90px;height:700px;border-radius: 5px">
+    <div style="margin: 90px auto;width: 1600px;background-color:#ffffff;padding-bottom: 90px;min-height:800px;border-radius: 5px">
         <div>
             <div class="col-lg-4" style="height:60px"></div>
             <div class="col-lg-4" style="height:60px"><h3>个人信息</h3></div>
             <div class="col-lg-4" style="height:60px"></div>
         </div>
-
-        <div class="col-lg-4" style="padding-top: 20px">
-            <form class="form-horizontal form-style" >
-                <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label">姓名</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="name" placeholder="姓名" onblur="checkName()">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="sex" class="col-sm-2 control-label">性别</label>
-                    <div class="col-sm-10">
-                        <select  class="form-control" id="sex">
-                            <option value="0">男</option>
-                            <option value="1">女</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="role" class="col-sm-2 control-label">角色</label>
-                    <div class="col-sm-10">
-                        <select  class="form-control" id="role" onchange="changeWord()">
-                            <option value="0" selected>学生</option>
-                            <option value="1">教师</option>
-                            <option value="2">企业人员</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="studentNum" class="col-sm-2 control-label" id="studentNum1">学号</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="studentNum" placeholder="学号">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="password" class="col-sm-2 control-label">密码</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" id="password" placeholder="密码">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="password1" class="col-sm-2 control-label">确认密码</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" id="password1" placeholder="确认密码">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="college" class="col-sm-2 control-label" id="college1">院系</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="college" placeholder="院系">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="profession" class="col-sm-2 control-label" id="profession1">专业</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="profession" placeholder="专业">
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="col-lg-4" style="padding-top: 20px">
-            <form class="form-horizontal form-style" >
-                <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail" placeholder="邮箱" onblur="checkEmail()">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="wechat" class="col-sm-2 control-label" >微信</label>
-                    <div class="col-sm-7">
-                        <input type="text" class="form-control" id="wechat" placeholder="微信">
-                    </div>
-                    <div class="col-sm-3">
-                        <select class="form-control" id="wechatP">
-                            <option value="0" selected>公开</option>
-                            <option value="1">不公开</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="phone" class="col-sm-2 control-label">电话</label>
-                    <div class="col-sm-7">
-                        <input type="text" class="form-control" id="phone" placeholder="电话" onblur="checkPhone()">
-                    </div>
-                    <div class="col-sm-3">
-                        <select class="form-control" id="phoneP">
-                            <option value="0" selected>公开</option>
-                            <option value="1" >不公开</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="pic" class="col-sm-2 control-label">照片</label>
-                    <div class="col-sm-8" id="pic" style="height:300px;border-radius: 3px;background-color: silver">
-                        <img src="" id="pic_url" width="100%" height="100%">
-                    </div>
-                    <div class="col-sm-2">
-                        <input type="file" id="file1" onchange="doChange()" name="file1" style="display:none">
-                        <button class="btn btn-default" type="button" onclick="file1.click()">上传</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="col-lg-4" style="padding-top: 20px">
-            <form class="form-horizontal form-style" >
-                <div class="form-group">
-                    <label for="feature" class="col-sm-2 control-label" id="feature1">特长</label>
-                    <div class="col-sm-10" >
-                        <textarea class="form-control" id="feature" placeholder="" style="height:230px">
-                        </textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="exprience" class="col-sm-2 control-label" id="exprience1">比赛和项目经历</label>
-                    <div class="col-sm-10">
-                        <textarea class="form-control" id="exprience" placeholder="" style="height:230px">
-                        </textarea>
-                    </div>
-                </div>
-            </form>
-        </div>
         <div>
+            <div class="col-lg-4" style="padding-top: 20px">
+                <form class="form-horizontal form-style" >
+                    <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">用户名</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="username" placeholder="用户名" onblur="checkName()">
+                        </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">姓名</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="name" placeholder="姓名"/>
+                        </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="sex" class="col-sm-2 control-label">性别</label>
+                        <div class="col-sm-9">
+                            <select  class="form-control" id="sex">
+                                <option value="0">男</option>
+                                <option value="1">女</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="role" class="col-sm-2 control-label">角色</label>
+                        <div class="col-sm-9">
+                            <select  class="form-control" id="role" onchange="changeWord()">
+                                <option value="0" selected>学生</option>
+                                <option value="1">教师</option>
+                                <option value="2">企业人员</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentNum" class="col-sm-2 control-label" id="studentNum1">学号</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="studentNum" placeholder="学号">
+                        </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-sm-2 control-label">密码</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" id="password" placeholder="密码">
+                        </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="password1" class="col-sm-2 control-label">确认密码</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" id="password1" placeholder="确认密码">
+                        </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="college" class="col-sm-2 control-label" id="college1">院系</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="college" placeholder="院系">
+                        </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="profession" class="col-sm-2 control-label" id="profession1">专业</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="profession" placeholder="专业">
+                        </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-4" style="padding-top: 20px">
+                <form class="form-horizontal form-style" >
+                    <div class="form-group">
+                        <label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="inputEmail" placeholder="邮箱" onblur="checkEmail()">
+                        </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="wechat" class="col-sm-2 control-label" >微信</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="wechat" placeholder="微信">
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-control" id="wechatP">
+                                <option value="0" selected>公开</option>
+                                <option value="1">不公开</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="col-sm-2 control-label">电话</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="phone" placeholder="电话" onblur="checkPhone()">
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-control" id="phoneP">
+                                <option value="0" selected>公开</option>
+                                <option value="1" >不公开</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pic" class="col-sm-2 control-label">照片</label>
+                        <div class="col-sm-8" id="pic" style="height:300px;border-radius: 3px;background-color: silver">
+                            <img src="" id="pic_url" width="100%" height="100%">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="file" id="file1" onchange="doChange()" name="file1" style="display:none">
+                            <button class="btn btn-default" type="button" onclick="file1.click()">上传</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-4" style="padding-top: 20px">
+                <form class="form-horizontal form-style" >
+                    <div class="form-group">
+                        <label for="feature" class="col-sm-2 control-label" id="feature1">特长</label>
+                        <div class="col-sm-10" >
+                            <textarea class="form-control" id="feature" placeholder="" style="height:230px">
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exprience" class="col-sm-2 control-label" id="exprience1">比赛和项目经历</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="exprience" placeholder="" style="height:230px">
+                            </textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div style="height:200px;margin-top:20px">
             <form class="form-horizontal form-style" >
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-10">
@@ -163,6 +180,7 @@
 <script th:src="@{/js/ajaxfileupload.js}" ></script>
 <script>
     function register(){
+        var username=$("#username").val();
         var name=$("#name").val();
         var sex=$("#sex").val()
         var role=$("#role").val();
@@ -179,6 +197,17 @@
         var pic=$("#pic_url").attr("src");
         var feature=$("#feature").val();
         var exprience=$("#exprience").val();
+        if(!username){
+            alert("用户名不能为空")
+            return
+        }
+        if(username){
+            var myreg=/^[\u3220-\uFA29]+$/;
+            if(myreg.test(username)){
+                alert("用户名应为字母或者特殊字符，不英文中文")
+                return;
+            }
+        }
         if(!name){
             alert("姓名不能为空");
             return;
@@ -244,6 +273,7 @@
             return;
         }
         var data1={
+            "username":username,
             "name":name,
             "password":password,
             "sex":sex,
@@ -321,15 +351,18 @@
         })
     }
     function checkName(){
-        var name=$("#name").val();
+        var username=$("#username").val();
+        if(!username){
+            return;
+        }
         $.ajax({
             "url":"/checkname",
             "type":"POST",
             "dataType":"JSON",
-            "data":{"name":name},
+            "data":{"username":username},
             "success":function (data) {
                 if(data>0){
-                    alert("姓名重复，请重新输入")
+                    alert("用户名重复，请重新输入")
                     $("#name").val("")
                 }
             }
