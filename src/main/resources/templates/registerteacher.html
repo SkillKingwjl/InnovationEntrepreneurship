@@ -17,14 +17,14 @@
     <div style="margin: 90px auto;width: 1600px;background-color:#ffffff;padding-bottom: 90px;min-height:800px;border-radius: 5px">
         <div>
             <div class="col-lg-4" style="height:60px"></div>
-            <div class="col-lg-4" style="height:60px"><h3>注册</h3></div>
+            <div class="col-lg-4" style="height:60px"><h3>个人信息</h3></div>
             <div class="col-lg-4" style="height:60px"></div>
         </div>
-        <!--<div>-->
-            <!--<button type="button" class="btn btn-default active" style="margin-left:150px;width:300px" onclick="skintoStudent()">学生注册</button>-->
-            <!--<button type="button" class="btn btn-default " style="margin-left: 150px;width:300px" onclick="skintoteacher()">老师注册</button>-->
-            <!--<button type="button" class="btn btn-default " style="margin-left: 150px;width:300px" onclick="skintocompany()">创新导师注册</button>-->
-        <!--</div>-->
+        <div>
+            <button type="button" class="btn btn-default " style="margin-left:150px;width:300px" onclick="skintoStudent()">学生注册</button>
+            <button type="button" class="btn btn-default active" style="margin-left: 150px;width:300px" onclick="skintoteacher()">老师注册</button>
+            <button type="button" class="btn btn-default " style="margin-left: 150px;width:300px" onclick="skintocompany()">创新导师注册</button>
+        </div>
         <div>
             <div class="col-lg-4" style="padding-top: 20px">
                 <form class="form-horizontal form-style" >
@@ -46,9 +46,9 @@
                         <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
                     <div class="form-group">
-                        <label for="studentNum" class="col-sm-2 control-label" id="studentNum1">学号</label>
+                        <label for="studentNum" class="col-sm-2 control-label" id="studentNum1">工号</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="studentNum" placeholder="学号" onblur="checkName()">
+                            <input type="text" class="form-control" id="studentNum" placeholder="工号">
                         </div>
                         <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
@@ -75,23 +75,12 @@
                         <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
                     <div class="form-group">
-                        <label for="profession" class="col-sm-2 control-label" id="profession1">专业</label>
+                        <label for="profession" class="col-sm-2 control-label" id="profession1">职称</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="profession" placeholder="专业">
+                            <input type="text" class="form-control" id="profession" placeholder="职称">
                         </div>
                         <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
-                    <!--<div class="form-group">-->
-                        <!--<label for="type" class="col-sm-2 control-label">项目类型</label>-->
-                        <!--<div class="col-sm-9" id="type">-->
-                            <!--<input class="form-control" type="checkbox" name="type" value="">11-->
-                            <!--<input class="form-control" type="checkbox" name="type" value="">22-->
-                            <!--<input class="form-control" type="checkbox" name="type" value="">33-->
-                            <!--<input class="form-control" type="checkbox" name="type" value="">44-->
-                            <!--<input class="form-control" type="checkbox" name="type" value="">55-->
-                        <!--</div>-->
-                        <!--<label class="col-sm-1 control-label" style="color:red">*</label>-->
-                    <!--</div>-->
                 </form>
             </div>
             <div class="col-lg-4" style="padding-top: 20px">
@@ -99,7 +88,7 @@
                     <div class="form-group">
                         <label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
                         <div class="col-sm-9">
-                            <input type="email" class="form-control" id="inputEmail" placeholder="邮箱" onblur="checkEmail()">
+                            <input type="email" class="form-control" id="inputEmail" placeholder="邮箱" onblur="checkName()">
                         </div>
                         <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
@@ -144,14 +133,14 @@
             <div class="col-lg-4" style="padding-top: 20px">
                 <form class="form-horizontal form-style" >
                     <div class="form-group">
-                        <label for="feature" class="col-sm-2 control-label" id="feature1">特长</label>
+                        <label for="feature" class="col-sm-2 control-label" id="feature1">个人简介</label>
                         <div class="col-sm-10" >
                             <textarea class="form-control" id="feature" placeholder="" style="height:230px">
                             </textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="exprience" class="col-sm-2 control-label" id="exprience1">比赛和项目经历</label>
+                        <label for="exprience" class="col-sm-2 control-label" id="exprience1">研究方向</label>
                         <div class="col-sm-10">
                             <textarea class="form-control" id="exprience" placeholder="" style="height:230px">
                             </textarea>
@@ -179,10 +168,10 @@
 <script th:src="@{/js/registercommon.js}" ></script>
 <script>
     function register(){
-        var username=$("#studentNum").val();
+        var username=$("#inputEmail").val();
         var name=$("#name").val();
         var sex=$("#sex").val()
-        var role=$("#role").val();
+        var role=3;
         var studentNum=$("#studentNum").val();
         var password=$("#password").val();
         var password1=$("#password1").val();
@@ -230,32 +219,10 @@
                 return;
             }
         }
-
-        if(role==0){
-            if(!studentNum){
-                alert("学号不能为空");
-                return;
-            }
-            if(!college){
-                alert("院系不能为空");
-                return;
-            }
-            if(!profession){
-                alert("专业不能为空");
-                return;
-            }
-        }else if(role==1){
-            if(!college){
-                alert("院系不能为空");
-                return;
-            }
-        }else{
-            if(!profession){
-                alert("学历不能为空");
-                return;
-            }
+        if(!college){
+            alert("院系不能为空");
+            return;
         }
-
         if(!inputEmail){
             alert("邮箱不能为空");
             return;
@@ -290,7 +257,7 @@
                     window.location.href="index";
                 }else{
                     if(data==-1){
-                       alert("学号重复，请重新输入")
+                       alert("邮箱重复，请重新输入")
                     }else{
                         alert("注册失败");
                     }
@@ -299,7 +266,8 @@
         })
  }
 function checkName(){
-    var username=$("#studentNum").val();
+    checkEmail();
+    var username=$("#inputEmail").val();
     if(!username){
         return;
     }

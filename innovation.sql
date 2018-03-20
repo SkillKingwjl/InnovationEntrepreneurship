@@ -24,7 +24,6 @@ CREATE TABLE `userdetil` (
   `userID` int(11) NOT NULL,
   `name` VARCHAR(255) NOT NULL ,
   `sex` tinyint(1) NOT NULL,
-  `studentID` varchar(255) NOT NULL,
   `department` varchar(255) NOT NULL,
   `major` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -35,6 +34,7 @@ CREATE TABLE `userdetil` (
   `photo` varchar(255) NOT NULL,
   `specialty` text,
   `competitionExperience` text,
+  `type` varchar(256) not null DEFAULT '' COMMENT '学生的项目类型，用逗号隔开，老师一级的没有',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -70,6 +70,7 @@ CREATE TABLE `projetdetail` (
   `leftNum` INT(2) NOT NULL  DEFAULT  1 COMMENT '还需人数',
   `findIntrodution` VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '寻找说明',
   `createTime` dateTime  not null DEFAULT  CURRENT_TIMESTAMP comment'创建时间',
+  `flag` int(2) not null DEFAULT 1 COMMENT '项目状态 0 通过 1 审核中 2审核未通过',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 -- --------------------------

@@ -17,6 +17,7 @@
             <li ><a href="meproject">已创建项目</a></li>
             <li ><a href="signupproject">已报名项目</a></li>
             <li ><a href="message?flag=0">通知</a></li>
+            <li style="display: none" id="findpassword"><a href="findpassword">密码重置</a></li>
             <li ><a href="loginout">退出</a></li>
         </ul>
     </div>
@@ -43,6 +44,7 @@
 </body>
 <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
 <script th:src="@{/js/bootstrap.js}" ></script>
+<script th:src="@{/js/common.js}" ></script>
 <script>
     $(function(){
         getcontent(1,15)

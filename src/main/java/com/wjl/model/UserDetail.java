@@ -5,7 +5,6 @@ public class UserDetail {
     private String name;
     private Integer userID;
     private Integer sex;
-    private String studentID;
     private String department;
     private String major;
     private String email;
@@ -16,6 +15,7 @@ public class UserDetail {
     private String photo;
     private String specialty;
     private String competitionExperience;
+    private String type;
 
     public Integer getId() {
         return id;
@@ -39,14 +39,6 @@ public class UserDetail {
 
     public void setSex(Integer sex) {
         this.sex = sex;
-    }
-
-    public String getStudentID() {
-        return studentID;
-    }
-
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
     }
 
     public String getDepartment() {
@@ -135,5 +127,13 @@ public class UserDetail {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
