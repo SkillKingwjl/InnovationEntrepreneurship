@@ -5,6 +5,7 @@ public class UserDetail {
     private String name;
     private Integer userID;
     private Integer sex;
+    private String studentID;
     private String department;
     private String major;
     private String email;
@@ -39,6 +40,14 @@ public class UserDetail {
 
     public void setSex(Integer sex) {
         this.sex = sex;
+    }
+
+    public String getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
     }
 
     public String getDepartment() {

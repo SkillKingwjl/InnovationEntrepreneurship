@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/doc.css}">
     <style>
         .form-style>div{
             margin-top: 30px;
@@ -13,18 +14,23 @@
 </head>
 
 <body style="background-color: #f7f7f7">
+<div class="bs-docs-header" id="content" tabindex="-1">
+    <div class="container">
+        <p>为方便管理项目而生xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
+    </div>
+</div>
 <div style="min-width: 1600px;min-height: 960px;">
-    <div style="margin: 90px auto;width: 1600px;background-color:#ffffff;padding-bottom: 90px;min-height:800px;border-radius: 5px">
+    <div style="margin: 0 auto;width: 1600px;background-color:#ffffff;padding-bottom: 90px;min-height:800px;border-radius: 5px">
         <div>
             <div class="col-lg-4" style="height:60px"></div>
             <div class="col-lg-4" style="height:60px"><h3>注册</h3></div>
             <div class="col-lg-4" style="height:60px"></div>
         </div>
-        <!--<div>-->
-            <!--<button type="button" class="btn btn-default active" style="margin-left:150px;width:300px" onclick="skintoStudent()">学生注册</button>-->
-            <!--<button type="button" class="btn btn-default " style="margin-left: 150px;width:300px" onclick="skintoteacher()">老师注册</button>-->
-            <!--<button type="button" class="btn btn-default " style="margin-left: 150px;width:300px" onclick="skintocompany()">创新导师注册</button>-->
-        <!--</div>-->
+        <div>
+            <button type="button" class="btn btn-default active" style="margin-left:150px;width:300px" onclick="skintoStudent()">学生注册</button>
+            <button type="button" class="btn btn-default " style="margin-left: 150px;width:300px" onclick="skintoteacher()">老师注册</button>
+            <button type="button" class="btn btn-default " style="margin-left: 150px;width:300px" onclick="skintocompany()">创新导师注册</button>
+        </div>
         <div>
             <div class="col-lg-4" style="padding-top: 20px">
                 <form class="form-horizontal form-style" >
@@ -81,17 +87,17 @@
                         </div>
                         <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
-                    <!--<div class="form-group">-->
-                        <!--<label for="type" class="col-sm-2 control-label">项目类型</label>-->
-                        <!--<div class="col-sm-9" id="type">-->
-                            <!--<input class="form-control" type="checkbox" name="type" value="">11-->
-                            <!--<input class="form-control" type="checkbox" name="type" value="">22-->
-                            <!--<input class="form-control" type="checkbox" name="type" value="">33-->
-                            <!--<input class="form-control" type="checkbox" name="type" value="">44-->
-                            <!--<input class="form-control" type="checkbox" name="type" value="">55-->
-                        <!--</div>-->
-                        <!--<label class="col-sm-1 control-label" style="color:red">*</label>-->
-                    <!--</div>-->
+                    <div class="form-group">
+                        <label for="type" class="col-sm-2 control-label">项目类型</label>
+                        <div class="col-sm-9" id="type">
+                            <input class="form-control" type="checkbox" name="type" value="">11
+                            <input class="form-control" type="checkbox" name="type" value="">22
+                            <input class="form-control" type="checkbox" name="type" value="">33
+                            <input class="form-control" type="checkbox" name="type" value="">44
+                            <input class="form-control" type="checkbox" name="type" value="">55
+                        </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
+                    </div>
                 </form>
             </div>
             <div class="col-lg-4" style="padding-top: 20px">
@@ -182,7 +188,7 @@
         var username=$("#studentNum").val();
         var name=$("#name").val();
         var sex=$("#sex").val()
-        var role=$("#role").val();
+        var role=1;
         var studentNum=$("#studentNum").val();
         var password=$("#password").val();
         var password1=$("#password1").val();
@@ -231,30 +237,18 @@
             }
         }
 
-        if(role==0){
-            if(!studentNum){
-                alert("学号不能为空");
-                return;
-            }
-            if(!college){
-                alert("院系不能为空");
-                return;
-            }
-            if(!profession){
-                alert("专业不能为空");
-                return;
-            }
-        }else if(role==1){
-            if(!college){
-                alert("院系不能为空");
-                return;
-            }
-        }else{
-            if(!profession){
-                alert("学历不能为空");
-                return;
-            }
-        }
+      if(!studentNum){
+        alert("学号不能为空");
+        return;
+      }
+      if(!college){
+        alert("院系不能为空");
+        return;
+      }
+      if(!profession){
+        alert("专业不能为空");
+        return;
+      }
 
         if(!inputEmail){
             alert("邮箱不能为空");

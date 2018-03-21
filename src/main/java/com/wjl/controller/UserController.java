@@ -130,7 +130,7 @@ public class UserController {
 
     @RequestMapping(value = "register",method = RequestMethod.POST)
     @ResponseBody
-    public Object insert(String username,String name,  String password, Integer flag,int sex,String studentNum,String college,String profession,
+    public Object insert(String username,String name,String password, Integer flag,int sex,String studentNum,String college,String profession,
     String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience,String type){
         int count=userService.getUserByName(name);
         if(count>0){
