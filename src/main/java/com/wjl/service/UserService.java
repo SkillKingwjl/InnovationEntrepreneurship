@@ -34,16 +34,15 @@ public class UserService {
         return user.getId();
     }
     @Transactional
-    public int register(String username,String name, String password, Integer flag,int sex,String studentNum,String college,String profession,
-                        String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience,String type){
+    public int register(String username,String name,  String password, Integer flag,int sex,String studentNum,String college,String profession,
+                        String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience){
         int userId=this.insert(username,password,flag);
-        int result=insertDetailService(userId,name,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience,type);
+        int result=insertDetailService(userId,name,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
         return result;
     }
     public int insertDetailService( Integer userId,String name,int sex,String studentNum,String college,String profession,
-                                   String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,
-                                   String feature,String exprience,String type){
-        return userMapper.insertDetail(userId,name,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience, type);
+                                   String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience){
+        return userMapper.insertDetail(userId,name,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
     }
 
     public UserDetail getUserDetailService(int userId){
@@ -126,7 +125,7 @@ public class UserService {
         ProjectMessage message=new ProjectMessage();
         if(flag==1){
             int hasNum=userMapper.getSignNum(userId);
-            List<ProjectDetail> list=null;
+            List<ProjectDetail> list=new ArrayList<>();
             int count=0;
             if(hasNum>0){
                 list=userMapper.getAllProjectDetail(userId,page,pageSize);
@@ -342,7 +341,6 @@ public class UserService {
        }
         return userBean;
     }
-
     @Transactional
     public int applicationProject(int userId,int ownId,int projectId,int type){
         ProjectDetail projectDetail= userMapper.getSingeProjectDeatil(projectId);

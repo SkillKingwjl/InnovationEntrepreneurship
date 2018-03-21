@@ -16,7 +16,6 @@ public class UserDetail {
     private String photo;
     private String specialty;
     private String competitionExperience;
-    private String type;
 
     public Integer getId() {
         return id;
@@ -136,13 +135,5 @@ public class UserDetail {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }

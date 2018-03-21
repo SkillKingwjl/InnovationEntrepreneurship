@@ -38,13 +38,12 @@ public interface UserMapper {
     /*
      新增用户的具体信息
      */
-    @Insert("INSERT INTO userdetil(userID,name,sex,studentID,department,major,email,weichart,isShowWei,phoneNum,isShowPhoneNum,photo,specialty,competitionExperience,type)" +
-            "values(#{userID},#{name},#{sex},#{studentID},#{department},#{major},#{email},#{weichart},#{isShowWei},#{phoneNum},#{isShowPhoneNum},#{photo},#{specialty}," +
-            "#{competitionExperience},#{type})")
+    @Insert("INSERT INTO userdetil(userID,name,sex,studentID,department,major,email,weichart,isShowWei,phoneNum,isShowPhoneNum,photo,specialty,competitionExperience)" +
+            "values(#{userID},#{name},#{sex},#{studentID},#{department},#{major},#{email},#{weichart},#{isShowWei},#{phoneNum},#{isShowPhoneNum},#{photo},#{specialty},#{competitionExperience})")
     public int insertDetail(@Param("userID") int userId,@Param("name")String name,@Param("sex") int sex,@Param("studentID") String studentNum,@Param("department")String college,
                      @Param("major")String profession,@Param("email")String inputEmail,@Param("weichart")String wechat,@Param("isShowWei")int wechatP,
                      @Param("phoneNum")String phone,@Param("isShowPhoneNum")int phoneP,@Param("photo")String pic,@Param("specialty")String feature,
-                     @Param("competitionExperience")String exprience ,@Param("type") String type);
+                     @Param("competitionExperience")String exprience );
     /*
      获取用户具体信息根据userID
      */
@@ -91,7 +90,7 @@ public interface UserMapper {
     /*
     获取项目表中不属于userId的项目数量
      */
-    @Select("select count(*) from projetdetail where userId!=#{userId} and leftNum>0 order by createTime desc limit #{page},#{pageSize}")
+    @Select("select * from projetdetail where userId!=#{userId} and leftNum>0 order by createTime desc limit #{page},#{pageSize}")
     public List<ProjectDetail> getAllProjectDetailNew(@Param("userId") Integer userID,@Param("page") Integer page, @Param("pageSize") Integer pageSize);
     /*
      获取已报名但是没有拒绝的项目数量

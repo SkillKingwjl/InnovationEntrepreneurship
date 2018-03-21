@@ -16,7 +16,6 @@ public class ProjectDetail {
     private Integer leftNum;
     private String findIntrodution;
     private String createTime;
-    private Integer flag;
 
     public Integer getId() {
         return id;
@@ -128,13 +127,5 @@ public class ProjectDetail {
 
     public void setLeftNum(Integer leftNum) {
         this.leftNum = leftNum;
-    }
-
-    public Integer getFlag() {
-        return flag;
-    }
-
-    public void setFlag(Integer flag) {
-        this.flag = flag;
     }
 }

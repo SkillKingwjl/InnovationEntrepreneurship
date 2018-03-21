@@ -14,26 +14,28 @@
 </head>
 
 <body style="background-color: #f7f7f7">
-<div class="bs-docs-header" id="content" tabindex="-1">
+<div class="bs-docs-header" style="height:60px" tabindex="-1">
     <div class="container">
         <p>为方便管理项目而生xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
     </div>
 </div>
 <div style="min-width: 1600px;min-height: 960px;">
-    <div style="margin: 0 auto;width: 1600px;background-color:#ffffff;padding-bottom: 90px;min-height:800px;border-radius: 5px">
+    <div style="margin: 0px auto;width: 1600px;background-color:#ffffff;padding-bottom: 90px;min-height:800px;border-radius: 5px">
         <div>
             <div class="col-lg-4" style="height:60px"></div>
-            <div class="col-lg-4" style="height:60px"><h3>注册</h3></div>
+            <div class="col-lg-4" style="height:60px"><h3>个人信息</h3></div>
             <div class="col-lg-4" style="height:60px"></div>
-        </div>
-        <div>
-            <button type="button" class="btn btn-default active" style="margin-left:150px;width:300px" onclick="skintoStudent()">学生注册</button>
-            <button type="button" class="btn btn-default " style="margin-left: 150px;width:300px" onclick="skintoteacher()">老师注册</button>
-            <button type="button" class="btn btn-default " style="margin-left: 150px;width:300px" onclick="skintocompany()">创新导师注册</button>
         </div>
         <div>
             <div class="col-lg-4" style="padding-top: 20px">
                 <form class="form-horizontal form-style" >
+                    <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">用户名</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="username" placeholder="用户名" onblur="checkName()">
+                        </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
+                    </div>
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">姓名</label>
                         <div class="col-sm-9">
@@ -52,9 +54,20 @@
                         <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
                     <div class="form-group">
+                        <label for="role" class="col-sm-2 control-label">角色</label>
+                        <div class="col-sm-9">
+                            <select  class="form-control" id="role" onchange="changeWord()">
+                                <option value="0" selected>学生</option>
+                                <option value="1">教师</option>
+                                <option value="2">企业人员</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
+                    </div>
+                    <div class="form-group">
                         <label for="studentNum" class="col-sm-2 control-label" id="studentNum1">学号</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="studentNum" placeholder="学号" onblur="checkName()">
+                            <input type="text" class="form-control" id="studentNum" placeholder="学号">
                         </div>
                         <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
@@ -84,17 +97,6 @@
                         <label for="profession" class="col-sm-2 control-label" id="profession1">专业</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="profession" placeholder="专业">
-                        </div>
-                        <label class="col-sm-1 control-label" style="color:red">*</label>
-                    </div>
-                    <div class="form-group">
-                        <label for="type" class="col-sm-2 control-label">项目类型</label>
-                        <div class="col-sm-9" id="type">
-                            <input class="form-control" type="checkbox" name="type" value="">11
-                            <input class="form-control" type="checkbox" name="type" value="">22
-                            <input class="form-control" type="checkbox" name="type" value="">33
-                            <input class="form-control" type="checkbox" name="type" value="">44
-                            <input class="form-control" type="checkbox" name="type" value="">55
                         </div>
                         <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
@@ -182,13 +184,12 @@
 <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
 <script th:src="@{/js/bootstrap.js}" ></script>
 <script th:src="@{/js/ajaxfileupload.js}" ></script>
-<script th:src="@{/js/registercommon.js}" ></script>
 <script>
     function register(){
-        var username=$("#studentNum").val();
+        var username=$("#username").val();
         var name=$("#name").val();
         var sex=$("#sex").val()
-        var role=1;
+        var role=$("#role").val();
         var studentNum=$("#studentNum").val();
         var password=$("#password").val();
         var password1=$("#password1").val();
@@ -202,6 +203,17 @@
         var pic=$("#pic_url").attr("src");
         var feature=$("#feature").val();
         var exprience=$("#exprience").val();
+        if(!username){
+            alert("用户名不能为空")
+            return
+        }
+        if(username){
+            var myreg=/^[\u3220-\uFA29]+$/;
+            if(myreg.test(username)){
+                alert("用户名应为字母或者特殊字符，不英文中文")
+                return;
+            }
+        }
         if(!name){
             alert("姓名不能为空");
             return;
@@ -237,18 +249,30 @@
             }
         }
 
-      if(!studentNum){
-        alert("学号不能为空");
-        return;
-      }
-      if(!college){
-        alert("院系不能为空");
-        return;
-      }
-      if(!profession){
-        alert("专业不能为空");
-        return;
-      }
+        if(role==0){
+            if(!studentNum){
+                alert("学号不能为空");
+                return;
+            }
+            if(!college){
+                alert("院系不能为空");
+                return;
+            }
+            if(!profession){
+                alert("专业不能为空");
+                return;
+            }
+        }else if(role==1){
+            if(!college){
+                alert("院系不能为空");
+                return;
+            }
+        }else{
+            if(!profession){
+                alert("学历不能为空");
+                return;
+            }
+        }
 
         if(!inputEmail){
             alert("邮箱不能为空");
@@ -270,8 +294,7 @@
             "pic":pic,
             "feature":feature,
             "exprience":exprience,
-            "flag":role,
-            "type":""
+            "flag":role
         };
         $.ajax({
             "url":"/register",
@@ -284,7 +307,7 @@
                     window.location.href="index";
                 }else{
                     if(data==-1){
-                       alert("学号重复，请重新输入")
+                       alert("姓名重复，请重新输入")
                     }else{
                         alert("注册失败");
                     }
@@ -292,24 +315,86 @@
             }
         })
  }
-function checkName(){
-    var username=$("#studentNum").val();
-    if(!username){
-        return;
-    }
-    $.ajax({
-        "url":"/checkname",
-        "type":"POST",
-        "dataType":"JSON",
-        "data":{"username":username},
-        "success":function (data) {
-            if(data>0){
-                alert("用户名重复，请重新输入")
-                $("#name").val("")
-            }
+ function changeWord(){
+        var role=$("#role").val();
+        if(role==0){
+            $("#studentNum1").text("学号");
+            $("#college1").text("院系");
+            $("#profession1").text("专业");
+            $("#feature1").text("特长");
+            $("#exprience1").text("比赛和项目经历")
+        }else if(role==1){
+            $("#studentNum1").text("工号");
+            $("#college1").text("院系");
+            $("#profession1").text("职称");
+            $("#feature1").text("个人简介");
+            $("#exprience1").text("研究方向")
+        }else{
+            $("#studentNum1").text("企业名称");
+            $("#college1").text("岗位");
+            $("#profession1").text("学历");
+            $("#feature1").text("个人简介");
+            $("#exprience1").text("工作经历")
         }
-    })
-}
+ }
+    function doChange(){
+     $.ajaxFileUpload({
+            url: "/upload", //用于文件上传的服务器端请求地址
+            secureuri: false, //是否需要安全协议，一般设置为false
+            fileElementId: 'file1', //文件上传域的ID
+            dataType: 'json', //返回值类型 一般设置为json
+            type:"POST",
+            success: function (data, status){
+                if(data!='false'){
+                    var fileName="/upload-dir/"+data.filename
+                   $("#pic_url").attr("src",fileName);
+                }
+            },
+            error: function (data, status, e)//服务器响应失败处理函数
+            {
+                alert(e);
+            }
+        })
+    }
+    function checkName(){
+        var username=$("#username").val();
+        if(!username){
+            return;
+        }
+        $.ajax({
+            "url":"/checkname",
+            "type":"POST",
+            "dataType":"JSON",
+            "data":{"username":username},
+            "success":function (data) {
+                if(data>0){
+                    alert("用户名重复，请重新输入")
+                    $("#name").val("")
+                }
+            }
+        })
+    }
+    function checkEmail(){
+        var email=$("#inputEmail").val();
+        var myreg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+        if(!myreg.test(email)){
+            alert('请输入有效的E_mail！');
+            $("#inputEmail").val("");
+            return;
+        }
 
+    }
+    function checkPhone(){
+        var phone=$("#phone").val();
+        var mobile=/^[1][3,4,5,7,8][0-9]{9}$/;
+        if(!mobile.test(phone)){
+            alert('请输入有效的手机号！');
+            return;
+        }
+        if(phone.length!=11){
+            alert('手机号长度不必须是11位！');
+            return;
+        }
+    }
 </script>
 </html>

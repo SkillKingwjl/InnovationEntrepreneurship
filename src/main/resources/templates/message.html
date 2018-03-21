@@ -8,7 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/doc.css}">
 </head>
 <body style="background-color: #f7f7f7">
-<div class="bs-docs-header" tabindex="-1">
+<div class="bs-docs-header" style="height:60px" tabindex="-1">
     <div class="container">
         <p>为方便管理项目而生xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
     </div>
@@ -161,6 +161,9 @@
             var ownname=value.ownName;
             var type=value.type;
             if(flag==0){
+                if(type==1){
+                    name=ownname;
+                }
                 url+="<tr onclick='skinto("+id+")'><td>"+projectName+"</td><td>"+typeName+"</td><td>"+name+"</td><td>"+createTime+"</td>"
             }else{
                 if(type==1){
