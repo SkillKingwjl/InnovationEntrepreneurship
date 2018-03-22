@@ -157,4 +157,7 @@ public interface UserMapper {
     @Select("select count(*) from ownproject where  projectID=#{projectId} and userID=#{userId} and ownID=#{ownId} and status=#{status} and flag!=2")
     public int getOwnProjectNum(@Param("projectId") Integer projectId,@Param("userId") Integer userId,@Param("ownId") Integer ownId,@Param("status") Integer status);
 
+    @Select("select count(a.*) from user a join userdetil b on a.id=b.userID  and b.studentID=#{} where  a.flag=0 or a.flag=3  ")
+    public int getStudentIDNum(@Param("studentID") String studentID);
+
 }

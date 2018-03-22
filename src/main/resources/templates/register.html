@@ -60,6 +60,7 @@
                                 <option value="0" selected>学生</option>
                                 <option value="1">教师</option>
                                 <option value="2">企业人员</option>
+                                <option value="4">项目负责人</option>
                             </select>
                         </div>
                         <label class="col-sm-1 control-label" style="color:red">*</label>
@@ -310,7 +311,12 @@
                 }else{
                     if(data==-1){
                        alert("姓名重复，请重新输入")
-                    }else{
+                    }if(data==-2){
+                        alert("学号重复");
+
+                        return;
+                    }
+                    else{
                         alert("注册失败");
                     }
                 }

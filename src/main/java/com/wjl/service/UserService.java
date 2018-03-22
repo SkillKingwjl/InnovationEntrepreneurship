@@ -412,4 +412,9 @@ public class UserService {
         }
         return 1;
     }
+
+    public int getStudentIDNum(String studentID){
+        int count=userMapper.getStudentIDNum(studentID);
+        return count;
+    }
 }

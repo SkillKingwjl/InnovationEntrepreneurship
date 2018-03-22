@@ -128,6 +128,10 @@ public class UserController {
         if(count>0){
             return -1;
         }
+        int num=userService.getStudentIDNum(studentNum);
+        if(num>0){
+            return -2;
+        }
         int result= userService.register(username,name,password,flag,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
         return result;
     }
