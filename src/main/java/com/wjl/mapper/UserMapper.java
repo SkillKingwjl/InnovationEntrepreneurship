@@ -138,8 +138,8 @@ public interface UserMapper {
     @Insert("insert into ownproject(userID,ownID,projectID,status,flag)values(#{userID},#{ownID},#{projectID},#{status},#{flag})")
     public int insertOwnProject(@Param("userID")Integer userID,@Param("ownID")Integer ownID,@Param("projectID")Integer projectID,@Param("status")Integer status,@Param("flag") Integer flag);
 
-    @Select("select * from ownproject where status=#{status} and userID=#{userID}  order by createTime desc limit #{page},#{pageSize}")
-    public List<OwnProject> getOwnProjectList(@Param("status") Integer status,@Param("userID") Integer userId,@Param("page") Integer page,@Param("pageSize")Integer pageSize);
+    @Select("select * from ownproject where  userID=#{userID}  order by createTime desc limit #{page},#{pageSize}")
+    public List<OwnProject> getOwnProjectList(@Param("userID") Integer userId,@Param("page") Integer page,@Param("pageSize")Integer pageSize);
     @Select("select * from ownproject where flag=0 and projectID=#{projectId}  order by createTime desc")
     public List<OwnProject> getOwnProjectUserList(@Param("projectId") Integer projectId);
     @Update("update message set status=${status} where id=${id}")
@@ -150,15 +150,14 @@ public interface UserMapper {
     public List<User> getUserByName(@Param("name") String name);
     @Select("select * from ownproject where  projectID=#{projectId} and userID=#{userId} and flag=0  order by createTime desc")
     public List<OwnProject> getOwnProjectbyProjectIdAndUserId(@Param("projectId") Integer projectId,@Param("userId") Integer userId);
-    @Select("select count(*)  from ownproject where status=#{status} and userID=#{userID} ")
-    public int getOwnProjectCount(@Param("status") Integer status,@Param("userID") Integer userId);
+    @Select("select count(*)  from ownproject where userID=#{userID} ")
+    public int getOwnProjectCount(@Param("userID") Integer userId);
     @Update("update projetdetail set leftNum=leftNum-1 where id=#{projectId}")
     public int updateProjectLeftNum(@Param("projectId") Integer projectId);
-    @Select("select count(*) from ownproject where  projectID=#{projectId} and userID=#{userId} and ownID=#{ownId} and status=#{status} and flag!=2")
-    public int getOwnProjectNum(@Param("projectId") Integer projectId,@Param("userId") Integer userId,@Param("ownId") Integer ownId,@Param("status") Integer status);
+    @Select("select count(*) from ownproject where  projectID=#{projectId} and userID=#{userId} and ownID=#{ownId} and flag!=2")
+    public int getOwnProjectNum(@Param("projectId") Integer projectId,@Param("userId") Integer userId,@Param("ownId") Integer ownId);
 
     @Select("select count(a.id) from user a join userdetil b on a.id=b.userID  and b.studentID=#{studentID} where  a.flag=0 or a.flag=3  ")
     public int getStudentIDNum(@Param("studentID") String studentID);
 
 }
-
