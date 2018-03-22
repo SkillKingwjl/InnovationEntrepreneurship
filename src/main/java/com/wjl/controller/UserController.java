@@ -128,7 +128,7 @@ public class UserController {
         if(count>0){
             return -1;
         }
-        if(flag==1||flag==3){
+        if(flag==0||flag==3){
             int num=userService.getStudentIDNum(studentNum);
             if(num>0){
                 return -2;
@@ -162,7 +162,7 @@ public class UserController {
         feature=feature.trim();
         exprience=exprience.trim();
         int flag1=user.getFlag();
-        if(flag1==1||flag1==3){
+        if(flag1==0||flag1==3){
           UserDetail userDetail=(UserDetail)session.getAttribute("userDetail");
           if(!userDetail.getStudentID().equals(studentNum)){
               int num=userService.getStudentIDNum(studentNum);
