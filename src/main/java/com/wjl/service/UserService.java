@@ -248,7 +248,7 @@ public class UserService {
                 UserDetail ownuserDetail=userMapper.getUserDeatil(ownId);
                 UserDetail userDetail=userMapper.getUserDeatil(tmpId);
                 info.setId(message.getId());
-                info.setCreateTime(message.getCreateTime().substring(1,13));
+                info.setCreateTime(message.getCreateTime().substring(0,13));
                 info.setProjectId(message.getProjectID());
                 int status=message.getStatus();
                 info.setStatus("通过");

@@ -47,7 +47,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `flag` tinyint(1) NOT NULL COMMENT '9代表管理员,1代表普通学生,2代表项目负责人,3代表教师,4代表企业',
+  `flag` tinyint(1) NOT NULL COMMENT '9代表管理员,0代表普通学生,1代表教师，2代表企业，3代表项目负责人,4代表管理员',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
