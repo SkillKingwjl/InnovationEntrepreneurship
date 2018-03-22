@@ -181,7 +181,7 @@ public class UserService {
     public ProjectMessage getAllSign(int userId,int page,int pageSize){
         ProjectMessage message=new ProjectMessage();
         List<ProjectDetail> list=new ArrayList<>();
-        int count=userMapper.getOwnProjectCount(0,userId);
+        int count=userMapper.getOwnProjectCount(userId);
         if(count==0){
             message.setCount(0);
             message.setPageNum(0);
@@ -192,7 +192,7 @@ public class UserService {
             message.setPageNum(allPage);
             message.setNowPage(page);
         }
-        List<OwnProject> ownList=userMapper.getOwnProjectList(0,userId,page,pageSize);
+        List<OwnProject> ownList=userMapper.getOwnProjectList(userId,page,pageSize);
         if(ownList!=null&&ownList.size()>0){
             for(OwnProject ownProject:ownList){
               int projectId=ownProject.getProjectID();
@@ -351,7 +351,7 @@ public class UserService {
            return -1;
         }
         if(type==0){
-            int count=userMapper.getOwnProjectNum(projectId,ownId,userId,type);
+            int count=userMapper.getOwnProjectNum(projectId,ownId,userId);
             if(count==0){
                 int result=userMapper.insertMessage(ownId,userId,projectId,type,1);
                 if(result>0){
@@ -365,8 +365,7 @@ public class UserService {
             }
             return 0;
         }else{
-
-            int count=userMapper.getOwnProjectNum(projectId,userId,ownId,type);
+            int count=userMapper.getOwnProjectNum(projectId,userId,ownId);
             if(count==0){
                 int result=userMapper.insertMessage(userId,ownId,projectId,type,1);
                 if(result>0){
