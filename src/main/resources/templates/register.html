@@ -308,16 +308,18 @@
                 if(data>0){
                     alert("注册成功");
                     window.location.href="index";
+                    return
                 }else{
                     if(data==-1){
-                       alert("姓名重复，请重新输入")
+                       alert("注册名重复，请重新输入")
+                        return
                     }if(data==-2){
                         alert("学号重复");
-
                         return;
                     }
                     else{
                         alert("注册失败");
+                        return
                     }
                 }
             }
