@@ -161,6 +161,16 @@ public class UserController {
         int userId=user.getId();
         feature=feature.trim();
         exprience=exprience.trim();
+        int flag1=user.getFlag();
+        if(flag1==1||flag1==3){
+          UserDetail userDetail=(UserDetail)session.getAttribute("userDetail");
+          if(!userDetail.getStudentID().equals(studentNum)){
+              int num=userService.getStudentIDNum(studentNum);
+              if(num>0){
+                  return -2;
+              }
+          }
+        }
         int result= userService.updateUserInfo(userId,name,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience,password);
         if(result>0){
             UserDetail userDetail=userService.getUserDetailService(userId);
