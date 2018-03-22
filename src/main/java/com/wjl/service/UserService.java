@@ -196,10 +196,12 @@ public class UserService {
         if(ownList!=null&&ownList.size()>0){
             for(OwnProject ownProject:ownList){
               int projectId=ownProject.getProjectID();
+              int flag=ownProject.getFlat();
                 ProjectDetail projectDetail=userMapper.getSingeProjectDeatil(projectId);
                 if(projectDetail!=null){
                     String times=projectDetail.getCreateTime();
                     projectDetail.setCreateTime(times.substring(0,13));
+                    projectDetail.setFlag(flag);
                     list.add(projectDetail);
                 }
             }
