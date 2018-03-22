@@ -124,7 +124,7 @@ public class UserController {
     @ResponseBody
     public Object insert(String username,String name,  String password, Integer flag,int sex,String studentNum,String college,String profession,
     String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience){
-        int count=userService.getUserByName(name);
+        int count=userService.getUserByName(username);
         if(count>0){
             return -1;
         }
@@ -332,3 +332,4 @@ public class UserController {
         return userService.getUserByName(name);
     }
 }
+
