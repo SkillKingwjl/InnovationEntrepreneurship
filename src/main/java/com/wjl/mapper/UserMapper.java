@@ -14,8 +14,8 @@ public interface UserMapper {
     /*
      查找用户
      */
-    @Select("SELECT * FROM user WHERE username = #{userName} and password = #{passWord} and flag=#{flag}")
-    public User findUser(@Param("userName") String userName, @Param("passWord") String userPass,@Param("flag") int flag);
+    @Select("SELECT * FROM user WHERE username = #{userName} and flag=#{flag}")
+    public User findUser(@Param("userName") String userName,@Param("flag") int flag);
     /*
       分页获取所有用户
      */
@@ -38,12 +38,13 @@ public interface UserMapper {
     /*
      新增用户的具体信息
      */
-    @Insert("INSERT INTO userdetil(userID,name,sex,studentID,department,major,email,weichart,isShowWei,phoneNum,isShowPhoneNum,photo,specialty,competitionExperience)" +
-            "values(#{userID},#{name},#{sex},#{studentID},#{department},#{major},#{email},#{weichart},#{isShowWei},#{phoneNum},#{isShowPhoneNum},#{photo},#{specialty},#{competitionExperience})")
+    @Insert("INSERT INTO userdetil(userID,name,sex,studentID,department,major,email,weichart,isShowWei,phoneNum,isShowPhoneNum,photo,specialty,competitionExperience,type)" +
+            "values(#{userID},#{name},#{sex},#{studentID},#{department},#{major},#{email},#{weichart},#{isShowWei},#{phoneNum},#{isShowPhoneNum},#{photo},#{specialty}," +
+            "#{competitionExperience},#{type})")
     public int insertDetail(@Param("userID") int userId,@Param("name")String name,@Param("sex") int sex,@Param("studentID") String studentNum,@Param("department")String college,
                      @Param("major")String profession,@Param("email")String inputEmail,@Param("weichart")String wechat,@Param("isShowWei")int wechatP,
                      @Param("phoneNum")String phone,@Param("isShowPhoneNum")int phoneP,@Param("photo")String pic,@Param("specialty")String feature,
-                     @Param("competitionExperience")String exprience );
+                     @Param("competitionExperience")String exprience ,@Param("type") String type);
     /*
      获取用户具体信息根据userID
      */

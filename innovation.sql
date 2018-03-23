@@ -35,6 +35,7 @@ CREATE TABLE `userdetil` (
   `photo` varchar(255) NOT NULL,
   `specialty` text,
   `competitionExperience` text,
+  `type` VARCHAR(255) not null DEFAULT '' COMMENT '比赛类型',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -47,7 +48,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `flag` tinyint(1) NOT NULL COMMENT '9代表管理员,1代表普通学生,2代表项目负责人,3代表教师,4代表企业',
+  `flag` tinyint(1) NOT NULL COMMENT '9代表管理员,1代表普通学生,2代表项目负责人,3代表教师,4代表企业，10代表超级管理员',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
@@ -69,7 +70,8 @@ CREATE TABLE `projetdetail` (
   `findNum` INT(2) NOT NULL  DEFAULT  1 COMMENT '寻找人数',
   `leftNum` INT(2) NOT NULL  DEFAULT  1 COMMENT '还需人数',
   `findIntrodution` VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '寻找说明',
-  `createTime` dateTime  not null DEFAULT  CURRENT_TIMESTAMP comment'创建时间',
+  `createTime` TIMESTAMP  not null DEFAULT  CURRENT_TIMESTAMP comment'创建时间',
+  `flag` int(2) not null DEFAULT 1 COMMENT '0审核通过 1审核中 2审核失败',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 -- --------------------------

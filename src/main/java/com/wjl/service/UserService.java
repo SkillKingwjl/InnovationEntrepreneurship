@@ -19,9 +19,9 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public User findUser(String userName, String userPass,int flag){
-        userPass = MD5Util.getMD5(userPass);
-        return userMapper.findUser(userName, userPass,flag);
+    public User findUser(String userName,int flag){
+
+        return userMapper.findUser(userName,flag);
     }
 
     public int insert(String userName, String password, Integer flag) {
@@ -34,15 +34,16 @@ public class UserService {
         return user.getId();
     }
     @Transactional
-    public int register(String username,String name,  String password, Integer flag,int sex,String studentNum,String college,String profession,
-                        String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience){
+    public int register(String username,String name, String password, Integer flag,int sex,String studentNum,String college,String profession,
+                        String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience,String type){
         int userId=this.insert(username,password,flag);
-        int result=insertDetailService(userId,name,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
+        int result=insertDetailService(userId,name,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience,type);
         return result;
     }
     public int insertDetailService( Integer userId,String name,int sex,String studentNum,String college,String profession,
-                                   String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience){
-        return userMapper.insertDetail(userId,name,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
+                                   String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,
+                                   String feature,String exprience,String type){
+        return userMapper.insertDetail(userId,name,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience, type);
     }
 
     public UserDetail getUserDetailService(int userId){
@@ -245,8 +246,8 @@ public class UserService {
                 MessageInfo info=new MessageInfo();
                 int ownId=message.getOwnID();
                 int tmpId=message.getUserID();
-                User own=userMapper.getSingleUser(ownId);
-                User user=userMapper.getSingleUser(tmpId);
+                UserDetail ownuserDetail=userMapper.getUserDeatil(ownId);
+                UserDetail userDetail=userMapper.getUserDeatil(tmpId);
                 info.setId(message.getId());
                 info.setCreateTime(message.getCreateTime().substring(1,13));
                 info.setProjectId(message.getProjectID());
@@ -258,11 +259,14 @@ public class UserService {
                     info.setStatus("拒绝");
                 }
                 int type=message.getType();
+                info.setType(type);
                 info.setTypeName("申请");
-                info.setName(user.getUsername());
+                info.setName(userDetail.getName());
+                info.setOwnName(ownuserDetail.getName());
                 if(type==1){
                     info.setTypeName("邀请");
-                    info.setName(own.getUsername());
+                    info.setName(userDetail.getName());
+                    info.setOwnName(ownuserDetail.getName());
                 }
                 ProjectDetail projectDetail=userMapper.getSingeProjectDeatil(message.getProjectID());
                 if(projectDetail!=null){
@@ -338,6 +342,7 @@ public class UserService {
        }
         return userBean;
     }
+
     @Transactional
     public int applicationProject(int userId,int ownId,int projectId,int type){
         ProjectDetail projectDetail= userMapper.getSingeProjectDeatil(projectId);

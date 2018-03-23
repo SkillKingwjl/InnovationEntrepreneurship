@@ -8,6 +8,8 @@ public class MessageInfo {
     private String status;
     private String typeName;
     private String projectName;
+    private String ownName;
+    private int type;
     public int getId() {
         return id;
     }
@@ -62,5 +64,21 @@ public class MessageInfo {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
+    }
+
+    public String getOwnName() {
+        return ownName;
+    }
+
+    public void setOwnName(String ownName) {
+        this.ownName = ownName;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

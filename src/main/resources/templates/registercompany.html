@@ -23,17 +23,24 @@
     <div style="margin: 0 auto;width: 1600px;background-color:#ffffff;padding-bottom: 90px;min-height:800px;border-radius: 5px">
         <div>
             <div class="col-lg-4" style="height:60px"></div>
-            <div class="col-lg-4" style="height:60px"><h3>注册</h3></div>
+            <div class="col-lg-4" style="height:60px"><h3>个人信息</h3></div>
             <div class="col-lg-4" style="height:60px"></div>
         </div>
         <div>
-            <button type="button" class="btn btn-default active" style="margin-left:150px;width:300px" onclick="skintoStudent()">学生注册</button>
+            <button type="button" class="btn btn-default " style="margin-left:150px;width:300px" onclick="skintoStudent()">学生注册</button>
             <button type="button" class="btn btn-default " style="margin-left: 150px;width:300px" onclick="skintoteacher()">老师注册</button>
-            <button type="button" class="btn btn-default " style="margin-left: 150px;width:300px" onclick="skintocompany()">创新导师注册</button>
+            <button type="button" class="btn btn-default active" style="margin-left: 150px;width:300px" onclick="skintocompany()">创新导师注册</button>
         </div>
         <div>
             <div class="col-lg-4" style="padding-top: 20px">
                 <form class="form-horizontal form-style" >
+                    <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">用户名</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="username" placeholder="用户名" onblur="checkName()">
+                        </div>
+                        <label class="col-sm-1 control-label" style="color:red">*</label>
+                    </div>
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">姓名</label>
                         <div class="col-sm-9">
@@ -52,9 +59,9 @@
                         <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
                     <div class="form-group">
-                        <label for="studentNum" class="col-sm-2 control-label" id="studentNum1">学号</label>
+                        <label for="studentNum" class="col-sm-2 control-label" id="studentNum1">企业名称</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="studentNum" placeholder="学号" onblur="checkName()">
+                            <input type="text" class="form-control" id="studentNum" placeholder="企业名称">
                         </div>
                         <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
@@ -74,39 +81,16 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="college" class="col-sm-2 control-label" id="college1">院系</label>
+                        <label for="college" class="col-sm-2 control-label" id="college1">岗位</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="college" placeholder="院系">
+                            <input type="text" class="form-control" id="college" placeholder="岗位">
                         </div>
                         <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
                     <div class="form-group">
-                        <label for="profession" class="col-sm-2 control-label" id="profession1">专业</label>
+                        <label for="profession" class="col-sm-2 control-label" id="profession1">学历</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="profession" placeholder="专业">
-                        </div>
-                        <label class="col-sm-1 control-label" style="color:red">*</label>
-                    </div>
-                    <div class="form-group">
-                        <label for="type" class="col-sm-2 control-label">项目类型</label>
-                        <div class="col-sm-9" id="type">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="chk" value="1"> 11
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="chk" value="2"> 22
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="chk" value="3"> 33
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="chk" value="4"> 44
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="chk" value="5"> 55
-                                </label>
-                            </div>
+                            <input type="text" class="form-control" id="profession" placeholder="学历">
                         </div>
                         <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
@@ -162,14 +146,14 @@
             <div class="col-lg-4" style="padding-top: 20px">
                 <form class="form-horizontal form-style" >
                     <div class="form-group">
-                        <label for="feature" class="col-sm-2 control-label" id="feature1">特长</label>
+                        <label for="feature" class="col-sm-2 control-label" id="feature1">个人简介</label>
                         <div class="col-sm-10" >
                             <textarea class="form-control" id="feature" placeholder="" style="height:230px">
                             </textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="exprience" class="col-sm-2 control-label" id="exprience1">比赛和项目经历</label>
+                        <label for="exprience" class="col-sm-2 control-label" id="exprience1">工作经历</label>
                         <div class="col-sm-10">
                             <textarea class="form-control" id="exprience" placeholder="" style="height:230px">
                             </textarea>
@@ -197,10 +181,10 @@
 <script th:src="@{/js/registercommon.js}" ></script>
 <script>
     function register(){
-        var username=$("#studentNum").val();
+        var username=$("#username").val();
         var name=$("#name").val();
         var sex=$("#sex").val()
-        var role=1;
+        var role=4;
         var studentNum=$("#studentNum").val();
         var password=$("#password").val();
         var password1=$("#password1").val();
@@ -214,6 +198,17 @@
         var pic=$("#pic_url").attr("src");
         var feature=$("#feature").val();
         var exprience=$("#exprience").val();
+        if(!username){
+            alert("用户名不能为空")
+            return
+        }
+        if(username){
+            var myreg=/^[\u3220-\uFA29]+$/;
+            if(myreg.test(username)){
+                alert("用户名应为字母或者特殊字符，不英文中文")
+                return;
+            }
+        }
         if(!name){
             alert("姓名不能为空");
             return;
@@ -249,18 +244,30 @@
             }
         }
 
-      if(!studentNum){
-        alert("学号不能为空");
-        return;
-      }
-      if(!college){
-        alert("院系不能为空");
-        return;
-      }
-      if(!profession){
-        alert("专业不能为空");
-        return;
-      }
+        if(role==0){
+            if(!studentNum){
+                alert("学号不能为空");
+                return;
+            }
+            if(!college){
+                alert("院系不能为空");
+                return;
+            }
+            if(!profession){
+                alert("专业不能为空");
+                return;
+            }
+        }else if(role==1){
+            if(!college){
+                alert("院系不能为空");
+                return;
+            }
+        }else{
+            if(!profession){
+                alert("学历不能为空");
+                return;
+            }
+        }
 
         if(!inputEmail){
             alert("邮箱不能为空");
@@ -296,7 +303,7 @@
                     window.location.href="index";
                 }else{
                     if(data==-1){
-                       alert("学号重复，请重新输入")
+                       alert("用户名重复，请重新输入")
                     }else{
                         alert("注册失败");
                     }
@@ -305,7 +312,7 @@
         })
  }
 function checkName(){
-    var username=$("#studentNum").val();
+    var username=$("#username").val();
     if(!username){
         return;
     }
@@ -322,6 +329,5 @@ function checkName(){
         }
     })
 }
-
 </script>
 </html>
