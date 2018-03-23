@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 public class UploadSrc {
     @Value("${upload.src}")
     private String src;
+    @Value("${upload.ipHost}")
+    private String ipHost;
 
     public String getSrc() {
         return src;
@@ -16,6 +18,14 @@ public class UploadSrc {
 
     public void setSrc(String src) {
         this.src = src;
+    }
+
+    public String getIpHost() {
+        return ipHost;
+    }
+
+    public void setIpHost(String ipHost) {
+        this.ipHost = ipHost;
     }
 }
 

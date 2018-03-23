@@ -220,7 +220,7 @@ public class UserController {
         try {
             file.transferTo(dest); //保存文件
             result.put("status",0);
-            result.put("filename",fileName);
+            result.put("filename","http://"+uploadSrc.getIpHost()+fileName);
             return result;
         } catch (Exception e) {
             // TODO Auto-generated catch block
