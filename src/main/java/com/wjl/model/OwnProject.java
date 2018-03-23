@@ -7,7 +7,7 @@ public class OwnProject {
     private int projectID;
     private int status;
     private String createTime;
-    private int flat;
+    private int flag;
 
     public int getId() {
         return id;
@@ -58,10 +58,10 @@ public class OwnProject {
     }
 
     public int getFlat() {
-        return flat;
+        return flag;
     }
 
-    public void setFlat(int flat) {
-        this.flat = flat;
+    public void setFlat(int flag) {
+        this.flag = flag;
     }
 }

@@ -69,7 +69,7 @@ CREATE TABLE `projetdetail` (
   `findNum` INT(2) NOT NULL  DEFAULT  1 COMMENT '寻找人数',
   `leftNum` INT(2) NOT NULL  DEFAULT  1 COMMENT '还需人数',
   `findIntrodution` VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '寻找说明',
-  `createTime` dateTime  not null DEFAULT  CURRENT_TIMESTAMP comment'创建时间',
+  `createTime` TIMESTAMP  not null DEFAULT  CURRENT_TIMESTAMP comment'创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 -- --------------------------

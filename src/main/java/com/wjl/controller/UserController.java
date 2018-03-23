@@ -1,6 +1,7 @@
 package com.wjl.controller;
 
 import com.alibaba.druid.util.StringUtils;
+import com.wjl.config.UploadSrc;
 import com.wjl.model.ProjectInfo;
 import com.wjl.model.User;
 import com.wjl.model.UserDetail;
@@ -28,12 +29,12 @@ import java.util.Map;
  */
 @Controller
 public class UserController {
-
+    @Autowired
+    private UploadSrc uploadSrc;
     @Autowired
     private UserService userService;
     @Autowired
     private  HttpSession session;
-    public static final String ROOT = "/upload-dir";
     @RequestMapping(value = "index")
     public String skinToLogin(){
         return "login";
@@ -124,13 +125,15 @@ public class UserController {
     @ResponseBody
     public Object insert(String username,String name,  String password, Integer flag,int sex,String studentNum,String college,String profession,
     String inputEmail,String wechat,Integer wechatP,String phone,Integer phoneP,String pic,String feature,String exprience){
-        int count=userService.getUserByName(name);
+        int count=userService.getUserByName(username);
         if(count>0){
             return -1;
         }
-        int num=userService.getStudentIDNum(studentNum);
-        if(num>0){
-            return -2;
+        if(flag==0||flag==3){
+            int num=userService.getStudentIDNum(studentNum);
+            if(num>0){
+                return -2;
+            }
         }
         int result= userService.register(username,name,password,flag,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience);
         return result;
@@ -159,6 +162,16 @@ public class UserController {
         int userId=user.getId();
         feature=feature.trim();
         exprience=exprience.trim();
+        int flag1=user.getFlag();
+        if(flag1==0||flag1==3){
+          UserDetail userDetail=(UserDetail)session.getAttribute("userDetail");
+          if(!userDetail.getStudentID().equals(studentNum)){
+              int num=userService.getStudentIDNum(studentNum);
+              if(num>0){
+                  return -2;
+              }
+          }
+        }
         int result= userService.updateUserInfo(userId,name,sex,studentNum,college,profession,inputEmail,wechat,wechatP,phone,phoneP,pic,feature,exprience,password);
         if(result>0){
             UserDetail userDetail=userService.getUserDetailService(userId);
@@ -199,7 +212,7 @@ public class UserController {
         int size = (int) file.getSize();
         System.out.println(fileName + "-->" + size);
 
-        String path = request.getRealPath("/") + ROOT; ;
+        String path =uploadSrc.getSrc();
         File dest = new File(path + "/" + fileName);
         if(!dest.getParentFile().exists()){ //判断文件父目录是否存在
             dest.getParentFile().mkdir();

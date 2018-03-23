@@ -45,6 +45,8 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: count\=countSql
+upload:
+  src: 11112222
 
 
 

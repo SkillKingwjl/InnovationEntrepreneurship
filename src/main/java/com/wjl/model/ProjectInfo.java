@@ -6,6 +6,7 @@ public class ProjectInfo {
     private ProjectDetail projectDetail;
     private List<UserBean> userList;
     private User user;
+    private OwnProject ownProject;
 
     public User getUser() {
         return user;
@@ -39,5 +40,13 @@ public class ProjectInfo {
 
     public void setFlag(int flag) {
         this.flag = flag;
+    }
+
+    public OwnProject getOwnProject() {
+        return ownProject;
+    }
+
+    public void setOwnProject(OwnProject ownProject) {
+        this.ownProject = ownProject;
     }
 }
