@@ -47,7 +47,7 @@ pagehelper:
   params: count\=countSql
 upload:
   src: /usr/local/project/img
-  ipHost: 140.143.245.159/
+  ipHost: http://140.143.245.159/
 
 
 

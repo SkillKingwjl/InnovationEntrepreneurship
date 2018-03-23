@@ -213,6 +213,7 @@ public class UserController {
         System.out.println(fileName + "-->" + size);
 
         String path =uploadSrc.getSrc();
+        String src=uploadSrc.getIpHost()+fileName;
         File dest = new File(path + "/" + fileName);
         if(!dest.getParentFile().exists()){ //判断文件父目录是否存在
             dest.getParentFile().mkdir();
@@ -220,7 +221,7 @@ public class UserController {
         try {
             file.transferTo(dest); //保存文件
             result.put("status",0);
-            result.put("filename","http://"+uploadSrc.getIpHost()+fileName);
+            result.put("filename",src);
             return result;
         } catch (Exception e) {
             // TODO Auto-generated catch block
