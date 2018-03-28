@@ -16,7 +16,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/innovation
     username: root
-    password: 123456
+    password: root
     initialSize: 1
     minIdle: 1
     maxActive: 20
