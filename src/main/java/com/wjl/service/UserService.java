@@ -353,9 +353,15 @@ public class UserService {
         if(type==0){
             int count=userMapper.getOwnProjectNum(projectId,ownId,userId);
             if(count==0){
-                int result=userMapper.insertMessage(ownId,userId,projectId,type,1);
-                if(result>0){
-                    int result2=userMapper.insertOwnProject(ownId,userId,projectId,type,1);
+                Message message=new Message();
+                message.setOwnID(userId);
+                message.setUserID(ownId);
+                message.setProjectID(projectId);
+                message.setType(type);
+                message.setStatus(1);
+                userMapper.insertMessage(message);
+                if(message.getId()>0){
+                    int result2=userMapper.insertOwnProject(ownId,message.getId(),userId,projectId,type,1);
                     if(result2>0){
                         return 1;
                     }
@@ -367,9 +373,15 @@ public class UserService {
         }else{
             int count=userMapper.getOwnProjectNum(projectId,userId,ownId);
             if(count==0){
-                int result=userMapper.insertMessage(userId,ownId,projectId,type,1);
-                if(result>0){
-                    int result2=userMapper.insertOwnProject(userId,ownId,projectId,type,1);
+                Message message=new Message();
+                message.setOwnID(ownId);
+                message.setUserID(userId);
+                message.setProjectID(projectId);
+                message.setType(type);
+                message.setStatus(1);
+                userMapper.insertMessage(message);
+                if(message.getId()>0){
+                    int result2=userMapper.insertOwnProject(userId,message.getId(),ownId,projectId,type,1);
                     if(result2>0){
                         return 1;
                     }
@@ -392,7 +404,7 @@ public class UserService {
         }
         int result1=userMapper.updateMessage(status,messageId);
         if(result1>0){
-            int result2=userMapper.updateOwnProject(status,userId,projectId);
+            int result2=userMapper.updateOwnProject(status,messageId);
             if(status==0){
                 int result3=userMapper.updateProjectLeftNum(projectId);
                 if(result3>0){

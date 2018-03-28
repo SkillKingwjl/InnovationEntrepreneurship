@@ -92,6 +92,7 @@ CREATE TABLE `message` (
 DROP TABLE IF EXISTS `ownproject`;
 CREATE TABLE `ownproject` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `messageId` int(11) NOT NULL DEFAULT 0 ,
   `userID` int(11) NOT NULL DEFAULT 0 ,
   `ownID` int(11) NOT NULL DEFAULT 0,
   `projectID` int(11) NOT NULl DEFAULT 0,

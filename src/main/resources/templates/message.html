@@ -14,8 +14,8 @@
     </div>
 </div>
 <input type="text"  th:value="${flag}" style="display:none" id="flag">
-<div style="width: 1500px;min-height: 960px;margin: auto">
-    <div class="col-lg-2" style="margin: 0 auto;background-color: #fff">
+<div style="width:90%;min-height: 960px;margin: auto">
+    <div class="col-lg-2 col-sm-2 col-md-2" style="margin: 0 auto;background-color: #fff">
         <ul class="nav nav-pills nav-stacked">
             <li  style="margin-top: 10px"><a href="showinfo">个人信息</a></li>
             <li ><a href="pubproject">发布项目</a></li>
@@ -28,7 +28,7 @@
             <li ><a href="loginout">退出</a></li>
         </ul>
     </div>
-    <div class="col-lg-10">
+    <div class="col-lg-10 col-sm-10 col-md-10">
         <div style="margin: 0 auto;background-color:#ffffff;padding-bottom: 90px;border-radius: 5px">
             <div class="table-responsive">
                 <div>
@@ -37,8 +37,8 @@
                     <div class="col-lg-4" style="height:60px"></div>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-default active" style="margin-left:160px;width:300px" id="receive" onclick="skintoReceive()">接收的消息</button>
-                    <button type="button" class="btn btn-default " style="margin-left: 300px;width:300px" id="send" onclick="skintoSend()">发送的消息</button>
+                    <button type="button" class="btn btn-default col-md-offset-2 col-md-3 col-sm-offset-2 col-sm-3 col-lg-offset-2 col-lg-3 active"  style="margin-bottom: 20px" id="receive" onclick="skintoReceive()">接收的消息</button>
+                    <button type="button" class="btn btn-default col-md-offset-1 col-md-3 col-sm-offset-1 col-sm-3 col-lg-offset-1 col-lg-3 "  style="margin-bottom: 20px"id="send" onclick="skintoSend()">发送的消息</button>
                 </div>
                 <table class="table table-bordered" id="content" style="margin-top: 20px">
 

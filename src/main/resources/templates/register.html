@@ -19,8 +19,8 @@
         <p>为方便管理项目而生xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
     </div>
 </div>
-<div style="min-width: 1600px;min-height: 960px;">
-    <div style="margin: 0px auto;width: 1600px;background-color:#ffffff;padding-bottom: 90px;min-height:800px;border-radius: 5px">
+<div style="width:100%;min-height: 960px;">
+    <div class="col-lg-10 col-lg-offset-1" style="background-color:#ffffff;padding-bottom: 90px;min-height:800px;border-radius: 5px">
         <div>
             <div class="col-lg-4" style="height:60px"></div>
             <div class="col-lg-4" style="height:60px"><h3>个人信息</h3></div>
@@ -172,7 +172,7 @@
         <div style="height:200px;margin-top:20px">
             <form class="form-horizontal form-style" >
                 <div class="form-group">
-                    <div class="col-sm-offset-4 col-sm-10">
+                    <div class="col-sm-offset-4 col-sm-8">
                         <button type="button" class="btn btn-default " onclick="javascript:history.go(-1)">返回</button>
                         <button type="button" class="btn btn-default " style="margin-left: 500px" onclick="register()">注册</button>
                     </div>
@@ -365,7 +365,7 @@
             type:"POST",
             success: function (data, status){
                 if(data!='false'){
-                    var fileName=data.filename
+                    var fileName="/upload-dir/"+data.filename
                    $("#pic_url").attr("src",fileName);
                 }
             },

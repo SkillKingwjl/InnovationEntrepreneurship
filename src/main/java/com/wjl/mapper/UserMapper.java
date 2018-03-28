@@ -110,9 +110,9 @@ public interface UserMapper {
     /*
      新增消息
      */
-    @Insert("insert into message(userID,ownID,projectID,type,status)values(#{userID},#{ownID},#{projectID},#{type},#{status}) ")
-    public int insertMessage(@Param("userID")Integer userID,@Param("ownID")Integer ownID,@Param("projectID")Integer projectID,@Param("type")Integer type,
-                             @Param("status") Integer status);
+    @Insert("insert into message(userID,ownID,projectID,type,status)values(#{message.userID},#{message.ownID},#{message.projectID},#{message.type},#{message.status}) ")
+    @Options(useGeneratedKeys=true, keyProperty = "message.id",keyColumn="id")
+    public void insertMessage(@Param("message")Message message);
     /*
      获取消息内容
      */
@@ -135,8 +135,8 @@ public interface UserMapper {
     /*
      获取申请的状态
      */
-    @Insert("insert into ownproject(userID,ownID,projectID,status,flag)values(#{userID},#{ownID},#{projectID},#{status},#{flag})")
-    public int insertOwnProject(@Param("userID")Integer userID,@Param("ownID")Integer ownID,@Param("projectID")Integer projectID,@Param("status")Integer status,@Param("flag") Integer flag);
+    @Insert("insert into ownproject(userID,messageId,ownID,projectID,status,flag)values(#{userID},#{messageId},#{ownID},#{projectID},#{status},#{flag})")
+    public int insertOwnProject(@Param("userID")Integer userID,@Param("messageId")Integer messageId,@Param("ownID")Integer ownID,@Param("projectID")Integer projectID,@Param("status")Integer status,@Param("flag") Integer flag);
 
     @Select("select * from ownproject where  userID=#{userID}  order by createTime desc limit #{page},#{pageSize}")
     public List<OwnProject> getOwnProjectList(@Param("userID") Integer userId,@Param("page") Integer page,@Param("pageSize")Integer pageSize);
@@ -144,8 +144,8 @@ public interface UserMapper {
     public List<OwnProject> getOwnProjectUserList(@Param("projectId") Integer projectId);
     @Update("update message set status=${status} where id=${id}")
     public int updateMessage(@Param("status") Integer status,@Param("id") int id);
-    @Update("update ownproject set flag=${flag} where userID=${userID} and projectID=${projectID}")
-    public int updateOwnProject(@Param("flag") Integer flag,@Param("userID") int userId,@Param("projectID")Integer projectId);
+    @Update("update ownproject set flag=${flag} where messageId=${messageId}")
+    public int updateOwnProject(@Param("flag") Integer flag,@Param("messageId") int messageId);
     @Select("select* from user where username=#{name}")
     public List<User> getUserByName(@Param("name") String name);
     @Select("select * from ownproject where  projectID=#{projectId} and userID=#{userId} and flag=0  order by createTime desc")
@@ -156,7 +156,6 @@ public interface UserMapper {
     public int updateProjectLeftNum(@Param("projectId") Integer projectId);
     @Select("select count(*) from ownproject where  projectID=#{projectId} and userID=#{userId} and ownID=#{ownId} and flag!=2")
     public int getOwnProjectNum(@Param("projectId") Integer projectId,@Param("userId") Integer userId,@Param("ownId") Integer ownId);
-
     @Select("select count(a.id) from user a join userdetil b on a.id=b.userID  and b.studentID=#{studentID} where  a.flag=0 or a.flag=3  ")
     public int getStudentIDNum(@Param("studentID") String studentID);
 
