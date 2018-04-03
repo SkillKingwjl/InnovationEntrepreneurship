@@ -346,13 +346,22 @@ public class UserService {
     @Transactional
     public int applicationProject(int userId,int ownId,int projectId,int type){
         ProjectDetail projectDetail= userMapper.getSingeProjectDeatil(projectId);
+        //计算该项目是否还需要人员
         int leftNum=projectDetail.getLeftNum();
         if(leftNum==0){
            return -1;
         }
+        int projectType=projectDetail.getType();
+        //申请加入该项目ownId为申请人 userId为项目所有人
         if(type==0){
+            //此人是否申请过该项目
             int count=userMapper.getOwnProjectNum(projectId,ownId,userId);
             if(count==0){
+                //此人是否申请过该类型项目
+                int typeCount=userMapper.getOwnProjectTypeNum(projectType,ownId);
+                if(typeCount>0){
+                    return -2;
+                }
                 Message message=new Message();
                 message.setOwnID(userId);
                 message.setUserID(ownId);
@@ -370,9 +379,15 @@ public class UserService {
                 return 2;
             }
             return 0;
-        }else{
+        }else{//邀请此人加入该项目 userId为被邀请人 ownId为项目所有人
+            //此人是否申请过该项目
             int count=userMapper.getOwnProjectNum(projectId,userId,ownId);
             if(count==0){
+                //此人是否申请过该类型项目
+                int typeCount=userMapper.getOwnProjectTypeNum(projectType,userId);
+                if(typeCount>0){
+                    return -2;
+                }
                 Message message=new Message();
                 message.setOwnID(ownId);
                 message.setUserID(userId);

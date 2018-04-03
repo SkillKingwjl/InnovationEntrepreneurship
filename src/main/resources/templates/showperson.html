@@ -187,6 +187,9 @@
                 if(data==-1){
                     alert("项目人数已达上限");
                     return;
+                }else if(data==-2){
+                    alert("此人已经申请过该类型的项目");
+                    return;
                 }
                 if(data==1){
                     alert("邀请成功");

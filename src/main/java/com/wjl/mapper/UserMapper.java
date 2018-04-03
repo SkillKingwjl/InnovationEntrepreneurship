@@ -121,15 +121,16 @@ public interface UserMapper {
     /*
      获取我发送的消息列表
      */
-    @Select("select  * from message where (ownID=#{ownId} and type=1) or(userID=#{ownId} and type=0) limit #{page},#{pageSize}")
+    @Select("select  * from message where (ownID=#{ownId} and type=1) or(userID=#{ownId} and type=0) order by createTime desc limit #{page},#{pageSize}")
     public List<Message> getMeSendMessageList(@Param("ownId") Integer userId,@Param("page") int page,@Param("pageSize") int  pageSize);
     @Select("select  count(*) from message where (ownID=#{ownId} and type=1) or(userID=#{ownId} and type=0) ")
     public int getMeSendMessageListNum(@Param("ownId") Integer userId);
     /*
      获取我接受的消息列表
      */
-    @Select("select  * from message where (userID=#{userId} and type=1) or(ownID=#{userId} and type=0) limit #{page},#{pageSize}")
+    @Select("select  * from message where (userID=#{userId} and type=1) or(ownID=#{userId} and type=0) order by createTime desc limit #{page},#{pageSize}")
     public List<Message> getMeMessageList(@Param("userId") Integer userId,@Param("page") int page,@Param("pageSize") int  pageSize);
+    //获取消息列表数量
     @Select("select  count(*) from message where (userID=#{userId} and type=1) or(ownID=#{userId} and type=0) ")
     public int getMeMessageListNum(@Param("userId") Integer userId);
     /*
@@ -137,26 +138,39 @@ public interface UserMapper {
      */
     @Insert("insert into ownproject(userID,messageId,ownID,projectID,status,flag)values(#{userID},#{messageId},#{ownID},#{projectID},#{status},#{flag})")
     public int insertOwnProject(@Param("userID")Integer userID,@Param("messageId")Integer messageId,@Param("ownID")Integer ownID,@Param("projectID")Integer projectID,@Param("status")Integer status,@Param("flag") Integer flag);
-
+    //分页获取项目申请记录
     @Select("select * from ownproject where  userID=#{userID}  order by createTime desc limit #{page},#{pageSize}")
     public List<OwnProject> getOwnProjectList(@Param("userID") Integer userId,@Param("page") Integer page,@Param("pageSize")Integer pageSize);
+    //获取项目申请信息
     @Select("select * from ownproject where flag=0 and projectID=#{projectId}  order by createTime desc")
     public List<OwnProject> getOwnProjectUserList(@Param("projectId") Integer projectId);
+    //更新消息状态
     @Update("update message set status=${status} where id=${id}")
     public int updateMessage(@Param("status") Integer status,@Param("id") int id);
+    //更新项目申请状态
     @Update("update ownproject set flag=${flag} where messageId=${messageId}")
     public int updateOwnProject(@Param("flag") Integer flag,@Param("messageId") int messageId);
+    //根据username查询用户
     @Select("select* from user where username=#{name}")
     public List<User> getUserByName(@Param("name") String name);
+    //获取自己报名成功的项目
     @Select("select * from ownproject where  projectID=#{projectId} and userID=#{userId} and flag=0  order by createTime desc")
     public List<OwnProject> getOwnProjectbyProjectIdAndUserId(@Param("projectId") Integer projectId,@Param("userId") Integer userId);
+    //获取该人申请的项目总数
     @Select("select count(*)  from ownproject where userID=#{userID} ")
     public int getOwnProjectCount(@Param("userID") Integer userId);
+    //更新项目的剩余人数
     @Update("update projetdetail set leftNum=leftNum-1 where id=#{projectId}")
     public int updateProjectLeftNum(@Param("projectId") Integer projectId);
+    //申请该项目的记录（除去拒绝的情况）
     @Select("select count(*) from ownproject where  projectID=#{projectId} and userID=#{userId} and ownID=#{ownId} and flag!=2")
     public int getOwnProjectNum(@Param("projectId") Integer projectId,@Param("userId") Integer userId,@Param("ownId") Integer ownId);
+    //学生编号的数量
     @Select("select count(a.id) from user a join userdetil b on a.id=b.userID  and b.studentID=#{studentID} where  a.flag=0 or a.flag=3  ")
     public int getStudentIDNum(@Param("studentID") String studentID);
+
+    //获取此人是否申请过该类型项目
+    @Select("select  count(a.id)  num from ownproject a join projetdetail b on a.projectID=b.id and  b.type=#{type} where a.userID=#{userId} and a.flag!=2")
+    public int getOwnProjectTypeNum(@Param("type") Integer type,@Param("userId") Integer userId);
 
 }
