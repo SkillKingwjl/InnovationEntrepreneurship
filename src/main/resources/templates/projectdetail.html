@@ -202,7 +202,15 @@
         $("#type").val(typename)
         $("#process").val(processname)
         $("#introduce").val(introdution)
-        $("#find_num").val(findnum)
+        var showNum="";
+        if(findType==0){
+            showNum="队员"+findnum+"名";
+        }else if(findType==1){
+            showNum="项目负责人"+findnum+"名";
+        }else if(findType==2){
+            showNum="创新创业导师"+findnum+"名";
+        }
+        $("#find_num").val(showNum)
         $("#left_num").val(leftNum)
         if(userList){
             var url="<tbody><tr><td>姓名</td><td>专业</td></tr>";
