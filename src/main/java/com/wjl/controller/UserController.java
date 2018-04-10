@@ -323,7 +323,7 @@ public class UserController {
             return false;
         }
         int ownId=user.getId();
-        return userService.applicationProject(userId,ownId,projectId,type);
+        return userService.applicationProject(userId,ownId,projectId,type,user.getFlag());
     }
     @RequestMapping(value = "updatemessage",method = RequestMethod.POST)
     @ResponseBody

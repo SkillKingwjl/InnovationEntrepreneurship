@@ -145,7 +145,12 @@
         if(photo){
             $("#pic_url").attr("src",photo)
         }
-        $("#wexin").val(weichart)
+
+        if(isShowWei==0){
+            $("#wexin").val(weichart)
+        }else{
+            $("#wexin").val("未公开")
+        }
         if(isShowPhoneNum==0){
             $("#phone").val(phoneNum)
         }else{
@@ -189,6 +194,12 @@
                     return;
                 }else if(data==-2){
                     alert("此人已经申请过该类型的项目");
+                    return;
+                }else if(data==-4) {
+                    alert("本项目寻找的是创新创业导师");
+                    return;
+                }else if(data==-5){
+                    alert("本项目寻找的是企业负责人");
                     return;
                 }
                 if(data==1){

@@ -45,7 +45,7 @@
                                 <option value="0" selected>互联网+</option>
                                 <option value="1">挑战杯</option>
                                 <option value="2">创青春</option>
-                                <option value="3">微软创青春</option>
+                                <option value="3">微软创新杯</option>
                             </select>
                         </div>
                         <label class="col-sm-1 control-label" style="color:red">*</label>
@@ -91,7 +91,7 @@
                     <div class="form-group">
                         <label for="search" class="col-sm-2 control-label">寻找</label>
                         <div class="col-sm-3">
-                            <select  class="form-control" id="search">
+                            <select  class="form-control" id="search" onselect="setPerson()">
                                 <option value="0">队员</option>
                                 <option value="1">项目负责人</option>
                                 <option value="2">创新创业导师</option>
@@ -153,7 +153,7 @@
                     var user=data.user;
                     var userdetail=data.userDetail;
                     var flag=user.flag;
-                    if(flag==2){
+                    if(flag==2||flag==0){
                         alert("您不具备发布项目的权限")
                         window.location.href="showinfo";
                     }else{
@@ -227,6 +227,15 @@
                 }
             }
         })
+    }
+    function setPerson(){
+        var type=$("#search").val();
+        if(type==1||type==2){
+           $("#search_num option[value=1]").attr("checked",true);
+            $("#search_num").attr("disabled",true)
+        }else{
+            $("#search_num").removeAttribute("disabled");
+        }
     }
 </script>
 </html>

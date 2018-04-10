@@ -46,7 +46,7 @@ pagehelper:
   support-methods-arguments: true
   params: count\=countSql
 upload:
-  src: 11112222
+  src: /user/local/project/img
 
 
 

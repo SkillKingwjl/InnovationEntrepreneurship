@@ -344,16 +344,24 @@ public class UserService {
         return userBean;
     }
     @Transactional
-    public int applicationProject(int userId,int ownId,int projectId,int type){
+    public int applicationProject(int userId,int ownId,int projectId,int type,int userType){
         ProjectDetail projectDetail= userMapper.getSingeProjectDeatil(projectId);
         //计算该项目是否还需要人员
         int leftNum=projectDetail.getLeftNum();
         if(leftNum==0){
            return -1;
         }
+
         int projectType=projectDetail.getType();
         //申请加入该项目ownId为申请人 userId为项目所有人
         if(type==0){
+            int findType=projectDetail.getFindType();
+            if(findType==2&&userType!=2){
+                return -4;
+            }
+            if(findType==1&&userType!=3){
+                return -5;
+            }
             //此人是否申请过该项目
             int count=userMapper.getOwnProjectNum(projectId,ownId,userId);
             if(count==0){
@@ -380,6 +388,14 @@ public class UserService {
             }
             return 0;
         }else{//邀请此人加入该项目 userId为被邀请人 ownId为项目所有人
+            User user=userMapper.getSingleUser(userId);
+            int findType=projectDetail.getFindType();
+            if(findType==2&&user.getFlag()!=2){
+                return -4;
+            }
+            if(findType==1&&user.getFlag()!=3){
+                return -5;
+            }
             //此人是否申请过该项目
             int count=userMapper.getOwnProjectNum(projectId,userId,ownId);
             if(count==0){
