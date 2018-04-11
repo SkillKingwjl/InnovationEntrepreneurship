@@ -327,10 +327,10 @@
  }
  function changeWord(){
         var role=$("#role").val();
-        if(role==0){
+        if(role==0||role==3){
             $("#studentNum1").text("学号");
             $("#college1").text("院系");
-            $("#profession1").text("专业");
+            $("#profession1").text("专业");g
             $("#feature1").text("特长");
             $("#exprience1").text("比赛和项目经历")
             $("#studentNum").attr("placeholder","学号");
@@ -345,7 +345,7 @@
             $("#studentNum").attr("placeholder","工号");
             $("#college").attr("placeholder","院系");
             $("#profession").attr("placeholder","职称");
-        }else{
+        } else{
             $("#studentNum1").text("企业名称");
             $("#college1").text("岗位");
             $("#profession1").text("学历");
