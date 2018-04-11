@@ -91,7 +91,7 @@
                     <div class="form-group">
                         <label for="search" class="col-sm-2 control-label">寻找</label>
                         <div class="col-sm-3">
-                            <select  class="form-control" id="search" onselect="setPerson()">
+                            <select  class="form-control" id="search" onchange="setPerson()">
                                 <option value="0">队员</option>
                                 <option value="1">项目负责人</option>
                                 <option value="2">创新创业导师</option>
@@ -231,10 +231,11 @@
     function setPerson(){
         var type=$("#search").val();
         if(type==1||type==2){
-           $("#search_num option[value=1]").attr("checked",true);
+            $("#search_num").find("option[value='1']").attr("selected",true);
             $("#search_num").attr("disabled",true)
         }else{
-            $("#search_num").removeAttribute("disabled");
+            $("#search_num").find("option[value='1']").attr("selected",false);
+            $("#search_num").attr("disabled",false);
         }
     }
 </script>
