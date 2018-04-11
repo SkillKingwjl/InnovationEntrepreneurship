@@ -365,7 +365,7 @@
             type:"POST",
             success: function (data, status){
                 if(data!='false'){
-                    var fileName="/upload-dir/"+data.filename
+                    var fileName=data.filename
                    $("#pic_url").attr("src",fileName);
                 }
             },
