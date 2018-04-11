@@ -35,6 +35,10 @@ public class UserController {
     private UserService userService;
     @Autowired
     private  HttpSession session;
+    @RequestMapping(value = "/")
+    public String login(){
+        return "login";
+    }
     @RequestMapping(value = "index")
     public String skinToLogin(){
         return "login";
