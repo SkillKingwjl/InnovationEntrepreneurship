@@ -39,6 +39,7 @@
                         <label class="col-sm-1 control-label" style="color:red">*</label>
                     </div>
                     <div class="form-group">
+                        <input type="hidden" id="flag">
                         <label for="type" class="col-sm-2 control-label">类型</label>
                         <div class="col-sm-3">
                             <select  class="form-control" id="type">
@@ -153,13 +154,22 @@
                     var user=data.user;
                     var userdetail=data.userDetail;
                     var flag=user.flag;
+                    $("#flag").val(flag);
                     if(flag==2||flag==0){
                         alert("您不具备发布项目的权限")
                         window.location.href="showinfo";
                     }else{
                         var name=userdetail.name;
-                        $("#name").val(name);
-                        $("#for_person").val(name)
+                        if (flag==3){
+                            $("#search").html("<option value='0'>队员</option><option value='2'>创新创业导师</option>");
+                            $("#name").val(name);
+                            $("#for_person").val(name)
+                        }
+                        if (flag==1){
+                            $("#search").html("<option value='1'>项目负责人</option>");
+                            $("#teacher").val(name);
+                            $("#name").val(name);
+                        }
                     }
                 }
             }
@@ -176,6 +186,7 @@
         var search=$("#search").val();
         var search_num=$("#search_num").val();
         var search_know=$("#search_know").val();
+        var flag = $("#flag").val();
         if(!name){
             alert("发布人不能为空");
             return;
@@ -184,7 +195,7 @@
             alert("项目名称不能为空");
             return;
         }
-        if(!for_person){
+        if(!for_person && flag!=1){
             alert("负责人不能为空");
             return;
         }

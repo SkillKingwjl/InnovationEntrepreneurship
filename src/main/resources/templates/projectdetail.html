@@ -207,23 +207,32 @@
             showNum="队员"+findnum+"名";
         }else if(findType==1){
             showNum="项目负责人"+findnum+"名";
+            if(userList){
+                $.each(userList,function(n,value){
+                    var user=value.user;
+                    leder =user.username;
+                    $("#for_person").val(leder);
+                })
+            }
         }else if(findType==2){
             showNum="创新创业导师"+findnum+"名";
         }
         $("#find_num").val(showNum)
         $("#left_num").val(leftNum)
-        if(userList){
-            var url="<tbody><tr><td>姓名</td><td>专业</td></tr>";
-            $.each(userList,function(n,value){
-                var user=value.user;
-                var userDetail=value.userDetail
-                var name=user.username;
-                var major=userDetail.major;
-                var id=user.id;
-                url+="<tr onclick='skinToUser("+id+")'><td>"+name+"</td><td>"+major+"</td></tr>"
-            })
-            url+="</tbody>";
-            $("#content").html(url)
+        if (findType==0) {
+            if(userList){
+                var url="<tbody><tr><td>姓名</td><td>专业</td></tr>";
+                $.each(userList,function(n,value){
+                    var user=value.user;
+                    var userDetail=value.userDetail
+                    var name=user.username;
+                    var major=userDetail.major;
+                    var id=user.id;
+                    url+="<tr onclick='skinToUser("+id+")'><td>"+name+"</td><td>"+major+"</td></tr>"
+                })
+                url+="</tbody>";
+                $("#content").html(url)
+            }
         }
         var tempId=$("#userId").val()
         if(userId==tempId||leftNum==0){
