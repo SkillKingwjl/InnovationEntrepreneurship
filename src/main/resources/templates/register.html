@@ -57,7 +57,7 @@
                         <label for="role" class="col-sm-2 control-label">角色</label>
                         <div class="col-sm-9">
                             <select  class="form-control" id="role" onchange="changeWord()">
-                                <option value="0" selected>学生</option>
+                                <option value="0" selected>队员</option>
                                 <option value="1">教师</option>
                                 <option value="2">企业人员</option>
                                 <option value="3">项目负责人</option>
@@ -252,7 +252,7 @@
             }
         }
 
-        if(role==0){
+        if(role==0||role==3){
             if(!studentNum){
                 alert("学号不能为空");
                 return;

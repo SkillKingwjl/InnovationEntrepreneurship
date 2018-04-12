@@ -1,6 +1,5 @@
 package com.wjl.controller;
 
-import com.alibaba.druid.util.StringUtils;
 import com.wjl.config.UploadSrc;
 import com.wjl.model.ProjectInfo;
 import com.wjl.model.User;
@@ -8,18 +7,17 @@ import com.wjl.model.UserDetail;
 import com.wjl.service.UserService;
 import com.wjl.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
