@@ -65,7 +65,13 @@ public class UserController {
         return "pubproject";
     }
     @RequestMapping(value = "searchperson")
-    public String skinToSearchPerson(){return "searchperson";}
+    public String skinToSearchPerson(Model model,Integer projectID,Integer projectFlag){
+        if (projectID!=null) {
+            model.addAttribute("projectID", projectID);
+        }
+        model.addAttribute("projectFlag", projectFlag);
+        return "searchperson";
+    }
     @RequestMapping(value = "searchproject")
     public String skinToSearchProject(){
         return "searchproject";
@@ -79,18 +85,19 @@ public class UserController {
         return "signupproject";
     }
     @RequestMapping(value = "projectdetail")
-    public String skinToProjectDetail(Model model, Integer projectId){
+    public String skinToProjectDetail(Model model, Integer projectId,Integer flag_p){
         model.addAttribute("projectId",projectId);
         User user=(User)session.getAttribute("user");
         if(user!=null){
             model.addAttribute("userId",user.getId());
+            model.addAttribute("flag_p",flag_p);
         }
-
         return "projectdetail";
     }
     @RequestMapping(value = "showperson")
-    public String skinToShowPerson(Model model, Integer userId){
+    public String skinToShowPerson(Model model, Integer userId, Integer projectID){
         model.addAttribute("userId",userId);
+        model.addAttribute("projectID",projectID);
         return "showperson";
     }
     @RequestMapping(value = "messageinfo")
